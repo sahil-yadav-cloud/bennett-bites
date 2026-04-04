@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartProvider } from "@/src/context/CartContext";
 
 export const metadata: Metadata = {
   title: "Bennett Bites",
@@ -31,7 +32,9 @@ export default function RootLayout({
         className="antialiased font-sans" 
         suppressHydrationWarning
       >
-        {children}
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

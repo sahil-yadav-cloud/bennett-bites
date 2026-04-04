@@ -1,13 +1,144 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --background: #060e20;
-  --foreground: #dae2fd;
+@theme {
+  --color-tertiary-container: #7b7469;
+  --color-outline: #70797a;
+  --color-surface-container: #f0ede9;
+  --color-tertiary: #625b51;
+  --color-surface-container-high: #ebe8e4;
+  --color-primary: #2b646c;
+  --color-tertiary-fixed-dim: #cfc5b9;
+  --color-inverse-on-surface: #f3f0ec;
+  --color-inverse-primary: #98d0d8;
+  --color-surface-tint: #2e666e;
+  --color-on-background: #1c1c19;
+  --color-surface-dim: #dcdad6;
+  --color-primary-fixed-dim: #98d0d8;
+  --color-primary-container: #467d85;
+  --color-on-tertiary-fixed-variant: #4c463c;
+  --color-on-secondary-fixed: #2b1700;
+  --color-surface-container-low: #f6f3ef;
+  --color-error-container: #ffdad6;
+  --color-primary-fixed: #b4ecf5;
+  --color-on-tertiary-container: #fffbff;
+  --color-surface-bright: #fcf9f5;
+  --color-on-surface: #1c1c19;
+  --color-secondary-fixed-dim: #f8bb73;
+  --color-on-surface-variant: #40484a;
+  --color-on-error-container: #93000a;
+  --color-background: #fcf9f5;
+  --color-on-secondary: #ffffff;
+  --color-secondary: #825516;
+  --color-on-primary-container: #f6feff;
+  --color-outline-variant: #bfc8c9;
+  --color-on-error: #ffffff;
+  --color-surface-variant: #e5e2de;
+  --color-surface-container-highest: #e5e2de;
+  --color-on-secondary-container: #784d0d;
+  --color-secondary-container: #fec178;
+  --color-on-tertiary: #ffffff;
+  --color-on-primary-fixed: #001f23;
+  --color-error: #ba1a1a;
+  --color-tertiary-fixed: #ebe1d4;
+  --color-inverse-surface: #31302e;
+  --color-secondary-fixed: #ffddb9;
+  --color-on-primary-fixed-variant: #0e4e56;
+  --color-on-primary: #ffffff;
+  --color-on-tertiary-fixed: #1f1b13;
+  --color-surface: #fcf9f5;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-secondary-fixed-variant: #663e00;
+
+  /* Screen 3 Login Colors */
+  --color-login-on-primary-fixed-variant: #5b3b00;
+  --color-login-surface-bright: #f6f6f8;
+  --color-login-on-secondary-fixed-variant: #00655d;
+  --color-login-secondary-container: #81f3e5;
+  --color-login-primary-container: #feaa00;
+  --color-login-on-secondary-container: #005a53;
+  --color-login-surface-tint: #7e5200;
+  --color-login-secondary: #00675f;
+  --color-login-on-error: #ffefec;
+  --color-login-on-tertiary-fixed-variant: #642600;
+  --color-login-on-error-container: #520c00;
+  --color-login-primary-fixed: #feaa00;
+  --color-login-background: #f6f6f8;
+  --color-login-tertiary-container: #ff955e;
+  --color-login-primary-fixed-dim: #ec9e00;
+  --color-login-surface: #f6f6f8;
+  --color-login-on-secondary: #bffff5;
+  --color-login-on-primary: #fff0e2;
+  --color-login-primary: #7e5200;
+  --color-login-surface-container: #e7e8ea;
+  --color-login-error: #b02500;
+  --color-login-on-background: #2d2f31;
+  --color-login-tertiary-dim: #883700;
+  --color-login-on-tertiary-fixed: #2f0e00;
+  --color-login-secondary-dim: #005a53;
+  --color-login-surface-variant: #dbdde0;
+  --color-login-on-primary-fixed: #331f00;
+  --color-login-outline: #757779;
+  --color-login-on-tertiary-container: #562000;
+  --color-login-surface-container-high: #e1e2e5;
+  --color-login-tertiary-fixed: #ff955e;
+  --color-login-on-secondary-fixed: #004640;
+  --color-login-tertiary-fixed-dim: #ff7f36;
+  --color-login-surface-container-low: #f0f1f3;
+  --color-login-inverse-surface: #0c0e10;
+  --color-login-inverse-primary: #feaa00;
+  --color-login-error-dim: #b92902;
+  --color-login-surface-dim: #d2d4d8;
+  --color-login-surface-container-highest: #dbdde0;
+  --color-login-outline-variant: #acadaf;
+  --color-login-tertiary: #9b3f00;
+  --color-login-secondary-fixed: #81f3e5;
+  --color-login-error-container: #f95630;
+  --color-login-on-surface-variant: #5a5c5d;
+  --color-login-inverse-on-surface: #9c9d9f;
+  --color-login-on-primary-container: #503300;
+  --color-login-on-surface: #2d2f31;
+  --color-login-secondary-fixed-dim: #72e4d7;
+  --color-login-on-tertiary: #fff0ea;
+  --color-login-primary-dim: #6e4800;
+  --color-login-surface-container-lowest: #ffffff;
+
+  --font-headline: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
+
+  --radius-default: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+@layer base {
+  body {
+    @apply bg-background text-on-surface font-body antialiased;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/40 backdrop-blur-xl;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

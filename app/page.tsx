@@ -2,156 +2,272 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import TopNavBar from '@/src/components/layout/TopNavBar';
+import SideNavBar from '@/src/components/layout/SideNavBar';
+import BottomMobileNav from '@/src/components/layout/BottomMobileNav';
+import Link from 'next/link';
+import { useCart, MenuItem } from '@/src/context/CartContext';
+import { useRouter } from 'next/navigation';
+
+interface Profile {
+  id: string;
+  full_name: string;
+  budget_balance: number;
+}
 
 export default function Home() {
-  // --- STATE MANAGEMENT ---
-  const [showToast, setShowToast] = useState(false);
-  const [lastAdded, setLastAdded] = useState("");
-  const [menuItems, setMenuItems] = useState<any[]>([]);
-  const [cart, setCart] = useState<{ item: any, qty: number }[]>([]);
+  const router = useRouter();
+  const { cart, addToTray, totalItems, totalPrice, clearCart } = useCart();
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [isTrayOpen, setIsTrayOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
-  // --- DATA FETCHING ---
   useEffect(() => {
     async function fetchData() {
-      // Fetches live snacks from your 'menu_items' table
-      const { data, error } = await supabase
+      // In a real app, we'd get the current user's ID
+      // const { data: { user } } = await supabase.auth.getUser();
+
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('*')
+        .single();
+
+      if (profileData) {
+        setProfile(profileData as Profile);
+      }
+
+      const { data: menuData } = await supabase
         .from('menu_items')
         .select('*')
-        .order('name');
+        .limit(3);
       
-      if (error) {
-        console.error("Error fetching menu:", error.message);
-      } else if (data) {
-        setMenuItems(data);
+      if (menuData) {
+        setMenuItems(menuData as MenuItem[]);
       }
       setIsLoading(false);
     }
     fetchData();
   }, []);
 
-  // --- ACTIONS ---
-  const addToTray = (item: any) => {
-    setCart(prev => {
-      const existing = prev.find(c => c.item.id === item.id);
-      if (existing) return prev.map(c => c.item.id === item.id ? { ...c, qty: c.qty + 1 } : c);
-      return [...prev, { item, qty: 1 }];
-    });
+  const budgetBalance = profile?.budget_balance ?? 142.50;
 
-    setLastAdded(item.name);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
+  const handlePlaceOrder = async () => {
+    if (cart.length === 0) return;
+    setIsPlacingOrder(true);
+    try {
+      // In a real app, we'd use current user's profile ID
+      const profileId = profile?.id || (await supabase.from('profiles').select('id').single()).data?.id;
+
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          profile_id: profileId,
+          total_price: totalPrice,
+          status: 'preparing'
+        })
+        .select()
+        .single();
+
+      if (orderError) throw orderError;
+
+      const orderItems = cart.map(c => ({
+        order_id: order.id,
+        menu_item_id: c.item.id,
+        quantity: c.qty,
+        price_at_order: c.item.price
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (itemsError) throw itemsError;
+
+      clearCart();
+      setIsTrayOpen(false);
+      router.push(`/order-status/${order.id}`);
+    } catch (e) {
+      console.error("Order failed", e);
+      alert("Failed to place order. Check console for details.");
+    } finally {
+      setIsPlacingOrder(false);
+    }
   };
 
-  const totalPrice = cart.reduce((acc, curr) => acc + (curr.item.price * curr.qty), 0);
-  const totalItems = cart.reduce((acc, curr) => acc + curr.qty, 0);
-
   return (
-    // Uses your custom 'background' and 'on-background' colors
-    <main className="min-h-screen bg-background text-on-background font-sans relative overflow-x-hidden">
+    <main className="min-h-screen bg-background text-on-surface font-body relative overflow-x-hidden">
+      <TopNavBar />
+      <SideNavBar />
       
-      {/* BACKGROUND GLOWS - Matches your screenshot design */}
+      {/* BACKGROUND GLOWS */}
       <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-teal-accent/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      {/* NOTIFICATION TOAST */}
-      {showToast && (
-        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] animate-in fade-in slide-in-from-top-4 duration-300">
-          <div className="bg-surface border border-white/10 shadow-2xl px-6 py-3 rounded-full flex items-center gap-3 backdrop-blur-md">
-            <div className="w-2 h-2 bg-teal-accent rounded-full animate-pulse"></div>
-            <p className="text-sm font-bold">
-              Added <span className="text-teal-accent">{lastAdded}</span> to tray
-            </p>
+      <div className="pt-32 pb-40 px-6 max-w-7xl mx-auto relative z-10 lg:ml-72">
+        {/* Header Section */}
+        <header className="mb-12">
+          <h1 className="font-headline text-5xl md:text-6xl font-extrabold tracking-tight text-primary mb-4">
+            {profile?.full_name ? `Welcome, ${profile.full_name}` : 'The Academic Alchemist'}
+          </h1>
+          <p className="font-body text-lg text-on-surface-variant max-w-2xl">Curating your campus nutrition and spending with data-driven elegance.</p>
+        </header>
+
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          {/* Nutrition Summary (Large Card) */}
+          <div className="md:col-span-8 bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_40px_rgba(43,100,108,0.06)] relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-700">
+              <span className="material-symbols-outlined text-9xl text-primary">analytics</span>
+            </div>
+            <h2 className="font-headline text-2xl font-bold mb-8 text-on-surface">Nutrition Overview</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 relative z-10">
+              <div className="flex flex-col gap-2">
+                <span className="text-secondary font-semibold text-sm tracking-wider uppercase">Calories</span>
+                <div className="text-4xl font-headline font-extrabold text-primary">1,840</div>
+                <div className="h-1.5 w-full bg-surface-container-high rounded-full mt-2">
+                  <div className="h-full bg-primary rounded-full w-[72%]"></div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="text-secondary font-semibold text-sm tracking-wider uppercase">Protein</span>
+                <div className="text-4xl font-headline font-extrabold text-primary">85g</div>
+                <div className="h-1.5 w-full bg-surface-container-high rounded-full mt-2">
+                  <div className="h-full bg-primary-container rounded-full w-[85%]"></div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="text-secondary font-semibold text-sm tracking-wider uppercase">Carbs</span>
+                <div className="text-4xl font-headline font-extrabold text-primary">210g</div>
+                <div className="h-1.5 w-full bg-surface-container-high rounded-full mt-2">
+                  <div className="h-full bg-secondary-fixed-dim rounded-full w-[60%]"></div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="text-secondary font-semibold text-sm tracking-wider uppercase">Fats</span>
+                <div className="text-4xl font-headline font-extrabold text-primary">54g</div>
+                <div className="h-1.5 w-full bg-surface-container-high rounded-full mt-2">
+                  <div className="h-full bg-tertiary-fixed-dim rounded-full w-[45%]"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Budget Tracker (Medium Card) */}
+          <div className="md:col-span-4 bg-surface-container-low rounded-xl p-8 flex flex-col justify-between">
+            <div>
+              <h2 className="font-headline text-2xl font-bold mb-2 text-on-surface">Spending</h2>
+              <p className="text-on-surface-variant font-body text-sm mb-6">Weekly allowance balance</p>
+              <div className="text-5xl font-headline font-extrabold text-primary mb-8 tracking-tighter">₹{(budgetBalance - totalPrice).toFixed(2)}</div>
+            </div>
+            <div className="flex items-end justify-between h-32 gap-2">
+              <div className="w-full bg-primary/20 rounded-t-lg h-[40%] hover:bg-primary transition-colors duration-300"></div>
+              <div className="w-full bg-primary/20 rounded-t-lg h-[65%] hover:bg-primary transition-colors duration-300"></div>
+              <div className="w-full bg-primary/20 rounded-t-lg h-[90%] hover:bg-primary transition-colors duration-300"></div>
+              <div className="w-full bg-primary/20 rounded-t-lg h-[55%] hover:bg-primary transition-colors duration-300"></div>
+              <div className="w-full bg-primary/20 rounded-t-lg h-[75%] hover:bg-primary transition-colors duration-300"></div>
+              <div className="w-full bg-primary/20 rounded-t-lg h-[45%] hover:bg-primary transition-colors duration-300"></div>
+              <div className="w-full bg-primary rounded-t-lg h-[30%]"></div>
+            </div>
+            <div className="flex justify-between mt-2 text-[10px] text-stone-400 font-bold uppercase tracking-widest">
+              <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+            </div>
+          </div>
+
+          {/* Ask Bennett AI */}
+          <div className="md:col-span-7 bg-primary rounded-xl p-8 relative overflow-hidden text-on-primary">
+            <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+                <h2 className="font-headline text-2xl font-bold">Ask Bennett AI</h2>
+              </div>
+              <p className="font-body text-on-primary-container/80 mb-8 max-w-md">&quot;Get personalized recommendations based on your current budget and macro goals.&quot;</p>
+              <div className="relative">
+                <input
+                  className="w-full bg-white/10 border-none rounded-2xl py-5 pl-6 pr-16 text-white placeholder:text-white/50 focus:ring-2 focus:ring-white/30 backdrop-blur-md font-body text-lg"
+                  placeholder="Suggest high protein food..."
+                  type="text"
+                />
+                <button className="absolute right-3 top-3 w-12 h-12 bg-white text-primary rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+                  <span className="material-symbols-outlined">arrow_forward</span>
+                </button>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="text-xs bg-white/10 px-3 py-1.5 rounded-full font-medium hover:bg-white/20 cursor-pointer transition-colors border border-white/5">Cheap dinner?</span>
+                <span className="text-xs bg-white/10 px-3 py-1.5 rounded-full font-medium hover:bg-white/20 cursor-pointer transition-colors border border-white/5">Low carb options</span>
+                <span className="text-xs bg-white/10 px-3 py-1.5 rounded-full font-medium hover:bg-white/20 cursor-pointer transition-colors border border-white/5">Meal prep help</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Bite */}
+          <div className="md:col-span-5 bg-surface-container-lowest rounded-xl p-1 shadow-[0_20px_40px_rgba(43,100,108,0.06)] relative h-full flex flex-col">
+            <div className="h-48 overflow-hidden rounded-t-lg relative">
+              <img
+                className="w-full h-full object-cover"
+                alt="Fresh salad bowl with protein"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCANz9EzU6x_4rZ6MZoiu0vZI2qf1peghFmObIPTckm5RihUiJzGc2ks9_PpdUvjIuBc_IGNGE-g9I16M4XRhy5M8cjXcKgw0yTs2SNHSpyUaMquD4i_gCWn-fs6klZ_mz-ZhEk0lNkd-21xnHsyomLoXCQouwzqhW9Tgj_Xwoqz5Csjl5oBwkhH7wH9hc7w1ggsHE2CsHes7t_YM58wZMcGhlZC8sVvGWYmck6ecqQMjY-tX8SvB8TKl-T3YmxVT31l5nkN0hxwxE"
+              />
+              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary">Last Order</div>
+            </div>
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="font-headline font-bold text-xl text-on-surface">Green Goddess Protein Bowl</h3>
+                <span className="text-secondary font-bold">₹125</span>
+              </div>
+              <div className="flex gap-4 mb-4">
+                <div className="flex items-center gap-1 text-stone-500 text-xs font-medium">
+                  <span className="material-symbols-outlined text-sm">local_fire_department</span> 450 kcal
+                </div>
+                <div className="flex items-center gap-1 text-stone-500 text-xs font-medium">
+                  <span className="material-symbols-outlined text-sm">fitness_center</span> 32g Protein
+                </div>
+              </div>
+              <button className="w-full py-3 bg-surface-container-high hover:bg-surface-variant text-on-surface font-bold rounded-xl transition-colors active:scale-95 duration-200">Reorder This Bite</button>
+            </div>
           </div>
         </div>
-      )}
 
-      {/* 1. HEADER */}
-      <nav className="fixed top-0 w-full z-40 bg-background/60 backdrop-blur-xl border-b border-white/5 px-8 h-20 flex justify-between items-center">
-        <div className="text-2xl font-black tracking-tighter text-teal-accent uppercase">Bennett Bites</div>
-        <div className="flex items-center gap-6">
-          <span className="material-symbols-outlined opacity-50 hover:opacity-100 cursor-pointer">search</span>
-          <div className="w-10 h-10 rounded-full bg-surface border border-white/10 flex items-center justify-center text-xs font-bold text-primary">JD</div>
-        </div>
-      </nav>
-
-      <div className="pt-32 pb-40 px-8 max-w-7xl mx-auto relative z-10">
-        
-        {/* 2. STATS SECTION */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          {[
-            { label: 'Budget Left', val: `₹${(120 - totalPrice).toFixed(2)}`, color: 'text-teal-accent' },
-            { label: 'Wait Time', val: '12m', color: 'text-on-background' },
-            { label: 'Daily Cals', val: '450', color: 'text-orange-400' },
-            { label: 'Orders', val: '0 Active', color: 'text-blue-400' }
-          ].map((stat, i) => (
-            <div key={i} className="bg-surface/50 backdrop-blur-sm p-6 rounded-[2rem] border border-white/5">
-              <p className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">{stat.label}</p>
-              <p className={`text-2xl font-black ${stat.color}`}>{stat.val}</p>
-            </div>
-          ))}
-        </section>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* 3. LIVE MENU */}
-          <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black flex items-center gap-3">
-                <span className="w-2 h-6 bg-teal-accent rounded-full"></span>
-                Live Menu
-              </h2>
-            </div>
-
+        {/* Campus Favorites */}
+        <section className="mt-16 overflow-hidden">
+          <h2 className="font-headline text-2xl font-bold mb-6 text-on-surface">Campus Favorites</h2>
+          <div className="flex gap-6 overflow-x-auto pb-8 no-scrollbar -mx-2 px-2">
             {isLoading ? (
-              <div className="flex flex-col items-center justify-center py-20 opacity-20">
-                <div className="w-10 h-10 border-4 border-teal-accent border-t-transparent rounded-full animate-spin mb-4"></div>
-                <p className="font-bold">Loading snacks...</p>
-              </div>
+              <p>Loading favorites...</p>
             ) : menuItems.length === 0 ? (
-              <div className="bg-surface/30 border border-dashed border-white/10 rounded-[2rem] p-12 text-center">
-                <p className="text-white/40 font-bold italic">Your menu is empty. Add items to your Supabase table!</p>
-              </div>
+              <p className="text-on-surface-variant opacity-50">No favorites found yet.</p>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {menuItems.map((item) => (
-                  <div key={item.id} className="bg-surface/40 rounded-[2.5rem] p-8 border border-white/5 hover:border-primary/30 transition-all group relative overflow-hidden">
-                    <div className="flex justify-between items-start mb-8 relative z-10">
-                      <div>
-                        <span className={`text-[10px] font-black px-3 py-1 rounded-full ${item.is_veg ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
-                          {item.is_veg ? 'VEG' : 'NON-VEG'}
-                        </span>
-                        <h3 className="text-xl font-bold mt-3 group-hover:text-primary transition-colors">{item.name}</h3>
-                      </div>
-                      <span className="text-xl font-black">₹{item.price}</span>
-                    </div>
+              menuItems.map((item) => (
+                <div key={item.id} className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100">
+                  <div className="h-32 rounded-lg bg-surface-variant mb-4 overflow-hidden flex items-center justify-center text-primary/20">
+                    <span className="material-symbols-outlined text-4xl">restaurant</span>
+                  </div>
+                  <h4 className="font-bold text-on-surface">{item.name}</h4>
+                  <p className="text-xs text-stone-500 mb-3">{item.is_veg ? 'Veg' : 'Non-Veg'} • High Protein</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-primary font-extrabold">₹{item.price}</span>
                     <button 
                       onClick={() => addToTray(item)}
-                      className="w-full py-4 bg-white/5 hover:bg-primary text-white hover:text-background font-black rounded-2xl border border-white/10 transition-all active:scale-95"
+                      className="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center hover:scale-110 transition-transform"
                     >
-                      ADD TO TRAY
+                      <span className="material-symbols-outlined text-sm">add</span>
                     </button>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))
             )}
-          </div>
-
-          {/* 4. AI SIDEBAR */}
-          <div className="lg:col-span-4">
-            <div className="sticky top-32 space-y-6">
-              <div className="bg-teal-accent/10 p-8 rounded-[2.5rem] border border-teal-accent/20">
-                <h3 className="font-black text-xs mb-4 text-teal-accent uppercase tracking-[0.2em]">AI Suggestion</h3>
-                <p className="text-sm leading-relaxed text-white/70 italic font-medium">
-                  "It's getting warm outside! A <b className="text-white">Cold Coffee</b> might be better than tea right now."
-                </p>
+            <div className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 opacity-50">
+              <div className="h-32 rounded-lg bg-surface-variant mb-4 flex items-center justify-center">
+                <span className="material-symbols-outlined text-4xl text-stone-300">more_horiz</span>
               </div>
+              <Link href="/menu" className="font-bold text-stone-400">View All Campus Eats</Link>
             </div>
           </div>
-        </div>
+        </section>
       </div>
 
-      {/* 5. TRAY MODAL */}
+      {/* TRAY MODAL */}
       {isTrayOpen && (
         <div className="fixed inset-0 z-[60] flex items-end justify-center px-4 pb-4">
           <div className="absolute inset-0 bg-background/80 backdrop-blur-md" onClick={() => setIsTrayOpen(false)}></div>
@@ -162,10 +278,10 @@ export default function Home() {
               <span className="bg-primary/20 text-primary px-4 py-1 rounded-full text-xs font-bold">{totalItems} items</span>
             </div>
             
-            <div className="space-y-4 max-h-64 overflow-y-auto mb-10 pr-2 custom-scrollbar">
+            <div className="space-y-4 max-h-64 overflow-y-auto mb-10 pr-2 no-scrollbar">
               {cart.map(c => (
                 <div key={c.item.id} className="flex justify-between items-center bg-white/5 p-5 rounded-[1.5rem]">
-                  <p className="font-bold text-white/90">{c.item.name} <span className="text-white/30 ml-2">x{c.qty}</span></p>
+                  <p className="font-bold text-on-surface">{c.item.name} <span className="text-on-surface/30 ml-2">x{c.qty}</span></p>
                   <p className="font-black text-primary">₹{c.item.price * c.qty}</p>
                 </div>
               ))}
@@ -174,36 +290,34 @@ export default function Home() {
             <div className="pt-8 border-t border-white/5">
               <div className="flex justify-between text-2xl font-black mb-8">
                 <span>Total</span>
-                <span className="text-teal-accent">₹{totalPrice.toFixed(2)}</span>
+                <span className="text-primary">₹{totalPrice.toFixed(2)}</span>
               </div>
-              <button className="w-full py-5 bg-primary text-background font-black rounded-2xl shadow-xl shadow-primary/20 active:scale-95 transition-transform uppercase tracking-widest">
-                Place Order
+              <button
+                onClick={handlePlaceOrder}
+                disabled={isPlacingOrder}
+                className="w-full py-5 bg-primary text-on-primary font-black rounded-2xl shadow-xl shadow-primary/20 active:scale-95 transition-transform uppercase tracking-widest disabled:opacity-50"
+              >
+                {isPlacingOrder ? 'Processing...' : 'Place Order'}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* 6. NAVIGATION DOCK */}
-      <nav className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-surface/60 backdrop-blur-2xl border border-white/10 px-8 py-4 rounded-full flex gap-12 items-center z-50 shadow-2xl">
-        <button className="flex flex-col items-center text-teal-accent">
-          <span className="material-symbols-outlined text-2xl">home</span>
-          <span className="text-[8px] font-black mt-1 uppercase tracking-widest">Home</span>
-        </button>
-        <button onClick={() => setIsTrayOpen(true)} className="flex flex-col items-center text-white/40 hover:text-white relative">
-          <span className="material-symbols-outlined text-2xl">shopping_bag</span>
-          {totalItems > 0 && (
-            <span className="absolute -top-1 -right-1 bg-primary text-background text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">
-              {totalItems}
-            </span>
-          )}
-          <span className="text-[8px] font-black mt-1 uppercase tracking-widest">Tray</span>
-        </button>
-        <button className="flex flex-col items-center text-white/40 hover:text-white">
-          <span className="material-symbols-outlined text-2xl">history</span>
-          <span className="text-[8px] font-black mt-1 uppercase tracking-widest">Orders</span>
-        </button>
-      </nav>
+      <BottomMobileNav activeTab="dashboard" />
+
+      {/* Floating Action Button (FAB) */}
+      <button
+        onClick={() => setIsTrayOpen(true)}
+        className="fixed bottom-24 right-6 md:bottom-12 md:right-12 w-16 h-16 bg-primary text-on-primary rounded-full shadow-[20px_20px_40px_rgba(43,100,108,0.2)] flex items-center justify-center active:scale-90 transition-transform z-50 group"
+      >
+        <span className="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform duration-300">add</span>
+        {totalItems > 0 && (
+          <span className="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-background">
+            {totalItems}
+          </span>
+        )}
+      </button>
     </main>
   );
 }
