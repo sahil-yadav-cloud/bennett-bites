@@ -94,7 +94,7 @@ export default function GroupOrderPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-xs text-tertiary uppercase tracking-wider font-bold">Total</p>
-                    <p className="text-xl font-extrabold text-primary">₹{friend.total.toFixed(2)}</p>
+                    <p className="text-xl font-extrabold text-primary">₹{(friend.total * 10).toFixed(0)}</p>
                   </div>
                 </div>
                 <div className="space-y-6">
@@ -104,7 +104,7 @@ export default function GroupOrderPage() {
                         <h4 className="font-bold text-on-surface">{item.name}</h4>
                         <p className="text-sm text-tertiary">{item.desc}</p>
                       </div>
-                      <span className="font-bold text-on-surface-variant">₹{item.price.toFixed(2)}</span>
+                      <span className="font-bold text-on-surface-variant">₹{(item.price * 10).toFixed(0)}</span>
                     </div>
                   ))}
                 </div>
@@ -177,14 +177,14 @@ export default function GroupOrderPage() {
                 </div>
                 <h4 className="font-bold text-lg mb-1">{addon.name}</h4>
                 <p className="text-sm text-tertiary mb-4">{addon.desc}</p>
-                <button className="w-full bg-secondary-fixed text-on-secondary-fixed py-3 rounded-full font-bold text-sm">Add to Shared Basket</button>
+                <button className="w-full bg-secondary-fixed text-on-secondary-fixed py-3 rounded-full font-bold text-sm hover:scale-95 transition-transform">Add to Shared Basket</button>
               </div>
             ))}
           </div>
         </section>
       </main>
 
-      <BottomMobileNav />
+      <BottomMobileNav activeTab="menu" />
     </main>
   );
 }

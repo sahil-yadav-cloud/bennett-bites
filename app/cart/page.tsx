@@ -6,8 +6,8 @@ import SideNavBar from '@/src/components/layout/SideNavBar';
 import BottomMobileNav from '@/src/components/layout/BottomMobileNav';
 import Link from 'next/link';
 import { useCart } from '@/src/context/CartContext';
-import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import { placeOrder } from '@/src/lib/orderUtils';
 
 export default function CartPage() {
   const router = useRouter();
@@ -164,20 +164,7 @@ export default function CartPage() {
                     if (cart.length === 0) return;
                     setIsPlacingOrder(true);
                     try {
-                      const profileId = (await supabase.from('profiles').select('id').single()).data?.id;
-                      const { data: order, error: orderError } = await supabase
-                        .from('orders')
-                        .insert({ profile_id: profileId, total_price: total, status: 'preparing' })
-                        .select().single();
-                      if (orderError) throw orderError;
-
-                      const orderItems = cart.map(c => ({
-                        order_id: order.id,
-                        menu_item_id: c.item.id,
-                        quantity: c.qty,
-                        price_at_order: c.item.price
-                      }));
-                      await supabase.from('order_items').insert(orderItems);
+                      const order = await placeOrder(undefined, cart, total);
                       clearCart();
                       router.push(`/order-status/${order.id}`);
                     } catch (e) {

@@ -8,6 +8,7 @@ import BottomMobileNav from '@/src/components/layout/BottomMobileNav';
 import Link from 'next/link';
 import { useCart, MenuItem } from '@/src/context/CartContext';
 import { useRouter } from 'next/navigation';
+import { placeOrder } from '@/src/lib/orderUtils';
 
 interface Profile {
   id: string;
@@ -26,12 +27,10 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      // In a real app, we'd get the current user's ID
-      // const { data: { user } } = await supabase.auth.getUser();
-
       const { data: profileData } = await supabase
         .from('profiles')
         .select('*')
+        .limit(1)
         .single();
 
       if (profileData) {
@@ -41,7 +40,7 @@ export default function Home() {
       const { data: menuData } = await supabase
         .from('menu_items')
         .select('*')
-        .limit(3);
+        .limit(6);
       
       if (menuData) {
         setMenuItems(menuData as MenuItem[]);
@@ -57,34 +56,7 @@ export default function Home() {
     if (cart.length === 0) return;
     setIsPlacingOrder(true);
     try {
-      // In a real app, we'd use current user's profile ID
-      const profileId = profile?.id || (await supabase.from('profiles').select('id').single()).data?.id;
-
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          profile_id: profileId,
-          total_price: totalPrice,
-          status: 'preparing'
-        })
-        .select()
-        .single();
-
-      if (orderError) throw orderError;
-
-      const orderItems = cart.map(c => ({
-        order_id: order.id,
-        menu_item_id: c.item.id,
-        quantity: c.qty,
-        price_at_order: c.item.price
-      }));
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems);
-
-      if (itemsError) throw itemsError;
-
+      const order = await placeOrder(profile?.id, cart, totalPrice);
       clearCart();
       setIsTrayOpen(false);
       router.push(`/order-status/${order.id}`);
@@ -102,9 +74,9 @@ export default function Home() {
       <SideNavBar />
       
       {/* BACKGROUND GLOWS */}
-      <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="pt-32 pb-40 px-6 max-w-7xl mx-auto relative z-10 lg:ml-72">
+      <div className="pt-28 pb-12 px-6 max-w-7xl mx-auto lg:ml-72">
         {/* Header Section */}
         <header className="mb-12">
           <h1 className="font-headline text-5xl md:text-6xl font-extrabold tracking-tight text-primary mb-4">
@@ -182,7 +154,7 @@ export default function Home() {
                 <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
                 <h2 className="font-headline text-2xl font-bold">Ask Bennett AI</h2>
               </div>
-              <p className="font-body text-on-primary-container/80 mb-8 max-w-md">&quot;Get personalized recommendations based on your current budget and macro goals.&quot;</p>
+              <p className="font-body text-on-primary-container/80 mb-8 max-w-md">Get personalized recommendations based on your current budget and macro goals.</p>
               <div className="relative">
                 <input
                   className="w-full bg-white/10 border-none rounded-2xl py-5 pl-6 pr-16 text-white placeholder:text-white/50 focus:ring-2 focus:ring-white/30 backdrop-blur-md font-body text-lg"
@@ -234,17 +206,21 @@ export default function Home() {
           <h2 className="font-headline text-2xl font-bold mb-6 text-on-surface">Campus Favorites</h2>
           <div className="flex gap-6 overflow-x-auto pb-8 no-scrollbar -mx-2 px-2">
             {isLoading ? (
-              <p>Loading favorites...</p>
-            ) : menuItems.length === 0 ? (
-              <p className="text-on-surface-variant opacity-50">No favorites found yet.</p>
+              [1, 2, 3].map((i) => (
+                <div key={i} className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 animate-pulse">
+                  <div className="h-32 rounded-lg bg-surface-variant mb-4"></div>
+                  <div className="h-4 w-3/4 bg-surface-variant mb-2"></div>
+                  <div className="h-3 w-1/2 bg-surface-variant"></div>
+                </div>
+              ))
             ) : (
               menuItems.map((item) => (
                 <div key={item.id} className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100">
-                  <div className="h-32 rounded-lg bg-surface-variant mb-4 overflow-hidden flex items-center justify-center text-primary/20">
-                    <span className="material-symbols-outlined text-4xl">restaurant</span>
+                  <div className="h-32 rounded-lg bg-surface-variant mb-4 overflow-hidden">
+                    <img alt={item.name} className="w-full h-full object-cover" src={item.image_url || ""} />
                   </div>
                   <h4 className="font-bold text-on-surface">{item.name}</h4>
-                  <p className="text-xs text-stone-500 mb-3">{item.is_veg ? 'Veg' : 'Non-Veg'} • High Protein</p>
+                  <p className="text-xs text-stone-500 mb-3">{item.category} • {item.is_veg ? 'Veg' : 'Non-Veg'}</p>
                   <div className="flex justify-between items-center">
                     <span className="text-primary font-extrabold">₹{item.price}</span>
                     <button 
@@ -257,8 +233,8 @@ export default function Home() {
                 </div>
               ))
             )}
-            <div className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 opacity-50">
-              <div className="h-32 rounded-lg bg-surface-variant mb-4 flex items-center justify-center">
+            <div className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 flex flex-col items-center justify-center">
+              <div className="h-32 rounded-lg bg-surface-variant mb-4 flex items-center justify-center w-full">
                 <span className="material-symbols-outlined text-4xl text-stone-300">more_horiz</span>
               </div>
               <Link href="/menu" className="font-bold text-stone-400">View All Campus Eats</Link>
@@ -272,7 +248,7 @@ export default function Home() {
         <div className="fixed inset-0 z-[60] flex items-end justify-center px-4 pb-4">
           <div className="absolute inset-0 bg-background/80 backdrop-blur-md" onClick={() => setIsTrayOpen(false)}></div>
           <div className="bg-surface w-full max-w-lg rounded-[3rem] p-10 relative z-10 border border-white/10 shadow-2xl animate-in slide-in-from-bottom duration-500">
-            <div className="w-12 h-1.5 bg-white/10 rounded-full mx-auto mb-10"></div>
+            <div className="w-12 h-1.5 bg-on-surface/10 rounded-full mx-auto mb-10"></div>
             <div className="flex justify-between items-center mb-8">
               <h3 className="text-3xl font-black">Your Tray</h3>
               <span className="bg-primary/20 text-primary px-4 py-1 rounded-full text-xs font-bold">{totalItems} items</span>
@@ -280,21 +256,22 @@ export default function Home() {
             
             <div className="space-y-4 max-h-64 overflow-y-auto mb-10 pr-2 no-scrollbar">
               {cart.map(c => (
-                <div key={c.item.id} className="flex justify-between items-center bg-white/5 p-5 rounded-[1.5rem]">
+                <div key={c.item.id} className="flex justify-between items-center bg-on-surface/5 p-5 rounded-[1.5rem]">
                   <p className="font-bold text-on-surface">{c.item.name} <span className="text-on-surface/30 ml-2">x{c.qty}</span></p>
                   <p className="font-black text-primary">₹{c.item.price * c.qty}</p>
                 </div>
               ))}
+              {cart.length === 0 && <p className="text-center opacity-50 py-10">Your tray is empty.</p>}
             </div>
 
-            <div className="pt-8 border-t border-white/5">
+            <div className="pt-8 border-t border-on-surface/5">
               <div className="flex justify-between text-2xl font-black mb-8">
                 <span>Total</span>
                 <span className="text-primary">₹{totalPrice.toFixed(2)}</span>
               </div>
               <button
                 onClick={handlePlaceOrder}
-                disabled={isPlacingOrder}
+                disabled={isPlacingOrder || cart.length === 0}
                 className="w-full py-5 bg-primary text-on-primary font-black rounded-2xl shadow-xl shadow-primary/20 active:scale-95 transition-transform uppercase tracking-widest disabled:opacity-50"
               >
                 {isPlacingOrder ? 'Processing...' : 'Place Order'}

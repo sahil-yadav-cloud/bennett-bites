@@ -12,6 +12,7 @@ export default function MenuPage() {
   const { addToTray, totalItems, totalPrice } = useCart();
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState('All');
 
   useEffect(() => {
     async function fetchMenu() {
@@ -30,6 +31,14 @@ export default function MenuPage() {
     fetchMenu();
   }, []);
 
+  const filteredItems = activeFilter === 'All'
+    ? menuItems
+    : menuItems.filter(item => {
+        if (activeFilter === 'Budget') return item.category === 'Budget';
+        if (activeFilter === 'Healthy') return item.category === 'Healthy';
+        if (activeFilter === 'Quick') return item.prep_time && item.prep_time <= 5;
+        return true;
+      });
 
   return (
     <main className="bg-background font-body text-on-surface min-h-screen selection:bg-primary-fixed relative overflow-x-hidden">
@@ -58,16 +67,30 @@ export default function MenuPage() {
         {/* Filters Section */}
         <section className="mb-12">
           <div className="flex flex-wrap items-center gap-4">
-            <button className="px-6 py-2.5 bg-primary text-on-primary rounded-full font-medium transition-all">All Bites</button>
-            <button className="px-6 py-2.5 bg-primary-fixed-dim text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container rounded-full font-medium transition-all flex items-center gap-2">
+            <button
+              onClick={() => setActiveFilter('All')}
+              className={`px-6 py-2.5 rounded-full font-medium transition-all ${activeFilter === 'All' ? 'bg-primary text-on-primary' : 'bg-primary-fixed-dim text-on-primary-fixed-variant'}`}
+            >
+              All Bites
+            </button>
+            <button
+              onClick={() => setActiveFilter('Budget')}
+              className={`px-6 py-2.5 rounded-full font-medium transition-all flex items-center gap-2 ${activeFilter === 'Budget' ? 'bg-primary text-on-primary' : 'bg-primary-fixed-dim text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container'}`}
+            >
               <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>savings</span>
               Budget-friendly
             </button>
-            <button className="px-6 py-2.5 bg-primary-fixed-dim text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container rounded-full font-medium transition-all flex items-center gap-2">
+            <button
+              onClick={() => setActiveFilter('Healthy')}
+              className={`px-6 py-2.5 rounded-full font-medium transition-all flex items-center gap-2 ${activeFilter === 'Healthy' ? 'bg-primary text-on-primary' : 'bg-primary-fixed-dim text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container'}`}
+            >
               <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>eco</span>
               Healthy
             </button>
-            <button className="px-6 py-2.5 bg-primary-fixed-dim text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container rounded-full font-medium transition-all flex items-center gap-2">
+            <button
+              onClick={() => setActiveFilter('Quick')}
+              className={`px-6 py-2.5 rounded-full font-medium transition-all flex items-center gap-2 ${activeFilter === 'Quick' ? 'bg-primary text-on-primary' : 'bg-primary-fixed-dim text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container'}`}
+            >
               <span className="material-symbols-outlined text-lg">bolt</span>
               Quick Bites
             </button>
@@ -78,33 +101,35 @@ export default function MenuPage() {
         <section className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {isLoading ? (
             <div className="col-span-12 py-20 text-center opacity-50 font-bold">Loading Menu...</div>
-          ) : menuItems.length === 0 ? (
-             <div className="col-span-12 py-20 text-center opacity-50 font-bold">No menu items found.</div>
+          ) : filteredItems.length === 0 ? (
+             <div className="col-span-12 py-20 text-center opacity-50 font-bold">No menu items found for this filter.</div>
           ) : (
             <>
-              {/* Featured Item (Placeholder for index 0 if it exists) */}
-              {menuItems[0] && (
-                <div className="md:col-span-8 group relative overflow-hidden rounded-xl bg-surface-container-low">
+              {/* Featured Item: Paneer Roll or First Item */}
+              {filteredItems[0] && (
+                <div className="md:col-span-8 group relative overflow-hidden rounded-xl bg-surface-container-low min-h-[400px]">
                   <div className="absolute inset-0 z-0">
                     <img
-                      alt={menuItems[0].name}
+                      alt={filteredItems[0].name}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      src={menuItems[0].image_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuBsb-HZtZ2zWeT0oNyv-N2yrOqRPNlrOW0trxlXspAHc_3lFWTgIHXL9hNuAve7U0FCfGjXAXVLHqq1TSkeBO4ixlK0GjIfdm-F7EHHqi_H03Jyp-hoT_P2b_RDpMhaQJRdtAEb_cRN0ruIJpy770BMlf1vxn0_8x9kzQ5Xdc1qOzrfXjzq4Z-3Hfl_QbRlxwu8b0c6C-KjWUqCrk3tw7JMMvjCbwt5bZiNUO6UTHxtLL26Ma3Ybj0MsXRkR5QlmazO6J7kQ3FDLMo"}
+                      src={filteredItems[0].image_url || "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=1000&auto=format&fit=crop"}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                   </div>
                   <div className="relative z-10 p-10 h-full flex flex-col justify-end">
                     <div className="flex gap-2 mb-4">
-                      <span className="px-3 py-1 bg-white/40 backdrop-blur-xl rounded-full text-xs font-bold text-white uppercase tracking-widest">Editor&apos;s Choice</span>
-                      {menuItems[0].is_veg && <span className="px-3 py-1 bg-secondary text-on-secondary rounded-full text-xs font-bold uppercase tracking-widest">Veg</span>}
+                      <span className="px-3 py-1 bg-white/20 backdrop-blur-xl border border-white/20 rounded-full text-xs font-bold text-white uppercase tracking-widest">Editor&apos;s Choice</span>
+                      <span className="px-3 py-1 bg-secondary text-on-secondary rounded-full text-xs font-bold uppercase tracking-widest">
+                        {filteredItems[0].category || 'Featured'}
+                      </span>
                     </div>
-                    <h3 className="text-4xl font-extrabold text-white font-headline mb-2">{menuItems[0].name}</h3>
-                    <p className="text-stone-200 max-w-md mb-6">{menuItems[0].description}</p>
+                    <h3 className="text-4xl font-extrabold text-white font-headline mb-2">{filteredItems[0].name}</h3>
+                    <p className="text-stone-200 max-w-md mb-6">{filteredItems[0].description}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-white">₹{menuItems[0].price}</span>
+                      <span className="text-2xl font-bold text-white">₹{filteredItems[0].price}</span>
                       <button
-                        onClick={() => addToTray(menuItems[0])}
-                        className="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center active:scale-90 transition-transform"
+                        onClick={() => addToTray(filteredItems[0])}
+                        className="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-lg"
                       >
                         <span className="material-symbols-outlined">add</span>
                       </button>
@@ -114,20 +139,20 @@ export default function MenuPage() {
               )}
 
               {/* Other Items */}
-              {menuItems.slice(1).map((item) => (
-                <div key={item.id} className="md:col-span-4 bg-white/40 backdrop-blur-xl p-1 border border-outline-variant/10 rounded-xl flex flex-col">
+              {filteredItems.slice(1).map((item) => (
+                <div key={item.id} className="md:col-span-4 bg-white/40 backdrop-blur-xl p-1 border border-outline-variant/10 rounded-xl flex flex-col shadow-sm hover:shadow-md transition-shadow">
                   <div className="h-48 rounded-lg overflow-hidden mb-6">
                     <img
                       alt={item.name}
                       className="w-full h-full object-cover"
-                      src={item.image_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuBmUDrpCvOydrpOc1OQu6B9mQzmtJQXePy29GWLDSa-_6cP_D6YTaglcgudZwZE8nmc_ars5XZ8wEkmRQ-iadRaULWLSjvnXtN1x7zaWgMPPXnW4wHMhpPkQM46bcIWMc8yPr2FOtDpHlRFlBK2dDyhZWC6U27DiIlGP8IiGVINMlF2azeL9lHCnDC3uBjSMZ4H8OoQcRo28aWMQmxIuwhY0eTkWigj2ztIQGyuA7WX07w990t7UDITyE67W_zkER0hls41ReLPtvE"}
+                      src={item.image_url || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop"}
                     />
                   </div>
                   <div className="px-6 pb-8 flex-grow flex flex-col">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-xl font-bold font-headline text-primary">{item.name}</h3>
                       <span className="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter">
-                        {(item.calories || 0) > 400 ? 'Filling' : 'Light'}
+                        {item.category || 'Bite'}
                       </span>
                     </div>
                     <div className="flex gap-3 mb-4">
@@ -143,7 +168,7 @@ export default function MenuPage() {
                       <span className="text-xl font-bold text-on-surface">₹{item.price}</span>
                       <button
                         onClick={() => addToTray(item)}
-                        className="px-4 py-2 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-full text-sm font-bold transition-all"
+                        className="px-4 py-2 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-full text-sm font-bold transition-all active:scale-95"
                       >
                         Add to Tray
                       </button>
@@ -155,15 +180,15 @@ export default function MenuPage() {
           )}
         </section>
 
-        {/* Quick Campus Grabs Carousel */}
+        {/* Specialized Component: Bite-Sized Carousel */}
         <section className="mt-24">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-extrabold font-headline text-primary">Quick Campus Grabs</h2>
             <div className="flex gap-2">
-              <button className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-primary">
+              <button className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
                 <span className="material-symbols-outlined">chevron_left</span>
               </button>
-              <button className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-primary">
+              <button className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
                 <span className="material-symbols-outlined">chevron_right</span>
               </button>
             </div>
