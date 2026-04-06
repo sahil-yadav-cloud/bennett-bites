@@ -36,7 +36,7 @@ export default function GroupOrderPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-background text-on-surface font-body relative overflow-x-hidden">
+    <div className="min-h-screen bg-background text-on-surface font-body relative overflow-x-hidden">
       <TopNavBar />
       <SideNavBar />
 
@@ -185,6 +185,6 @@ export default function GroupOrderPage() {
       </main>
 
       <BottomMobileNav activeTab="menu" />
-    </main>
+    </div>
   );
 }

@@ -20,7 +20,7 @@ export default function CartPage() {
   const total = subtotal + delivery + tax;
 
   return (
-    <main className="bg-surface font-body text-on-surface antialiased min-h-screen relative overflow-x-hidden">
+    <div className="bg-surface font-body text-on-surface antialiased min-h-screen relative overflow-x-hidden">
       <TopNavBar />
       <SideNavBar />
 
@@ -198,6 +198,6 @@ export default function CartPage() {
       </main>
 
       <BottomMobileNav activeTab="cart" />
-    </main>
+    </div>
   );
 }

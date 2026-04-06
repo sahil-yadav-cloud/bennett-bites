@@ -5,8 +5,8 @@ import { supabase } from '@/lib/supabase';
 import TopNavBar from '@/src/components/layout/TopNavBar';
 import SideNavBar from '@/src/components/layout/SideNavBar';
 import BottomMobileNav from '@/src/components/layout/BottomMobileNav';
-import Link from 'next/link';
 import { useCart, MenuItem } from '@/src/context/CartContext';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { placeOrder } from '@/src/lib/orderUtils';
 
@@ -69,14 +69,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-background text-on-surface font-body relative overflow-x-hidden">
+    <div className="bg-surface selection:bg-primary-fixed-dim selection:text-on-primary-fixed font-body min-h-screen">
       <TopNavBar />
       <SideNavBar />
       
-      {/* BACKGROUND GLOWS */}
-      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-      <div className="pt-28 pb-12 px-6 max-w-7xl mx-auto lg:ml-72">
+      <main className="pt-28 pb-12 px-6 max-w-7xl mx-auto lg:ml-72">
         {/* Header Section */}
         <header className="mb-12">
           <h1 className="font-headline text-5xl md:text-6xl font-extrabold tracking-tight text-primary mb-4">
@@ -132,6 +129,7 @@ export default function Home() {
               <p className="text-on-surface-variant font-body text-sm mb-6">Weekly allowance balance</p>
               <div className="text-5xl font-headline font-extrabold text-primary mb-8 tracking-tighter">₹{(budgetBalance - totalPrice).toFixed(2)}</div>
             </div>
+            {/* Soft Bar Chart */}
             <div className="flex items-end justify-between h-32 gap-2">
               <div className="w-full bg-primary/20 rounded-t-lg h-[40%] hover:bg-primary transition-colors duration-300"></div>
               <div className="w-full bg-primary/20 rounded-t-lg h-[65%] hover:bg-primary transition-colors duration-300"></div>
@@ -207,15 +205,11 @@ export default function Home() {
           <div className="flex gap-6 overflow-x-auto pb-8 no-scrollbar -mx-2 px-2">
             {isLoading ? (
               [1, 2, 3].map((i) => (
-                <div key={i} className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 animate-pulse">
-                  <div className="h-32 rounded-lg bg-surface-variant mb-4"></div>
-                  <div className="h-4 w-3/4 bg-surface-variant mb-2"></div>
-                  <div className="h-3 w-1/2 bg-surface-variant"></div>
-                </div>
+                <div key={i} className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 animate-pulse h-64"></div>
               ))
             ) : (
               menuItems.map((item) => (
-                <div key={item.id} className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100">
+                <div key={item.id} className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 snap-start">
                   <div className="h-32 rounded-lg bg-surface-variant mb-4 overflow-hidden">
                     <img alt={item.name} className="w-full h-full object-cover" src={item.image_url || ""} />
                   </div>
@@ -233,7 +227,7 @@ export default function Home() {
                 </div>
               ))
             )}
-            <div className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 flex flex-col items-center justify-center">
+            <div className="min-w-[280px] bg-white rounded-xl p-4 shadow-sm border border-stone-100 opacity-50 flex flex-col items-center justify-center">
               <div className="h-32 rounded-lg bg-surface-variant mb-4 flex items-center justify-center w-full">
                 <span className="material-symbols-outlined text-4xl text-stone-300">more_horiz</span>
               </div>
@@ -241,7 +235,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </div>
+      </main>
 
       {/* TRAY MODAL */}
       {isTrayOpen && (
@@ -295,6 +289,6 @@ export default function Home() {
           </span>
         )}
       </button>
-    </main>
+    </div>
   );
 }

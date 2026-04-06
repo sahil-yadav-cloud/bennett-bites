@@ -57,7 +57,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ id: stri
   if (loading) return <div className="min-h-screen flex items-center justify-center opacity-50 font-bold">Loading order status...</div>;
 
   return (
-    <main className="bg-surface font-body text-on-surface min-h-screen relative overflow-x-hidden">
+    <div className="bg-surface font-body text-on-surface min-h-screen relative overflow-x-hidden">
       <header className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl">
         <div className="flex justify-between items-center w-full px-6 py-6 max-w-7xl mx-auto">
           <Link href="/" className="w-12 h-12 flex items-center justify-center rounded-full hover:bg-stone-100/50 transition-colors duration-300 active:scale-95">
@@ -206,6 +206,6 @@ export default function OrderStatusPage({ params }: { params: Promise<{ id: stri
           </div>
         </footer>
       </main>
-    </main>
+    </div>
   );
 }

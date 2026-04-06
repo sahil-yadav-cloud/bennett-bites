@@ -41,7 +41,7 @@ export default function MenuPage() {
       });
 
   return (
-    <main className="bg-background font-body text-on-surface min-h-screen selection:bg-primary-fixed relative overflow-x-hidden">
+    <div className="bg-background font-body text-on-surface min-h-screen selection:bg-primary-fixed relative overflow-x-hidden">
       <TopNavBar />
       <SideNavBar />
 
@@ -230,6 +230,6 @@ export default function MenuPage() {
       )}
 
       <BottomMobileNav activeTab="menu" />
-    </main>
+    </div>
   );
 }
