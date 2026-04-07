@@ -1,5 +1,6 @@
 export const menuItems = [
   {
+    id: "item-1",
     name: "Signature Paneer Roll",
     description: "Whole wheat wrap filled with spice-marinated paneer, crunchy peppers, and mint greek yogurt dip.",
     price: 120,
@@ -13,6 +14,7 @@ export const menuItems = [
     prep_time: 12
   },
   {
+    id: "item-2",
     name: "Classic Street Maggi",
     description: "The ultimate campus comfort food. Double masala, sweet corn, and fine-chopped bell peppers.",
     price: 45,
@@ -26,6 +28,7 @@ export const menuItems = [
     prep_time: 5
   },
   {
+    id: "item-3",
     name: "Bennett Brew Latte",
     description: "Locally sourced beans, double shot espresso, and silky oat milk with a hint of cinnamon.",
     price: 160,
@@ -39,6 +42,7 @@ export const menuItems = [
     prep_time: 8
   },
   {
+    id: "item-4",
     name: "Harvest Bowl",
     description: "Vibrant fresh garden salad with avocado, seeds, and lemon-tahini dressing.",
     price: 180,
@@ -52,6 +56,7 @@ export const menuItems = [
     prep_time: 10
   },
   {
+    id: "item-5",
     name: "Artisan Avocado Toast",
     description: "Sourdough, heirloom radish, chili flakes, and perfectly ripe avocado.",
     price: 240,
@@ -65,6 +70,7 @@ export const menuItems = [
     prep_time: 10
   },
   {
+    id: "item-6",
     name: "Lavender Cold Brew",
     description: "12hr steep, house-made floral syrup, served over ice.",
     price: 130,

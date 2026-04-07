@@ -6,6 +6,7 @@ import TopNavBar from '@/src/components/layout/TopNavBar';
 import SideNavBar from '@/src/components/layout/SideNavBar';
 import BottomMobileNav from '@/src/components/layout/BottomMobileNav';
 import { useCart, MenuItem } from '@/src/context/CartContext';
+import { menuItems as mockMenuItems } from '@/src/lib/seedData';
 import Link from 'next/link';
 
 export default function MenuPage() {
@@ -16,6 +17,7 @@ export default function MenuPage() {
 
   useEffect(() => {
     async function fetchMenu() {
+      setIsLoading(true);
       const { data, error } = await supabase
         .from('menu_items')
         .select('*')
@@ -23,8 +25,11 @@ export default function MenuPage() {
 
       if (error) {
         console.error("Error fetching menu:", error.message);
-      } else if (data) {
+        setMenuItems(mockMenuItems as MenuItem[]);
+      } else if (data && data.length > 0) {
         setMenuItems(data as MenuItem[]);
+      } else {
+        setMenuItems(mockMenuItems as MenuItem[]);
       }
       setIsLoading(false);
     }

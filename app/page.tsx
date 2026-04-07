@@ -9,6 +9,7 @@ import { useCart, MenuItem } from '@/src/context/CartContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { placeOrder } from '@/src/lib/orderUtils';
+import { menuItems as mockMenuItems } from '@/src/lib/seedData';
 
 interface Profile {
   id: string;
@@ -27,6 +28,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       const { data: profileData } = await supabase
         .from('profiles')
         .select('*')
@@ -42,8 +44,11 @@ export default function Home() {
         .select('*')
         .limit(6);
       
-      if (menuData) {
+      if (menuData && menuData.length > 0) {
         setMenuItems(menuData as MenuItem[]);
+      } else {
+        // Fallback to mock data
+        setMenuItems(mockMenuItems.slice(0, 6) as MenuItem[]);
       }
       setIsLoading(false);
     }
