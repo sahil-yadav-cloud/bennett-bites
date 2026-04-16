@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bennett Bites | Student Fuel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#002020",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed-variant": "#604100",
+                        "on-primary-fixed-variant": "#802a00",
+                        "tertiary-container": "#9b6b00",
+                        "tertiary-fixed": "#ffdeac",
+                        "primary": "#a43700",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#cd4700",
+                        "primary-fixed": "#ffdbcf",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#380d00",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-container": "#006e6e",
+                        "tertiary": "#7b5500",
+                        "inverse-on-surface": "#f1f1f1",
+                        "secondary-fixed-dim": "#76d6d5",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#93f2f2",
+                        "on-tertiary-fixed": "#281900",
+                        "on-primary-container": "#fffbff",
+                        "tertiary-fixed-dim": "#ffba38",
+                        "surface": "#f9f9f9",
+                        "on-surface-variant": "#5a4138",
+                        "primary-fixed-dim": "#ffb59a",
+                        "surface-dim": "#dadada",
+                        "on-surface": "#1a1c1c",
+                        "secondary": "#006a6a",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f3f3f3",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#ffb59a",
+                        "surface-tint": "#a83900",
+                        "outline": "#8f7066",
+                        "outline-variant": "#e3bfb2",
+                        "background": "#f9f9f9",
+                        "on-background": "#1a1c1c",
+                        "inverse-surface": "#2f3131",
+                        "on-tertiary-container": "#fffbff",
+                        "secondary-container": "#90efef",
+                        "surface-container": "#eeeeee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    },
+                    "animation": {
+                        "gentle-pulse": "gentle-pulse 3s infinite",
+                        "float-up": "float-up 1s ease-out forwards"
+                    },
+                    "keyframes": {
+                        "gentle-pulse": {
+                            "0%, 100%": { "transform": "scale(1)", "opacity": "1" },
+                            "50%": { "transform": "scale(1.03)", "opacity": "0.9" }
+                        },
+                        "float-up": {
+                            "0%": { "transform": "translateY(0)", "opacity": "1" },
+                            "100%": { "transform": "translateY(-40px)", "opacity": "0" }
+                        }
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .plus-one {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            pointer-events: none;
+            color: #a43700;
+            font-weight: 800;
+            font-size: 1.25rem;
+            z-index: 10;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)] flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<a class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant active:scale-90 transition-transform" href="{{DATA:SCREEN:SCREEN_2}}">
+<img alt="Student Profile Photo" class="w-full h-full object-cover" data-alt="Close-up portrait of a cheerful college student with a backpack in a sunlit university courtyard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd-o8EpAIYEalOZbN4HNU9TMwTtVFuWRmwvh2TPBeFGJLU0uAnjIf5cacZ_Jw7iQFlvrp9J7zU2uatimpyg2xpKCG-F5k18_RTfXj-U8CGn6lpBdmA0vYYKm7bvznTPqpJs3Iv4uQQMOamfKmO_HIiDtw2U6BJPYji2HkAoCisO5qgSIkKXDh-UR0wiWI50JAXPFmYTqT2WMrIJKL954X1OG2K4M-1-GEXkLByllAksuxDxTAJTrW-SvyU-ja_U3bxClIJNNT27WBt"/>
+</a>
+<h1 class="text-2xl font-black italic text-orange-700 dark:text-orange-400 font-headline tracking-tight">Bennett Bites</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-stone-500 dark:text-stone-400 hover:text-primary transition-colors active:scale-95 duration-200" onclick="this.classList.toggle('text-primary')">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-2xl mx-auto space-y-8">
+<!-- Active Order Snippet -->
+<a class="block relative overflow-hidden bg-secondary-container rounded-lg p-6 flex items-center justify-between shadow-sm active:scale-[0.98] transition-transform" href="{{DATA:SCREEN:SCREEN_16}}">
+<div class="space-y-1">
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-secondary-container">Active Order</span>
+<p class="font-headline font-bold text-lg text-on-secondary-container leading-tight">Fresh Bowl is being prepped</p>
+<div class="flex items-center gap-2 text-sm text-on-secondary-container/80">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+<span>Ready in 8 mins • Cafe Terra</span>
+</div>
+</div>
+<div class="relative w-16 h-16 flex items-center justify-center">
+<div class="absolute inset-0 border-4 border-white/20 rounded-full"></div>
+<div class="absolute inset-0 border-4 border-white rounded-full animate-pulse" style="clip-path: polygon(0 0, 70% 0, 70% 100%, 0 100%)"></div>
+<span class="material-symbols-outlined text-white text-3xl" data-icon="restaurant">restaurant</span>
+</div>
+</a>
+<!-- Quick Links: Horizontal Scroll -->
+<section>
+<h2 class="font-headline font-extrabold text-xl mb-4 tracking-tight">On Campus Now</h2>
+<div class="flex gap-4 overflow-x-auto no-scrollbar -mx-6 px-6">
+<div class="flex-none w-40 space-y-3 group cursor-pointer active:scale-95 transition-transform duration-200" onclick="window.location.href='{{DATA:SCREEN:SCREEN_17}}'">
+<div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+<img alt="Cafe Terra" class="w-full h-full object-cover" data-alt="Modern minimalist campus cafe interior with warm lighting and hanging plants" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA0q15xp7iHNRqJhv3bmfBj6U8mIKUefdiM6OjOEHrIYB5-NuExC0sVoguGz1OmlfMoE2BbS3j9DHDvhNMfc1jPvq--RY5lyT6gBs0xEmn9kw9cWg_HosXkSSGrEtBrE8-LK-4eoQKkgHjKcglOYyXfPeRsihRXCa89sflex5U1DVlQBuKjDRa8oj6olDcqIDn1L2IuN68VK_egb1p0TiANvsXA3dcHGKOXqce80-8AtsRBNBBuLslmPAgBlG0iaaaRb5eL1u7VRW5"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-secondary">OPEN</div>
+</div>
+<p class="font-bold text-sm">Cafe Terra</p>
+</div>
+<div class="flex-none w-40 space-y-3 group cursor-pointer active:scale-95 transition-transform duration-200" onclick="window.location.href='{{DATA:SCREEN:SCREEN_17}}'">
+<div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+<img alt="Student Hub" class="w-full h-full object-cover" data-alt="Lively student hub dining area with colorful seating and students collaborating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3LdpnK5zIpTAn9d1CuRdmaO43IpNrntrJ9vQXGRpUceewIpmm8stzZP4ACDu6pUyN62y6rDAPVwln7ZBFG18-QhKimOv4j9ARvbvtZmx7SwSEXt026X1LMVB7k5pacYPyilsuUb7vqcl9NPZTkJC898ByBT1jYyQMGcgdYMOq0uCUykx4AB9tw5Y1QZ-9toNWjF2Z9E_5eP5VOaZLiILb8VJp4A68m-rUy2x2QbrjTkwTg2MDjNQIktzpbj-1yWpGOuASg14y7jLD"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-secondary">OPEN</div>
+</div>
+<p class="font-bold text-sm">Student Hub</p>
+</div>
+<div class="flex-none w-40 space-y-3 group cursor-pointer active:scale-95 transition-transform duration-200" onclick="window.location.href='{{DATA:SCREEN:SCREEN_17}}'">
+<div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+<img alt="The Salad Bar" class="w-full h-full object-cover" data-alt="Bright and fresh salad bar featuring vibrant greens and assorted toppings in steel containers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOl8v768kYJ9GsZDyRiNM-OXlOwcIrJUsJ-07C4p1KHwk9yP9HMG2qT5ejiJiMGPdxhoicmSvyh3Amd-MasMtlC2JXtQyHyyOL7E43fNpqPTUQ4ddlbClbluX0PbsOEVx6tqTnM9r9bxE20GaC-6sdef3KULwwEHAcHBPjqiyE43PRBYQvSh-6qH6vhJgPcmpvMXF6-As6indcG0xg4kEf4TDKC3j8V-sc8AiiBB1cVailaXvwpKYUNKySuS4ct-hfCHsyYc8-jMZ5"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-error">BUSY</div>
+</div>
+<p class="font-bold text-sm">The Salad Bar</p>
+</div>
+</div>
+</section>
+<!-- AI For You Section: Bento Grid -->
+<section class="space-y-6">
+<div class="flex items-end justify-between">
+<div class="space-y-1">
+<h2 class="font-headline font-extrabold text-3xl tracking-tight">For You</h2>
+<p class="text-on-surface-variant text-sm">High protein • Under $10 budget</p>
+</div>
+<button class="bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full flex items-center gap-2 shadow-sm active:scale-95 transition-transform animate-gentle-pulse">
+<span class="material-symbols-outlined text-lg" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-xs font-bold">AI SMART PICK</span>
+</button>
+</div>
+<div class="grid grid-cols-12 gap-4">
+<!-- Bento Primary Item -->
+<div class="col-span-12 rounded-lg bg-surface-container-low p-1 overflow-hidden group">
+<div class="relative h-64 rounded-xl overflow-hidden mb-4">
+<img alt="Grilled Chicken Harvest Bowl" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Vibrant mediterranean bowl with grilled chicken, quinoa, roasted vegetables and tahini drizzle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5eojqNOC4l7dcwsmnGbgChHTSqZhnTmngBCYn7LipnlRbjtNWgWLqYUYjkGArVyTQXnikj_mLu0qLoLuDCYkYiUzXznX9TFEscO0grfIlgp3cuUIUoGhoVIHr1P_Xxu4MxjDwAXON80gOZtvG6C0nDnF-9t0fRMXQhjPk2-gpE-ZFJtDWJ6TzREA4No1DsbymBYwmRAhe8PCMdYBL3zvUREyKc1rdFSjetV0ZbSfdh2qGKAx06PCzvKF6cdmIdFjlhWlkvBMqLZZP"/>
+<div class="absolute bottom-4 left-4 flex gap-2">
+<span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary shadow-sm">$8.50</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-xs font-bold shadow-sm">32g PROTEIN</span>
+</div>
+</div>
+<div class="px-5 pb-6 relative">
+<h3 class="font-headline font-bold text-2xl mb-1">Harvest Protein Bowl</h3>
+<p class="text-on-surface-variant text-sm mb-4 leading-relaxed line-clamp-2">Roasted root vegetables, citrus-marinated chicken, and high-fiber quinoa base. Perfect for a long study session.</p>
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-white rounded-full py-4 font-bold text-sm shadow-lg active:scale-95 transition-all duration-300 relative overflow-visible" onclick="const btn = this; const oldText = btn.innerText; btn.innerText = 'Added ✓'; btn.classList.add('opacity-80'); const plusOne = document.createElement('div'); plusOne.className = 'plus-one animate-float-up'; plusOne.innerText = '+1'; btn.appendChild(plusOne); setTimeout(() =&gt; { btn.innerText = oldText; btn.classList.remove('opacity-80'); plusOne.remove(); }, 2000);">
+                            Add to Cart
+                        </button>
+</div>
+</div>
+<!-- Bento Secondary Item -->
+<div class="col-span-12 md:col-span-6 rounded-lg bg-surface-container-highest p-6 space-y-4 cursor-pointer active:scale-95 transition-transform" onclick="window.location.href='{{DATA:SCREEN:SCREEN_17}}'">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-headline font-bold text-lg leading-tight">Spicy Tuna Wrap</h3>
+<p class="text-xs text-on-surface-variant">Low Carb • Grab &amp; Go</p>
+</div>
+<span class="text-primary font-black">$6.95</span>
+</div>
+<div class="flex gap-2">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">VALUE PICK</span>
+</div>
+<div class="h-32 rounded-xl overflow-hidden">
+<img alt="Spicy Tuna Wrap" class="w-full h-full object-cover" data-alt="Close-up of a fresh tuna wrap sliced in half, showing lettuce, cucumber and spicy mayo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACX6rzPUgWpfppQOrh2PGPwcKTZbWG6ut8na1ppcxFxVToikmnLFvhPrdw0EKYa9xZ_PsHTOlTFY13HV2e2SVchyOsLI_r4AZSmmLqkwqV3WaXYgfIkGYpUiKEsqqg0nmvw2zSXoP1XBJER65Rfky-J2CPAVx9bn-4otCwsKW7OqcskA2Cve3uZp-VcfeHcIseA9lwK6pAGKkflQgEgPEBmsupH0cplp-RfklvVUjS0OtvEEhsRy5E6YLDYaeGP_cK2sdbRulE8dn2"/>
+</div>
+</div>
+<!-- Bento Tertiary Item -->
+<div class="col-span-12 md:col-span-6 rounded-lg bg-surface-container-low p-6 space-y-4 cursor-pointer active:scale-95 transition-transform" onclick="window.location.href='{{DATA:SCREEN:SCREEN_17}}'">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-headline font-bold text-lg leading-tight">Zesty Greek Salad</h3>
+<p class="text-xs text-on-surface-variant">Gluten Free • Fresh</p>
+</div>
+<span class="text-primary font-black">$9.20</span>
+</div>
+<div class="flex gap-2">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">HEALTHY FILL</span>
+</div>
+<div class="h-32 rounded-xl overflow-hidden">
+<img alt="Greek Salad" class="w-full h-full object-cover" data-alt="Traditional greek salad with feta cheese blocks, olives, and fresh tomatoes on a white ceramic plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlclcleF84GebEXk1DnWhVbBNej1Rlzyw_S0qLhAOH7j278UNtFQRmg0YPLgpRPECShWaR8-TOpoZhgk8Mq1fRquiN-akoLxNHO1M1NAjjJZvjYAh6yxZb4Oc-QSRogeJBH93tjEhcM1Qz7U7jRyyc-Qbk9o3vRGsrTEfcxB0BI9sFGRrLdaCzwYrgnEbNdUjGQuvhEWjqLXgKaFyTVV3t0uDPN-TDIg7W80lKVYtplS13FBtJZmJwwjGeKT22IoHvTg5iTrAr5fV8"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Nutrition Tracker Micro-Widget -->
+<section class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_12px_24px_rgba(26,28,28,0.04)]">
+<h2 class="font-headline font-extrabold text-xl mb-6 tracking-tight">Today's Goals</h2>
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-3 cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_2}}'">
+<div class="flex justify-between items-center text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+<span>Protein</span>
+<span class="text-primary">82/120g</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 68%"></div>
+</div>
+</div>
+<div class="space-y-3 cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_2}}'">
+<div class="flex justify-between items-center text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+<span>Budget</span>
+<span class="text-on-secondary-container">$1.50 left</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 85%"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/90 dark:bg-stone-950/90 backdrop-blur-lg rounded-t-[2rem] z-50 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center bg-orange-100 dark:bg-orange-950/50 text-orange-700 dark:text-orange-300 rounded-full py-2 px-4 transition-transform duration-200 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-orange-700 transition-transform duration-200 active:scale-[0.98]" href="{{DATA:SCREEN:SCREEN_17}}">
+<span class="material-symbols-outlined mb-1" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-orange-700 transition-transform duration-200 active:scale-[0.98]" href="{{DATA:SCREEN:SCREEN_6}}">
+<span class="material-symbols-outlined mb-1" data-icon="group_add">group_add</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Group</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-orange-700 transition-transform duration-200 active:scale-[0.98]" href="{{DATA:SCREEN:SCREEN_16}}">
+<span class="material-symbols-outlined mb-1" data-icon="potted_plant">potted_plant</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Track</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-orange-700 transition-transform duration-200 active:scale-[0.98]" href="{{DATA:SCREEN:SCREEN_2}}">
+<span class="material-symbols-outlined mb-1" data-icon="account_circle">account_circle</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Profile</span>
+</a>
+</nav>
+</body></html>

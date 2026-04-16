@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bennett Bites</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#002020","surface-container-high":"#e8e8e8","on-tertiary-fixed-variant":"#604100","on-primary-fixed-variant":"#802a00","tertiary-container":"#9b6b00","tertiary-fixed":"#ffdeac","primary":"#a43700","on-primary":"#ffffff","primary-container":"#cd4700","primary-fixed":"#ffdbcf","on-error":"#ffffff","error-container":"#ffdad6","on-primary-fixed":"#380d00","surface-bright":"#f9f9f9","on-secondary-container":"#006e6e","tertiary":"#7b5500","inverse-on-surface":"#f1f1f1","secondary-fixed-dim":"#76d6d5","surface-variant":"#e2e2e2","surface-container-lowest":"#ffffff","secondary-fixed":"#93f2f2","on-tertiary-fixed":"#281900","on-primary-container":"#fffbff","tertiary-fixed-dim":"#ffba38","surface":"#f9f9f9","on-surface-variant":"#5a4138","primary-fixed-dim":"#ffb59a","surface-dim":"#dadada","on-surface":"#1a1c1c","secondary":"#006a6a","on-error-container":"#93000a","on-secondary-fixed-variant":"#004f4f","on-tertiary":"#ffffff","surface-container-low":"#f3f3f3","on-secondary":"#ffffff","surface-container-highest":"#e2e2e2","error":"#ba1a1a","inverse-primary":"#ffb59a","surface-tint":"#a83900","outline":"#8f7066","outline-variant":"#e3bfb2","background":"#f9f9f9","on-background":"#1a1c1c","inverse-surface":"#2f3131","on-tertiary-container":"#fffbff","secondary-container":"#90efef","surface-container":"#eeeeee"},borderRadius:{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},fontFamily:{"headline":["Plus Jakarta Sans"],"body":["Be Vietnam Pro"]}}}}
+  </script>
+  <style>
+    *{-webkit-tap-highlight-color:transparent;}
+    .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1;vertical-align:middle;}
+    body{font-family:'Be Vietnam Pro',sans-serif;min-height:100dvh;background:#f9f9f9;overflow-x:hidden;}
+    h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;}
+    .no-scrollbar::-webkit-scrollbar{display:none;}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+    .heat-gradient{background:linear-gradient(135deg,#a43700 0%,#cd4700 100%);}
+
+    /* Page transitions */
+    .page{display:none;min-height:100dvh;}
+    .page.active{display:block;animation:pageIn 0.28s cubic-bezier(0.4,0,0.2,1);}
+    @keyframes pageIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+    /* Shimmer */
+    @keyframes shimmer{0%{transform:translateX(-100%) skewX(-20deg);}100%{transform:translateX(250%) skewX(-20deg);}}
+    .animate-shimmer{animation:shimmer 2.5s infinite;}
+
+    /* QR scan */
+    @keyframes scan{0%,100%{top:0}50%{top:calc(100% - 4px)}}
+    .qr-scan{animation:scan 2s ease-in-out infinite;}
+
+    /* Spin */
+    @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    .animate-spin-fast{animation:spin 0.6s linear infinite;}
+
+    /* Checkmark */
+    .checkmark-draw{stroke-dasharray:100;stroke-dashoffset:100;animation:dash 0.5s ease-in-out forwards;}
+    @keyframes dash{to{stroke-dashoffset:0}}
+
+    /* Bounce */
+    @keyframes subtle-bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+    .animate-bounce-gentle{animation:subtle-bounce 1.8s ease-in-out infinite;}
+
+    /* Gentle pulse */
+    @keyframes gentle-pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.03);opacity:0.9;}}
+    .animate-gentle-pulse{animation:gentle-pulse 3s infinite;}
+
+    /* Slide up */
+    @keyframes slideUp{from{transform:translateY(100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+    /* Fade in stagger */
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+    .fade-in-1{animation:fadeIn 0.4s ease forwards;}
+    .fade-in-2{animation:fadeIn 0.4s 0.08s ease forwards;opacity:0;}
+    .fade-in-3{animation:fadeIn 0.4s 0.16s ease forwards;opacity:0;}
+    .fade-in-4{animation:fadeIn 0.4s 0.24s ease forwards;opacity:0;}
+
+    /* Toast */
+    #bb-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1c1c;color:#fff;padding:12px 24px;border-radius:9999px;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:14px;z-index:9999;opacity:0;transition:all 0.25s ease;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+    #bb-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+    /* Payment method */
+    .payment-method.active{background-color:#fff7ed;border-color:rgba(164,55,0,0.4);border-width:2px;}
+    .payment-method.active .radio-circle{border-width:6px;border-color:#a43700;}
+
+    /* Ripple */
+    .ripple{position:relative;overflow:hidden;}
+    .ripple:after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,0.3);transform:scale(0);animation:ripple-effect 0.5s linear;pointer-events:none;}
+    @keyframes ripple-effect{to{transform:scale(4);opacity:0;}}
+
+    /* Bottom nav press */
+    nav a:active{transform:scale(0.92);}
+
+    /* Cart badge pulse */
+    @keyframes badgePop{0%{transform:scale(0);}70%{transform:scale(1.3);}100%{transform:scale(1);}}
+    .badge-pop{animation:badgePop 0.3s ease;}
+  </style>
+</head>
+<body class="text-on-surface">
+
+<!-- TOAST -->
+<div id="bb-toast"></div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: LOGIN
+═══════════════════════════════════════════ -->
+<div class="page active" id="page-login">
+  <div class="bg-background min-h-dvh flex flex-col items-center justify-center p-6">
+    <main class="w-full max-w-md flex flex-col gap-8">
+      <!-- Brand -->
+      <div class="flex flex-col items-center text-center gap-4 fade-in-1">
+        <div class="relative group">
+          <div class="absolute -inset-4 bg-primary-fixed/20 rounded-full blur-2xl"></div>
+          <h1 class="font-headline font-black italic text-5xl tracking-tighter text-primary relative">Bennett Bites</h1>
+        </div>
+        <p class="font-body text-on-surface-variant max-w-[260px] leading-relaxed text-sm">Fueling the academic pulse with campus-favorite flavors.</p>
+      </div>
+
+      <!-- Login Card -->
+      <section class="bg-surface-container-lowest rounded-lg p-8 shadow-[0_12px_24px_rgba(26,28,28,0.06)] relative overflow-hidden fade-in-2">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+        <div class="flex flex-col gap-6 relative z-10">
+          <!-- Email -->
+          <div class="flex flex-col gap-1.5">
+            <label class="font-body text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1">Campus Email</label>
+            <div class="relative group">
+              <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px] group-focus-within:text-primary transition-colors">mail</span>
+              <input id="login-email" class="w-full h-14 pl-12 pr-4 bg-surface-container-high rounded-md border-none ring-0 focus:ring-2 focus:ring-primary/20 transition-all text-on-surface font-medium placeholder:text-stone-400 outline-none" placeholder="student@university.edu" type="email" value="alex@bennett.edu"/>
+            </div>
+          </div>
+          <!-- Password -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex justify-between items-center px-1">
+              <label class="font-body text-xs font-bold uppercase tracking-widest text-on-surface-variant">Password</label>
+              <a class="text-[10px] font-bold text-secondary uppercase tracking-wider cursor-pointer" onclick="showToast('Password reset email sent!')">Forgot?</a>
+            </div>
+            <div class="relative group">
+              <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px] group-focus-within:text-primary transition-colors">lock</span>
+              <input id="login-password" class="w-full h-14 pl-12 pr-4 bg-surface-container-high rounded-md border-none ring-0 focus:ring-2 focus:ring-primary/20 transition-all text-on-surface font-medium placeholder:text-stone-400 outline-none" placeholder="••••••••" type="password" value="demo123"/>
+            </div>
+          </div>
+          <p id="login-error" class="text-error text-sm font-medium hidden px-1"></p>
+          <!-- Submit -->
+          <button id="login-btn" class="mt-2 w-full h-14 rounded-full bg-gradient-to-r from-primary to-primary-container text-white font-headline font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-[0.97] transition-all duration-200 relative overflow-hidden">
+            <div class="absolute inset-0 w-1/2 h-full bg-white/20 -skew-x-[20deg] -translate-x-full animate-shimmer pointer-events-none"></div>
+            <span class="relative z-10">Login</span>
+            <span class="material-symbols-outlined text-[20px] relative z-10">arrow_forward</span>
+          </button>
+        </div>
+
+        <div class="relative flex items-center justify-center py-8">
+          <div class="w-full border-t border-outline-variant/30"></div>
+          <span class="absolute bg-surface-container-lowest px-4 text-[10px] font-bold uppercase tracking-widest text-outline">or</span>
+        </div>
+
+        <button id="guest-btn" class="w-full h-14 rounded-full bg-secondary-container text-on-secondary-container font-headline font-bold text-base flex items-center justify-center gap-2 active:scale-[0.97] transition-all duration-200">
+          Continue as Guest
+        </button>
+      </section>
+
+      <!-- Footer -->
+      <footer class="flex flex-col items-center gap-6 fade-in-3">
+        <div class="flex gap-4">
+          <div class="w-12 h-12 rounded-lg overflow-hidden animate-bounce-gentle" style="animation-delay:0s"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx8Q8GLxDRLbc13-L2y4oKWy6Gky2LUYU0KelHSyMJsxruj_klD-7fi_rISzMryNsuCrcrpL1szvH8dyneT98rNBoH8t8DrPazlNkBFM8SfqP0r3UvhiH-U9rkMSiaLzdk_ol9d6cFKBuboVul_6rlRmHyWUkr_DdXuY73hDNTie0vzABEeVWuZfXTnHp5521DoeQUuhq3GegTz-pSyw7191Yc9QSrvWjOxvvux73zW8kTux3EIwae9XxVNd-yMP2HYb8CjJ98e7tG"/></div>
+          <div class="w-12 h-12 rounded-lg overflow-hidden animate-bounce-gentle" style="animation-delay:0.2s"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqSCNDmsvn27NTLkkRWZXquSk23mwdDFTJQ-rjz4O5pJHTxk6xjLTDoVTGr-JH-aFC_7e-9HdsNG8FnB0eSBFWM15G2n0YwzaKoqOdB-dkSXya83E_FPvw4NLZN74-jg4nYVKFI3bfN1M-fJGKldGnxYL8utbJOKcQhd_ZwaMZTr9Z0AWA8OfNJxYsiciaAJQuUJqLShdNltOI-wZ0MjafpMxcXofmODVb7I9Ow-x_26yvvfI8WyiTDrgqwIu1YgR7HCClTvDIBOku"/></div>
+          <div class="w-12 h-12 rounded-lg overflow-hidden animate-bounce-gentle" style="animation-delay:0.4s"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD13N3M82ZVx9UhXeVaU8aIqgcz3W041X64efbWe7T9Wb4hb7kAQp-w09au5bbLgSar_BEXXUz33HsNEFk_CmIZgeJ2ybGcAm8JpZRbUKLH1tJpptjvgZMEipmEQ_0waxJYd9iCIQbshWS12_Ff-XdiaqWCpgOh_CSIsFXhPW6C7pcvVwrxQHPkvEgkwElLOb7QjwHAf5bymPFjBYNveLV0FNZjbNt1wFQKTjqXrUGrfq1KqtxQ6aNwIfr7eThjrsc_q2ycXhIpMFoj"/></div>
+        </div>
+        <p class="text-xs text-on-surface-variant font-medium">New to the campus? <a id="signup-link" class="text-primary font-bold cursor-pointer hover:underline">Create an account</a></p>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════════ -->
+<div class="page" id="page-home">
+  <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)] flex justify-between items-center px-6 py-4">
+    <div class="flex items-center gap-3">
+      <button onclick="navigate('profile')" class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant active:scale-90 transition-transform">
+        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd-o8EpAIYEalOZbN4HNU9TMwTtVFuWRmwvh2TPBeFGJLU0uAnjIf5cacZ_Jw7iQFlvrp9J7zU2uatimpyg2xpKCG-F5k18_RTfXj-U8CGn6lpBdmA0vYYKm7bvznTPqpJs3Iv4uQQMOamfKmO_HIiDtw2U6BJPYji2HkAoCisO5qgSIkKXDh-UR0wiWI50JAXPFmYTqT2WMrIJKL954X1OG2K4M-1-GEXkLByllAksuxDxTAJTrW-SvyU-ja_U3bxClIJNNT27WBt"/>
+      </button>
+      <h1 class="text-2xl font-black italic text-orange-700 font-headline tracking-tight">Bennett Bites</h1>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="showToast('Search coming soon!')" class="text-stone-500 hover:text-primary transition-colors active:scale-95">
+        <span class="material-symbols-outlined">search</span>
+      </button>
+      <button onclick="navigate('cart')" class="relative cursor-pointer active:scale-90 transition-transform">
+        <span class="material-symbols-outlined text-stone-500 hover:text-primary transition-colors">shopping_cart</span>
+        <span id="home-cart-badge" class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-black rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="pt-24 pb-32 px-6 max-w-2xl mx-auto space-y-8">
+    <!-- Active Order -->
+    <button onclick="navigate('tracker')" class="w-full text-left relative overflow-hidden bg-secondary-container rounded-lg p-6 flex items-center justify-between shadow-sm active:scale-[0.98] transition-all duration-200 fade-in-1">
+      <div class="space-y-1">
+        <span class="text-[10px] font-bold uppercase tracking-widest text-on-secondary-container">Active Order</span>
+        <p class="font-headline font-bold text-lg text-on-secondary-container leading-tight">Fresh Bowl is being prepped</p>
+        <div class="flex items-center gap-2 text-sm text-on-secondary-container/80">
+          <span class="material-symbols-outlined text-sm">timer</span>
+          <span>Ready in 8 mins • Cafe Terra</span>
+        </div>
+      </div>
+      <div class="relative w-16 h-16 flex items-center justify-center">
+        <div class="absolute inset-0 border-4 border-white/20 rounded-full"></div>
+        <div class="absolute inset-0 border-4 border-white rounded-full animate-pulse" style="clip-path:polygon(0 0,70% 0,70% 100%,0 100%)"></div>
+        <span class="material-symbols-outlined text-white text-3xl">restaurant</span>
+      </div>
+    </button>
+
+    <!-- On Campus Now -->
+    <section class="fade-in-2">
+      <h2 class="font-headline font-extrabold text-xl mb-4 tracking-tight">On Campus Now</h2>
+      <div class="flex gap-4 overflow-x-auto no-scrollbar -mx-6 px-6">
+        <button onclick="navigate('menu')" class="flex-none w-40 space-y-3 active:scale-95 transition-transform text-left">
+          <div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA0q15xp7iHNRqJhv3bmfBj6U8mIKUefdiM6OjOEHrIYB5-NuExC0sVoguGz1OmlfMoE2BbS3j9DHDvhNMfc1jPvq--RY5lyT6gBs0xEmn9kw9cWg_HosXkSSGrEtBrE8-LK-4eoQKkgHjKcglOYyXfPeRsihRXCa89sflex5U1DVlQBuKjDRa8oj6olDcqIDn1L2IuN68VK_egb1p0TiANvsXA3dcHGKOXqce80-8AtsRBNBBuLslmPAgBlG0iaaaRb5eL1u7VRW5"/>
+            <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-secondary">OPEN</div>
+          </div>
+          <p class="font-bold text-sm">Cafe Terra</p>
+        </button>
+        <button onclick="navigate('menu')" class="flex-none w-40 space-y-3 active:scale-95 transition-transform text-left">
+          <div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3LdpnK5zIpTAn9d1CuRdmaO43IpNrntrJ9vQXGRpUceewIpmm8stzZP4ACDu6pUyN62y6rDAPVwln7ZBFG18-QhKimOv4j9ARvbvtZmx7SwSEXt026X1LMVB7k5pacYPyilsuUb7vqcl9NPZTkJC898ByBT1jYyQMGcgdYMOq0uCUykx4AB9tw5Y1QZ-9toNWjF2Z9E_5eP5VOaZLiILb8VJp4A68m-rUy2x2QbrjTkwTg2MDjNQIktzpbj-1yWpGOuASg14y7jLD"/>
+            <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-secondary">OPEN</div>
+          </div>
+          <p class="font-bold text-sm">Student Hub</p>
+        </button>
+        <button onclick="navigate('menu')" class="flex-none w-40 space-y-3 active:scale-95 transition-transform text-left">
+          <div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOl8v768kYJ9GsZDyRiNM-OXlOwcIrJUsJ-07C4p1KHwk9yP9HMG2qT5ejiJiMGPdxhoicmSvyh3Amd-MasMtlC2JXtQyHyyOL7E43fNpqPTUQ4ddlbClbluX0PbsOEVx6tqTnM9r9bxE20GaC-6sdef3KULwwEHAcHBPjqiyE43PRBYQvSh-6qH6vhJgPcmpvMXF6-As6indcG0xg4kEf4TDKC3j8V-sc8AiiBB1cVailaXvwpKYUNKySuS4ct-hfCHsyYc8-jMZ5"/>
+            <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-error">BUSY</div>
+          </div>
+          <p class="font-bold text-sm">The Salad Bar</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- For You -->
+    <section class="space-y-6 fade-in-3">
+      <div class="flex items-end justify-between">
+        <div class="space-y-1">
+          <h2 class="font-headline font-extrabold text-3xl tracking-tight">For You</h2>
+          <p class="text-on-surface-variant text-sm">High protein • Under $10 budget</p>
+        </div>
+        <button onclick="showToast('AI Smart Picks refreshed!')" class="bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full flex items-center gap-2 shadow-sm active:scale-95 transition-transform animate-gentle-pulse">
+          <span class="material-symbols-outlined text-lg">auto_awesome</span>
+          <span class="text-xs font-bold">AI SMART PICK</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-12 gap-4">
+        <!-- Primary -->
+        <div class="col-span-12 rounded-lg bg-surface-container-low p-1 overflow-hidden group">
+          <div class="relative h-64 rounded-xl overflow-hidden mb-4">
+            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5eojqNOC4l7dcwsmnGbgChHTSqZhnTmngBCYn7LipnlRbjtNWgWLqYUYjkGArVyTQXnikj_mLu0qLoLuDCYkYiUzXznX9TFEscO0grfIlgp3cuUIUoGhoVIHr1P_Xxu4MxjDwAXON80gOZtvG6C0nDnF-9t0fRMXQhjPk2-gpE-ZFJtDWJ6TzREA4No1DsbymBYwmRAhe8PCMdYBL3zvUREyKc1rdFSjetV0ZbSfdh2qGKAx06PCzvKF6cdmIdFjlhWlkvBMqLZZP"/>
+            <div class="absolute bottom-4 left-4 flex gap-2">
+              <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary shadow-sm">$8.50</span>
+              <span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-xs font-bold shadow-sm">32g PROTEIN</span>
+            </div>
+          </div>
+          <div class="px-5 pb-6 relative">
+            <h3 class="font-headline font-bold text-2xl mb-1">Harvest Protein Bowl</h3>
+            <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Roasted root vegetables, citrus-marinated chicken, and high-fiber quinoa base.</p>
+            <button id="add-harvest-btn" class="w-full bg-gradient-to-r from-primary to-primary-container text-white rounded-full py-4 font-bold text-sm shadow-lg active:scale-95 transition-all duration-300 relative overflow-hidden">
+              <span class="relative z-10">Add to Cart</span>
+            </button>
+          </div>
+        </div>
+        <!-- Secondary items -->
+        <button onclick="navigate('menu')" class="col-span-12 md:col-span-6 rounded-lg bg-surface-container-highest p-6 space-y-4 active:scale-95 transition-transform text-left">
+          <div class="flex justify-between items-start">
+            <div class="space-y-1">
+              <h3 class="font-headline font-bold text-lg leading-tight">Spicy Tuna Wrap</h3>
+              <p class="text-xs text-on-surface-variant">Low Carb • Grab &amp; Go</p>
+            </div>
+            <span class="text-primary font-black">$6.95</span>
+          </div>
+          <div class="flex gap-2"><span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">VALUE PICK</span></div>
+          <div class="h-32 rounded-xl overflow-hidden">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACX6rzPUgWpfppQOrh2PGPwcKTZbWG6ut8na1ppcxFxVToikmnLFvhPrdw0EKYa9xZ_PsHTOlTFY13HV2e2SVchyOsLI_r4AZSmmLqkwqV3WaXYgfIkGYpUiKEsqqg0nmvw2zSXoP1XBJER65Rfky-J2CPAVx9bn-4otCwsKW7OqcskA2Cve3uZp-VcfeHcIseA9lwK6pAGKkflQgEgPEBmsupH0cplp-RfklvVUjS0OtvEEhsRy5E6YLDYaeGP_cK2sdbRulE8dn2"/>
+          </div>
+        </button>
+        <button onclick="navigate('menu')" class="col-span-12 md:col-span-6 rounded-lg bg-surface-container-low p-6 space-y-4 active:scale-95 transition-transform text-left">
+          <div class="flex justify-between items-start">
+            <div class="space-y-1">
+              <h3 class="font-headline font-bold text-lg leading-tight">Zesty Greek Salad</h3>
+              <p class="text-xs text-on-surface-variant">Gluten Free • Fresh</p>
+            </div>
+            <span class="text-primary font-black">$9.20</span>
+          </div>
+          <div class="flex gap-2"><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">HEALTHY FILL</span></div>
+          <div class="h-32 rounded-xl overflow-hidden">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlclcleF84GebEXk1DnWhVbBNej1Rlzyw_S0qLhAOH7j278UNtFQRmg0YPLgpRPECShWaR8-TOpoZhgk8Mq1fRquiN-akoLxNHO1M1NAjjJZvjYAh6yxZb4Oc-QSRogeJBH93tjEhcM1Qz7U7jRyyc-Qbk9o3vRGsrTEfcxB0BI9sFGRrLdaCzwYrgnEbNdUjGQuvhEWjqLXgKaFyTVV3t0uDPN-TDIg7W80lKVYtplS13FBtJZmJwwjGeKT22IoHvTg5iTrAr5fV8"/>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Today's Goals -->
+    <section class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_12px_24px_rgba(26,28,28,0.04)] fade-in-4">
+      <h2 class="font-headline font-extrabold text-xl mb-6 tracking-tight">Today's Goals</h2>
+      <div class="grid grid-cols-2 gap-8">
+        <button onclick="navigate('profile')" class="space-y-3 text-left active:opacity-70 transition-opacity">
+          <div class="flex justify-between items-center text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+            <span>Protein</span><span class="text-primary">82/120g</span>
+          </div>
+          <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full transition-all duration-700" style="width:68%"></div>
+          </div>
+        </button>
+        <button onclick="navigate('profile')" class="space-y-3 text-left active:opacity-70 transition-opacity">
+          <div class="flex justify-between items-center text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+            <span>Budget</span><span class="text-on-secondary-container">$1.50 left</span>
+          </div>
+          <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+            <div class="h-full bg-secondary rounded-full transition-all duration-700" style="width:85%"></div>
+          </div>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/90 backdrop-blur-lg rounded-t-[2rem] z-50 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+    <a onclick="navigate('home')" class="flex flex-col items-center justify-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 transition-transform active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined mb-1" style="font-variation-settings:'FILL' 1;">local_fire_department</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Home</span>
+    </a>
+    <a onclick="navigate('menu')" class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 transition-transform active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined mb-1">restaurant_menu</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Menu</span>
+    </a>
+    <a onclick="navigate('group')" class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 transition-transform active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined mb-1">group_add</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Group</span>
+    </a>
+    <a onclick="navigate('tracker')" class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 transition-transform active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined mb-1">potted_plant</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Track</span>
+    </a>
+    <a onclick="navigate('profile')" class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 transition-transform active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined mb-1">account_circle</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Profile</span>
+    </a>
+  </nav>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: MENU
+═══════════════════════════════════════════ -->
+<div class="page" id="page-menu">
+  <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)]">
+    <div class="flex items-center justify-between px-6 py-4">
+      <button onclick="navigate('home')" class="flex items-center gap-3 group cursor-pointer active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-stone-500">arrow_back</span>
+        <div>
+          <span class="text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Campus Partner</span>
+          <h1 class="font-headline text-xl font-black tracking-tight leading-none">Cafe Terra</h1>
+        </div>
+      </button>
+      <div class="flex items-center gap-3">
+        <div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1.5 rounded-full flex items-center gap-1.5 text-sm font-bold">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">star</span>4.8
+        </div>
+        <button onclick="showToast('Search coming soon!')" class="text-stone-500 active:scale-95 transition-transform">
+          <span class="material-symbols-outlined">search</span>
+        </button>
+      </div>
+    </div>
+    <div class="flex gap-2 px-6 pb-4 overflow-x-auto no-scrollbar" id="menu-filter-chips">
+      <button class="filter-chip bg-primary text-on-primary px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95" data-filter="all">All Menu</button>
+      <button class="filter-chip bg-surface-container-high text-on-surface px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95" data-filter="under5">Under $5</button>
+      <button class="filter-chip bg-surface-container-high text-on-surface px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95" data-filter="5to10">$5 – $10</button>
+      <button class="filter-chip bg-surface-container-high text-on-surface px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95" data-filter="plant">Plant-Based</button>
+    </div>
+  </header>
+
+  <main class="pt-36 pb-36 px-6 max-w-2xl mx-auto space-y-6">
+    <div class="bg-tertiary-fixed rounded-lg p-5 relative overflow-hidden">
+      <div class="absolute right-0 top-0 bottom-0 w-24 opacity-20 flex items-center justify-center text-[80px]">🧠</div>
+      <div class="flex items-start gap-3 relative z-10">
+        <span class="material-symbols-outlined text-tertiary mt-0.5">lightbulb</span>
+        <div>
+          <p class="font-headline font-bold text-sm text-on-tertiary-fixed mb-2">Bennett's Insight</p>
+          <p class="text-sm text-on-tertiary-fixed/80 leading-relaxed">"Add dry fruits to your Greek Curd Bowl for an extra 5g of protein and sustained energy through your afternoon lab."</p>
+          <button onclick="showToast('Hack applied to your next order!')" class="mt-3 text-sm font-bold text-tertiary underline decoration-2 underline-offset-4">Try this hack</button>
+        </div>
+      </div>
+    </div>
+    <div id="menu-list" class="space-y-6"></div>
+  </main>
+
+  <!-- Cart FAB -->
+  <button onclick="navigate('cart')" class="fixed bottom-24 right-6 z-40 bg-primary text-on-primary w-16 h-16 rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-transform">
+    <span class="material-symbols-outlined text-2xl">shopping_cart</span>
+    <span id="menu-cart-badge" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-black rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+  </button>
+
+  <nav class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg rounded-t-[2rem] z-30 flex justify-around items-center px-4 pb-6 pt-2 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+    <a onclick="navigate('home')" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+      <span class="material-symbols-outlined">local_fire_department</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Feed</span>
+    </a>
+    <a onclick="navigate('menu')" class="flex flex-col items-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">restaurant_menu</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Menu</span>
+    </a>
+    <a onclick="navigate('group')" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+      <span class="material-symbols-outlined">group_add</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Group</span>
+    </a>
+    <a onclick="navigate('tracker')" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+      <span class="material-symbols-outlined">potted_plant</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Track</span>
+    </a>
+    <a onclick="navigate('profile')" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+      <span class="material-symbols-outlined">account_circle</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Goals</span>
+    </a>
+  </nav>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: CART
+═══════════════════════════════════════════ -->
+<div class="page" id="page-cart">
+  <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)] flex justify-between items-center px-6 py-4">
+    <div class="flex items-center gap-3">
+      <button onclick="navigate('home')" class="hover:opacity-80 transition-opacity active:scale-95 text-stone-500">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <span class="text-2xl font-black italic text-orange-700 font-headline tracking-tight">Bennett Bites</span>
+    </div>
+    <button onclick="showToast('Search coming soon!')" class="text-stone-500 active:scale-95 transition-transform">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+  </header>
+
+  <main class="pt-24 px-6 max-w-2xl mx-auto space-y-8 pb-36">
+    <section class="space-y-2">
+      <h1 class="text-4xl font-extrabold tracking-tighter text-on-surface">Your Cart</h1>
+      <p class="text-stone-500 font-medium">Review your selection or start a group session.</p>
+    </section>
+
+    <!-- Group Order Entry -->
+    <section class="bg-secondary-container p-6 rounded-lg flex items-center justify-between gap-4 shadow-sm">
+      <div class="space-y-1">
+        <h3 class="font-bold text-on-secondary-container text-lg">Group Order</h3>
+        <p class="text-sm text-on-secondary-container/80">Order with friends and track together.</p>
+      </div>
+      <button onclick="navigate('group')" class="bg-on-secondary-container text-white px-6 py-3 rounded-full font-bold text-sm transition-all active:scale-95 shadow-lg">
+        Start Group Order
+      </button>
+    </section>
+
+    <!-- Cart Items -->
+    <section class="space-y-6">
+      <div class="flex justify-between items-end">
+        <h2 class="text-xl font-bold tracking-tight" id="cart-items-heading">Items (0)</h2>
+        <button onclick="navigate('menu')" class="text-primary font-bold text-sm active:opacity-70 transition-opacity">Add More</button>
+      </div>
+      <div id="cart-items-list" class="space-y-4"></div>
+      <div id="empty-cart-msg" class="hidden text-center py-12 space-y-3">
+        <span class="material-symbols-outlined text-5xl text-stone-300">shopping_cart</span>
+        <p class="text-on-surface-variant font-medium">Your cart is empty</p>
+        <button onclick="navigate('menu')" class="bg-gradient-to-r from-primary to-primary-container text-white px-8 py-3 rounded-full font-bold text-sm active:scale-95 transition-transform">Browse Menu</button>
+      </div>
+    </section>
+
+    <!-- Nutrition -->
+    <section class="space-y-4" id="nutrition-section">
+      <h2 class="text-xl font-bold tracking-tight">Order Nutrition</h2>
+      <div class="grid grid-cols-3 gap-3">
+        <div class="bg-secondary-fixed p-4 rounded-lg flex flex-col justify-between aspect-square">
+          <span class="text-[10px] font-bold tracking-widest uppercase text-on-secondary-fixed/60">Protein</span>
+          <div class="flex items-end gap-1">
+            <span class="text-2xl font-black text-on-secondary-fixed" id="nutrition-protein">0</span>
+            <span class="text-xs font-bold mb-1">g</span>
+          </div>
+        </div>
+        <div class="bg-tertiary-fixed p-4 rounded-lg flex flex-col justify-between aspect-square">
+          <span class="text-[10px] font-bold tracking-widest uppercase text-on-tertiary-fixed/60">Carbs</span>
+          <div class="flex items-end gap-1">
+            <span class="text-2xl font-black text-on-tertiary-fixed" id="nutrition-carbs">0</span>
+            <span class="text-xs font-bold mb-1">g</span>
+          </div>
+        </div>
+        <div class="bg-primary-fixed p-4 rounded-lg flex flex-col justify-between aspect-square">
+          <span class="text-[10px] font-bold tracking-widest uppercase text-on-primary-fixed/60">Fats</span>
+          <div class="flex items-end gap-1">
+            <span class="text-2xl font-black text-on-primary-fixed" id="nutrition-fat">0</span>
+            <span class="text-xs font-bold mb-1">g</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Split Toggle -->
+    <section class="bg-surface-container p-5 rounded-lg flex items-center justify-between border-l-4 border-secondary shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="bg-secondary/10 w-10 h-10 rounded-full flex items-center justify-center text-secondary">
+          <span class="material-symbols-outlined">payments</span>
+        </div>
+        <div>
+          <h3 class="font-bold text-sm">Split Bill Evenly</h3>
+          <p class="text-xs text-stone-500">Perfect for group study sessions</p>
+        </div>
+      </div>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input class="sr-only peer" type="checkbox" id="split-toggle"/>
+        <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+      </label>
+    </section>
+
+    <!-- Totals -->
+    <section class="space-y-3 pt-4">
+      <div class="flex justify-between text-sm">
+        <span class="text-stone-500">Subtotal</span>
+        <span class="font-bold" id="cart-subtotal">$0.00</span>
+      </div>
+      <div class="flex justify-between text-sm">
+        <span class="text-stone-500">Service Fee</span>
+        <span class="font-bold text-secondary">FREE (Student Plan)</span>
+      </div>
+      <div class="flex justify-between text-xl font-extrabold pt-2 border-t border-outline-variant/20">
+        <span>Total</span>
+        <span class="text-primary" id="cart-total">$0.00</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Fixed Bottom -->
+  <div class="fixed bottom-0 left-0 w-full z-50">
+    <div class="px-6 pb-4">
+      <button id="checkout-btn" onclick="navigate('payment')" class="heat-gradient w-full py-5 rounded-full flex items-center justify-between px-8 shadow-xl active:scale-[0.98] transition-transform duration-200">
+        <div class="flex flex-col items-start">
+          <span class="text-white/80 text-[10px] uppercase font-bold tracking-widest">Ready in 12 mins</span>
+          <span class="text-white font-bold text-lg">Checkout Order</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-white font-bold text-xl" id="checkout-total">$0.00</span>
+          <span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1;">arrow_forward</span>
+        </div>
+      </button>
+    </div>
+    <nav class="bg-white/90 backdrop-blur-lg rounded-t-[2rem] shadow-[0_-8px_20px_rgba(0,0,0,0.05)] flex justify-around items-center px-4 pb-6 pt-2 w-full">
+      <a onclick="navigate('home')" class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+        <span class="material-symbols-outlined">local_fire_department</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Feed</span>
+      </a>
+      <a onclick="navigate('menu')" class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+        <span class="material-symbols-outlined">restaurant_menu</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Menu</span>
+      </a>
+      <a onclick="navigate('group')" class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+        <span class="material-symbols-outlined">group_add</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Group</span>
+      </a>
+      <a onclick="navigate('tracker')" class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+        <span class="material-symbols-outlined">potted_plant</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Track</span>
+      </a>
+      <a onclick="navigate('profile')" class="flex flex-col items-center justify-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 active:scale-90 cursor-pointer transition-transform">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">account_circle</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Goals</span>
+      </a>
+    </nav>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: GROUP
+═══════════════════════════════════════════ -->
+<div class="page" id="page-group">
+  <header class="flex items-center justify-between px-6 pt-12 pb-4">
+    <div class="flex items-center gap-4">
+      <button onclick="navigate('cart')" class="text-primary active:scale-90 transition-transform">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="font-headline font-black text-2xl text-primary">Group Order</h1>
+    </div>
+    <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high">
+      <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbtEpkH_dj2iX9-MQVIEMSGH5B7zK2Xlv88pFeECWWHEGh8mGd9oeO4tGpy-L87n-vE4YXkw89a0oeZ2njr7y_c6J2e-K8YXySvpRiF4lPauTNIy9Q7ogjk0-p1LKdu8s9jsKQ5EfVwez2hrqtjx5VvAS4lSgPbg1HKx4Yy_58hO456HVEdOhgkqiI1glO_RA2jcFCVJtuIl8lWkVxR89kP6BPVVRyFZmySaknahg708UZO4HXqpaYBaU89qEUmmGK5se7TaksVlgt"/>
+    </div>
+  </header>
+
+  <main class="px-6 max-w-2xl mx-auto space-y-6 pt-4 pb-52">
+    <section>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Active Members</p>
+      <div class="flex gap-3 flex-wrap" id="group-members-list"></div>
+      <div id="add-member-row" class="mt-4 hidden">
+        <div class="flex gap-2">
+          <input id="new-member-input" class="flex-1 h-11 bg-surface-container-high rounded-full px-5 text-sm font-bold text-on-surface placeholder:text-stone-400 border-none outline-none focus:ring-2 focus:ring-primary/20" placeholder="Friend's name..." type="text"/>
+          <button id="confirm-add-member" class="h-11 px-5 bg-primary text-on-primary rounded-full font-bold text-sm active:scale-95 transition-transform">Add</button>
+          <button id="cancel-add-member" class="h-11 px-4 bg-surface-container-high text-on-surface rounded-full font-bold text-sm active:scale-95 transition-transform">✕</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Shared Basket</p>
+      <div id="group-basket-list" class="space-y-4"></div>
+      <div id="group-empty-basket" class="hidden text-center py-8">
+        <p class="text-on-surface-variant text-sm">No items in cart yet.</p>
+        <button onclick="navigate('menu')" class="mt-3 text-primary font-bold text-sm active:opacity-70 transition-opacity">Browse Menu →</button>
+      </div>
+    </section>
+
+    <section class="bg-surface-container-low rounded-lg p-6 space-y-4">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-symbols-outlined text-on-surface-variant">receipt_long</span>
+        <h3 class="font-headline font-black text-lg">The Split</h3>
+      </div>
+      <div id="group-split-rows" class="space-y-4"></div>
+      <div class="flex justify-between items-center pt-4 border-t border-outline-variant/20">
+        <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Total Bill</span>
+        <span class="font-headline font-black text-2xl text-primary" id="group-split-total">$0.00</span>
+      </div>
+    </section>
+  </main>
+
+  <div class="fixed bottom-0 left-0 w-full z-50">
+    <div class="px-6 pb-3 space-y-3 bg-white/90 backdrop-blur-lg pt-4 rounded-t-[2rem] shadow-[0_-8px_20px_rgba(0,0,0,0.08)]">
+      <button onclick="navigate('payment')" class="w-full bg-gradient-to-r from-primary to-primary-container text-white py-5 rounded-full font-headline font-black text-lg flex items-center justify-center gap-3 shadow-xl active:scale-[0.98] transition-all">
+        Finalize Group Order
+        <span class="material-symbols-outlined">rocket_launch</span>
+      </button>
+      <button onclick="navigate('cart')" class="w-full py-3 text-center font-bold text-on-surface-variant text-sm active:opacity-60 transition-opacity">
+        Back to Cart
+      </button>
+    </div>
+    <nav class="bg-white/90 backdrop-blur-lg flex justify-around items-center px-4 pb-6 pt-2 w-full shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+      <a onclick="navigate('home')" class="flex flex-col items-center text-stone-400 py-2 px-3 cursor-pointer active:scale-90 transition-transform">
+        <span class="material-symbols-outlined text-xl">restaurant</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Feed</span>
+      </a>
+      <a onclick="navigate('menu')" class="flex flex-col items-center text-stone-400 py-2 px-3 cursor-pointer active:scale-90 transition-transform">
+        <span class="material-symbols-outlined text-xl">menu_book</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Orders</span>
+      </a>
+      <a onclick="navigate('group')" class="flex flex-col items-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 cursor-pointer active:scale-90 transition-transform">
+        <span class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 1;">group</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Group</span>
+      </a>
+      <a onclick="navigate('profile')" class="flex flex-col items-center text-stone-400 py-2 px-3 cursor-pointer active:scale-90 transition-transform">
+        <span class="material-symbols-outlined text-xl">account_circle</span>
+        <span class="text-[10px] uppercase tracking-widest font-bold">Profile</span>
+      </a>
+    </nav>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: PAYMENT
+═══════════════════════════════════════════ -->
+<div class="page" id="page-payment">
+  <!-- Processing Overlay -->
+  <div class="fixed inset-0 z-[100] bg-white/95 backdrop-blur-xl flex flex-col items-center justify-center hidden" id="processing-overlay">
+    <div class="relative w-32 h-32 mb-8 flex items-center justify-center">
+      <div class="absolute inset-0 border-[6px] border-primary-fixed rounded-full" id="spinner-circle"></div>
+      <div class="absolute inset-0 border-[6px] border-primary rounded-full border-t-transparent animate-spin-fast" id="spinner-arc"></div>
+      <div class="hidden scale-0 transition-transform duration-500 ease-out" id="success-icon">
+        <svg class="w-24 h-24 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path class="checkmark-draw" d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        </svg>
+      </div>
+      <div class="absolute inset-0 flex items-center justify-center transition-all duration-300" id="lock-icon">
+        <span class="material-symbols-outlined text-primary text-4xl">lock</span>
+      </div>
+    </div>
+    <h3 class="font-headline text-3xl font-extrabold text-on-surface text-center px-6" id="processing-title">Securing Your Bite</h3>
+    <p class="text-on-surface-variant mt-2 font-medium" id="processing-status">Processing payment...</p>
+  </div>
+
+  <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)]">
+    <div class="flex justify-between items-center px-6 py-4">
+      <div class="flex items-center gap-4">
+        <button onclick="navigate('cart')" class="hover:opacity-80 transition-opacity active:scale-95 text-stone-500">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="text-2xl font-black italic text-orange-700 font-headline tracking-tight">Bennett Bites</h1>
+      </div>
+      <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border-2 border-primary-fixed">
+        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbtEpkH_dj2iX9-MQVIEMSGH5B7zK2Xlv88pFeECWWHEGh8mGd9oeO4tGpy-L87n-vE4YXkw89a0oeZ2njr7y_c6J2e-K8YXySvpRiF4lPauTNIy9Q7ogjk0-p1LKdu8s9jsKQ5EfVwez2hrqtjx5VvAS4lSgPbg1HKx4Yy_58hO456HVEdOhgkqiI1glO_RA2jcFCVJtuIl8lWkVxR89kP6BPVVRyFZmySaknahg708UZO4HXqpaYBaU89qEUmmGK5se7TaksVlgt"/>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-24 pb-40 px-6 max-w-2xl mx-auto space-y-8">
+    <section>
+      <span class="text-[10px] uppercase tracking-widest font-bold text-secondary mb-2 block">SECURE CHECKOUT</span>
+      <h2 class="font-headline text-4xl font-extrabold tracking-tight leading-none">Finalize <span class="text-primary">Order</span></h2>
+    </section>
+
+    <!-- Order Summary -->
+    <section class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_12px_24px_rgba(26,28,28,0.04)] relative overflow-hidden">
+      <div class="absolute -right-8 -top-8 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
+      <div class="relative z-10">
+        <div id="pay-order-items" class="space-y-3 mb-4"></div>
+        <div class="space-y-3 py-4 border-y border-outline-variant/20">
+          <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Subtotal</span><span class="font-bold" id="pay-subtotal">$0.00</span></div>
+          <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Campus Delivery</span><span class="text-secondary font-bold">FREE</span></div>
+          <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Processing</span><span class="font-bold">$0.75</span></div>
+        </div>
+        <div class="flex justify-between items-center mt-6">
+          <span class="text-xs uppercase tracking-widest font-bold text-on-surface-variant">Total Amount</span>
+          <span class="text-2xl font-black font-headline text-on-surface" id="pay-total">$0.00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment Methods -->
+    <section class="space-y-4">
+      <h3 class="font-headline text-lg font-bold px-1">Payment Method</h3>
+      <div class="grid gap-3" id="payment-methods">
+        <button class="payment-method active flex items-center justify-between p-5 rounded-lg bg-surface-container-low border-2 border-transparent transition-all active:scale-[0.98]">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary shadow-sm">
+              <span class="material-symbols-outlined">account_balance_wallet</span>
+            </div>
+            <div class="text-left">
+              <p class="font-bold text-on-surface">UPI / Instant Pay</p>
+              <p class="text-xs text-on-surface-variant">Google Pay, PhonePe, BHIM</p>
+            </div>
+          </div>
+          <div class="radio-circle w-6 h-6 rounded-full border-2 border-outline-variant bg-white transition-all"></div>
+        </button>
+        <button class="payment-method flex items-center justify-between p-5 rounded-lg bg-surface-container-low border-2 border-transparent transition-all hover:bg-surface-container-high active:scale-[0.98]">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-stone-500">
+              <span class="material-symbols-outlined">credit_card</span>
+            </div>
+            <div class="text-left">
+              <p class="font-bold text-on-surface">Credit / Debit Card</p>
+              <p class="text-xs text-on-surface-variant">Visa, Mastercard, Amex</p>
+            </div>
+          </div>
+          <div class="radio-circle w-6 h-6 rounded-full border-2 border-outline-variant bg-white transition-all"></div>
+        </button>
+        <button class="payment-method flex items-center justify-between p-5 rounded-lg bg-surface-container-low border-2 border-transparent transition-all hover:bg-surface-container-high active:scale-[0.98]">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-secondary">
+              <span class="material-symbols-outlined">account_balance</span>
+            </div>
+            <div class="text-left">
+              <div class="flex items-center gap-2">
+                <p class="font-bold text-on-surface">Campus Wallet</p>
+                <span class="bg-tertiary-container text-[10px] px-2 py-0.5 rounded-full text-on-tertiary-fixed font-bold">VALUE</span>
+              </div>
+              <p class="text-xs text-on-surface-variant">Balance: $45.20</p>
+            </div>
+          </div>
+          <div class="radio-circle w-6 h-6 rounded-full border-2 border-outline-variant bg-white transition-all"></div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Bento Prefs -->
+    <section class="grid grid-cols-2 gap-3">
+      <div class="bg-surface-container-low p-4 rounded-lg flex flex-col justify-between aspect-square">
+        <span class="material-symbols-outlined text-secondary">timer</span>
+        <div><p class="font-bold text-sm">Delivery Time</p><p class="text-xs text-on-surface-variant">Ready in 12 mins</p></div>
+      </div>
+      <button onclick="showToast('Eco packaging selected! 🌿')" class="bg-surface-container-low p-4 rounded-lg flex flex-col justify-between aspect-square active:scale-95 transition-transform text-left">
+        <span class="material-symbols-outlined text-primary">eco</span>
+        <div><p class="font-bold text-sm">Eco Packaging</p><p class="text-xs text-on-surface-variant">Plastic-free option</p></div>
+      </button>
+    </section>
+  </main>
+
+  <div class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg px-6 pb-8 pt-4 z-50">
+    <div class="max-w-2xl mx-auto">
+      <button id="pay-now-btn" class="w-full bg-gradient-to-r from-primary to-primary-container text-white rounded-full py-5 font-headline font-extrabold text-lg flex items-center justify-center gap-3 shadow-[0_12px_24px_rgba(164,55,0,0.3)] active:scale-[0.98] transition-all">
+        Pay Now — <span id="pay-btn-total">$0.00</span>
+        <span class="material-symbols-outlined text-xl">arrow_forward</span>
+      </button>
+      <p class="text-center text-[10px] text-on-surface-variant mt-4 uppercase tracking-tighter">Secure 256-bit SSL Encrypted Payment</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: TRACKER
+═══════════════════════════════════════════ -->
+<div class="page" id="page-tracker">
+  <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)] flex items-center justify-between px-6 py-4">
+    <div class="flex items-center gap-3">
+      <button onclick="navigate('home')" class="text-stone-500 active:scale-95 transition-transform">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="text-2xl font-black italic text-orange-700 font-headline tracking-tight">Bennett Bites</h1>
+    </div>
+    <button onclick="showToast('Order history coming soon!')" class="text-stone-500 active:scale-95 transition-transform">
+      <span class="material-symbols-outlined">history</span>
+    </button>
+  </header>
+
+  <main class="pt-24 pb-32 px-6 max-w-2xl mx-auto space-y-6">
+    <div class="h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+      <div id="tracker-progress" class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full transition-all duration-1000" style="width:40%"></div>
+    </div>
+
+    <!-- Timer -->
+    <section class="bg-surface-container-lowest rounded-lg p-8 shadow-[0_12px_24px_rgba(26,28,28,0.04)] text-center">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-3">Estimated Arrival</p>
+      <div class="font-headline font-black text-8xl tracking-tighter text-on-surface mb-2" id="timer-display">12:00</div>
+      <p class="text-on-surface-variant font-medium text-sm">Minutes until your bite is ready</p>
+
+      <div class="flex items-center justify-center gap-2 mt-8">
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
+            <span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">Placed</span>
+        </div>
+        <div id="tracker-line-1" class="flex-1 h-1 rounded-full bg-surface-container-high max-w-[60px] transition-colors duration-500"></div>
+        <div class="flex flex-col items-center gap-2">
+          <div id="step-preparing" class="w-14 h-14 rounded-full bg-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings:'FILL' 1;">restaurant</span>
+          </div>
+          <span id="label-preparing" class="text-[10px] font-bold uppercase tracking-widest text-primary">Preparing</span>
+        </div>
+        <div id="tracker-line-2" class="flex-1 h-1 rounded-full bg-surface-container-high max-w-[60px] transition-colors duration-500"></div>
+        <div class="flex flex-col items-center gap-2">
+          <div id="step-ready" class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-stone-400">shopping_bag</span>
+          </div>
+          <span id="label-ready" class="text-[10px] font-bold uppercase tracking-widest text-stone-400">Ready</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pickup -->
+    <section class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_20px_rgba(26,28,28,0.04)]">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-secondary text-sm">location_on</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Pickup Point</span>
+      </div>
+      <h3 class="font-headline font-bold text-xl mb-4">Student Center West Wing, Level 2</h3>
+      <button onclick="showToast('Opening maps...')" class="w-full bg-secondary-container text-on-secondary-container py-3.5 rounded-full font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+        <span class="material-symbols-outlined">directions</span>
+        Get Directions
+      </button>
+    </section>
+
+    <!-- QR -->
+    <section class="bg-surface-container-low rounded-lg p-6 text-center shadow-sm">
+      <div class="relative w-44 h-44 mx-auto mb-4">
+        <div class="bg-secondary/10 rounded-lg overflow-hidden p-3 w-full h-full">
+          <img class="w-full h-full object-cover rounded" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Commons_QR_code.png/220px-Commons_QR_code.png"/>
+        </div>
+        <div class="absolute left-3 right-3 top-0 h-1 bg-primary/60 rounded-full qr-scan shadow-[0_0_8px_rgba(164,55,0,0.5)]"></div>
+      </div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">Verification Code</p>
+      <p class="font-headline font-black text-4xl tracking-[0.25em]" id="pickup-code">– – – –</p>
+    </section>
+
+    <!-- Your Order -->
+    <section class="bg-surface-container-lowest rounded-lg p-6 shadow-sm">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-headline font-bold text-lg">Your Order</h3>
+        <button onclick="showToast('Order history coming soon!')" class="text-primary font-bold text-sm active:opacity-70 transition-opacity">Order History</button>
+      </div>
+      <div id="tracker-order-items" class="space-y-4"></div>
+      <div id="tracker-no-order" class="hidden text-center py-6">
+        <p class="text-on-surface-variant text-sm">No active order. <button onclick="navigate('menu')" class="text-primary font-bold cursor-pointer">Browse menu →</button></p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/90 backdrop-blur-lg rounded-t-[2rem] z-50 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+    <a onclick="navigate('home')" class="flex flex-col items-center text-stone-400 py-2 px-4 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined">local_fire_department</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Feed</span>
+    </a>
+    <a onclick="navigate('menu')" class="flex flex-col items-center text-stone-400 py-2 px-4 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined">restaurant_menu</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Menu</span>
+    </a>
+    <a onclick="navigate('group')" class="flex flex-col items-center text-stone-400 py-2 px-4 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined">group_add</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Group</span>
+    </a>
+    <a onclick="navigate('tracker')" class="flex flex-col items-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">potted_plant</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Track</span>
+    </a>
+    <a onclick="navigate('profile')" class="flex flex-col items-center text-stone-400 py-2 px-4 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined">account_circle</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Goals</span>
+    </a>
+  </nav>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: PROFILE
+═══════════════════════════════════════════ -->
+<div class="page" id="page-profile">
+  <header class="flex items-center justify-between px-6 pt-12 pb-4">
+    <div class="flex items-center gap-3">
+      <button onclick="navigate('home')" class="text-stone-500 active:scale-95 transition-transform">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="font-headline font-black text-xl">Profile</h1>
+    </div>
+    <button onclick="showToast('Settings coming soon!')" class="text-stone-500 active:scale-95 transition-transform">
+      <span class="material-symbols-outlined">settings</span>
+    </button>
+  </header>
+
+  <main class="px-6 max-w-2xl mx-auto space-y-8 pb-32">
+    <!-- Identity -->
+    <section class="flex items-center gap-5">
+      <div class="relative">
+        <div class="w-20 h-20 rounded-full overflow-hidden ring-4 ring-primary-fixed">
+          <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbtEpkH_dj2iX9-MQVIEMSGH5B7zK2Xlv88pFeECWWHEGh8mGd9oeO4tGpy-L87n-vE4YXkw89a0oeZ2njr7y_c6J2e-K8YXySvpRiF4lPauTNIy9Q7ogjk0-p1LKdu8s9jsKQ5EfVwez2hrqtjx5VvAS4lSgPbg1HKx4Yy_58hO456HVEdOhgkqiI1glO_RA2jcFCVJtuIl8lWkVxR89kP6BPVVRyFZmySaknahg708UZO4HXqpaYBaU89qEUmmGK5se7TaksVlgt"/>
+        </div>
+        <button onclick="showToast('Photo updated!')" class="absolute bottom-0 right-0 w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform">
+          <span class="material-symbols-outlined text-white text-sm">edit</span>
+        </button>
+      </div>
+      <div>
+        <h2 class="font-headline font-black text-2xl" id="profile-name">Alex Bennett</h2>
+        <p class="text-on-surface-variant text-sm font-medium mt-0.5" id="profile-email">alex@bennett.edu</p>
+        <p class="text-on-surface-variant text-xs mt-1">ID: 8829-4402-UX</p>
+      </div>
+    </section>
+
+    <!-- Dietary Goals -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-headline font-bold text-lg">Dietary Goals</h3>
+        <button onclick="showToast('Daily targets updated!')" class="text-primary font-bold text-xs uppercase tracking-wider active:opacity-70 transition-opacity">Target Daily</button>
+      </div>
+      <div class="bg-surface-container-lowest rounded-lg p-5 shadow-sm space-y-3">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-lg">fitness_center</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Protein</span>
+          </div>
+          <span class="material-symbols-outlined text-error text-sm">close</span>
+        </div>
+        <p class="font-headline font-black text-2xl">120g <span class="text-xs font-bold uppercase tracking-widest text-primary">Reached</span></p>
+        <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+          <div class="h-full bg-primary rounded-full" style="width:100%"></div>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-lg p-5 shadow-sm space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-lg">local_fire_department</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Calories</span>
+        </div>
+        <p class="font-headline font-black text-2xl">1,625 / 2,500</p>
+        <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+          <div class="h-full bg-secondary rounded-full" style="width:65%"></div>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-lg p-5 shadow-sm space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-tertiary text-lg">grass</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Carbs</span>
+        </div>
+        <p class="font-headline font-black text-2xl">155g / 310g</p>
+        <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+          <div class="h-full bg-tertiary rounded-full" style="width:50%"></div>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-1">Allergies &amp; Preferences</p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="bg-surface-container-high text-on-surface px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm">eco</span> Vegan
+          </span>
+          <span class="bg-surface-container-high text-on-surface px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm">block</span> Nut-free
+          </span>
+          <button onclick="showToast('Add preference coming soon!')" class="bg-surface-container-high text-on-surface w-9 h-9 rounded-full font-bold flex items-center justify-center active:scale-90 transition-transform">
+            <span class="material-symbols-outlined text-sm">add</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wallet -->
+    <section class="space-y-4">
+      <h3 class="font-headline font-bold text-lg">Wallet &amp; Budget</h3>
+      <div class="bg-surface-container-lowest rounded-lg p-6 shadow-sm space-y-5">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Daily Spending Limit</p>
+            <p class="font-headline font-black text-3xl text-primary">$15.00 <span class="text-sm font-bold text-on-surface-variant">Standard</span></p>
+          </div>
+          <button onclick="showToast('Limit updated!')" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary active:scale-90 transition-transform">
+            <span class="material-symbols-outlined text-sm">edit</span>
+          </button>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm mb-2">
+            <span class="font-bold text-on-surface-variant uppercase text-[10px] tracking-widest">Weekly Allowance</span>
+            <span class="font-bold">$105.00</span>
+          </div>
+          <div class="relative h-2 bg-surface-variant rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full" style="width:35%"></div>
+          </div>
+          <div class="flex justify-between mt-1 text-[10px] text-on-surface-variant font-bold">
+            <span>$0</span><span>$300</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-sm">notifications</span>
+            <span class="font-bold text-sm">Budget Alerts</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" checked onchange="showToast(this.checked ? 'Budget alerts ON' : 'Budget alerts OFF')"/>
+            <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Smart Picks -->
+    <section class="bg-secondary-container rounded-lg p-6 space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+          <span class="material-symbols-outlined text-white text-lg">auto_awesome</span>
+        </div>
+        <h3 class="font-headline font-bold text-on-secondary-container">Personalized for You</h3>
+      </div>
+      <p class="text-sm text-on-secondary-container/80 leading-relaxed">Our <strong>Smart Picks</strong> AI uses your dietary goals and budget limits to curate the best meals from campus dining halls.</p>
+      <button onclick="navigate('menu')" class="text-xs font-bold text-secondary active:opacity-70 transition-opacity">🍔🥗 + 12 TODAY'S SUGGESTIONS →</button>
+    </section>
+
+    <!-- Account -->
+    <section class="space-y-2">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-1">Preferences &amp; Account</p>
+      <div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm">
+        <button onclick="navigate('tracker')" class="w-full flex items-center justify-between p-5 border-b border-outline-variant/10 active:bg-surface-container transition-colors">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-on-surface-variant">history</span>
+            <span class="font-bold">Order History</span>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+        </button>
+        <button onclick="showToast('Payment methods coming soon!')" class="w-full flex items-center justify-between p-5 border-b border-outline-variant/10 active:bg-surface-container transition-colors">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+            <span class="font-bold">Payment Methods</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-on-surface-variant font-medium">Visa **** 4402</span>
+            <span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+          </div>
+        </button>
+        <button onclick="showToast('Notification settings coming soon!')" class="w-full flex items-center justify-between p-5 active:bg-surface-container transition-colors">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+            <span class="font-bold">Notification Settings</span>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+        </button>
+      </div>
+      <button id="logout-btn" class="w-full flex items-center gap-3 p-4 text-error font-bold active:opacity-70 transition-opacity">
+        <span class="material-symbols-outlined">logout</span>
+        Logout
+      </button>
+    </section>
+  </main>
+
+  <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/90 backdrop-blur-lg rounded-t-[2rem] z-50 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+    <a onclick="navigate('home')" class="flex flex-col items-center text-stone-400 py-2 px-3 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined">restaurant</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Feed</span>
+    </a>
+    <a onclick="navigate('menu')" class="flex flex-col items-center text-stone-400 py-2 px-3 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined">menu_book</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Orders</span>
+    </a>
+    <a onclick="navigate('tracker')" class="flex flex-col items-center text-stone-400 py-2 px-3 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined">potted_plant</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Track</span>
+    </a>
+    <a onclick="navigate('profile')" class="flex flex-col items-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">account_circle</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold">Profile</span>
+    </a>
+  </nav>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     ALL JAVASCRIPT — INLINE SPA ENGINE
+═══════════════════════════════════════════ -->
+<script>
+// ─── STATE ──────────────────────────────────
+const KEY = 'bb_state';
+const DEFAULTS = {
+  user: null,
+  cart: [],
+  groupMembers: [{ id: 'you', name: 'You (Alex)', initial: 'A', color: '#a43700', active: true }],
+  splitData: {},
+  currentOrder: null,
+  orderStatus: 'placed',
+  orderPlacedAt: null,
+};
+const MEMBER_COLORS = ['#a43700','#006a6a','#7b5500','#1a1c1c','#93000a'];
+
+function loadState() {
+  try { const r = localStorage.getItem(KEY); return r ? {...JSON.parse(JSON.stringify(DEFAULTS)), ...JSON.parse(r)} : JSON.parse(JSON.stringify(DEFAULTS)); }
+  catch { return JSON.parse(JSON.stringify(DEFAULTS)); }
+}
+function saveState(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e) {} }
+function update(fn) { const s = loadState(); fn(s); saveState(s); }
+
+function getUser()       { return loadState().user; }
+function setUser(u)      { update(s => s.user = u); }
+function clearUser()     { update(s => s.user = null); }
+function getCart()       { return loadState().cart; }
+function setCart(c)      { update(s => s.cart = c); }
+function addToCart(item) {
+  update(s => {
+    const ex = s.cart.find(i => i.id === item.id);
+    if (ex) ex.qty += 1; else s.cart.push({...item, qty:1});
+  });
+}
+function updateQty(id, delta) {
+  update(s => {
+    const item = s.cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty = Math.max(0, item.qty + delta);
+    if (item.qty === 0) s.cart = s.cart.filter(i => i.id !== id);
+  });
+}
+function removeFromCart(id) { update(s => { s.cart = s.cart.filter(i => i.id !== id); }); }
+function getCartTotal()  { return getCart().reduce((s,i) => s + i.price * i.qty, 0); }
+function getCartCount()  { return getCart().reduce((s,i) => s + i.qty, 0); }
+function getGroupMembers()        { return loadState().groupMembers; }
+function addGroupMember(m)        { update(s => { if (!s.groupMembers.find(x => x.id === m.id)) s.groupMembers.push(m); }); }
+function getSplitData()           { return loadState().splitData; }
+function toggleItemSplit(itemId)  { update(s => { const ms = s.groupMembers.map(m=>m.id); if (s.splitData[itemId]) delete s.splitData[itemId]; else s.splitData[itemId] = ms; }); }
+function setCurrentOrder(order)   { update(s => { s.currentOrder = order; s.orderPlacedAt = Date.now(); s.orderStatus = 'placed'; }); }
+function getCurrentOrder()        { return loadState().currentOrder; }
+function getOrderPlacedAt()       { return loadState().orderPlacedAt; }
+function formatPrice(n)           { return '$' + Number(n).toFixed(2); }
+function generateCode()           { return String(Math.floor(1000 + Math.random() * 9000)); }
+
+function seedDemo() {
+  if (getCart().length === 0) {
+    setCart([
+      { id:'item_1', name:'Spicy Salmon Quinoa Bowl', price:14.50, qty:1, note:'No onions, extra dressing on side', image:'https://lh3.googleusercontent.com/aida-public/AB6AXuArnuuWypGAoy5poADW_Co6wjNLGUEYzO4_lJIo-w1mX7Cqj7RIKgt_wP9EVXOHL696xqbN1wWnqcZuFAfBciRoWfxBW0YET_CNwxZcq_B7jYEiZ_Tk-Wk0346h99QTiqn9YYmppZ-ojzXKcgczQyNmGmGysXw748cnAu826zy5hvyQoLgg4Pe7zqjE8DyYi7vnT-1msHJkO-R0CHgBqttdOsk1zwnlDrGUHYY0c0JidhRv95727TAUqWyXxJMzVVRvFzikz_xJdhKO', protein:28, carbs:42, fat:12 },
+      { id:'item_2', name:'Oat Milk Cold Brew', price:5.75, qty:1, note:'Regular ice, 2 pumps vanilla', image:'https://lh3.googleusercontent.com/aida-public/AB6AXuA3wVDrkEcPvQWivgbGe9MQmJBjMWY_JwDGKto6PS0ZwVGDTHo8F_bZPBrYqsrfwsVuzUPu2VAqWdZ4dYMJW-9XtsJfES5OB8iGYHslLotABjLP100pI5x13wgAPKuGCd4QZuZzM0Qm7tk3DK0B5TzS0Cr_Fk7lTb5BBW6SyaGlUh_x7T-rTeMwRjuiciNqHbaJFXrt5PSzYE6QeEI0BXBLgrEsLnAKRVAxNkBhVM6OF3bdk3wIbCb0FQv7jWxRH5FyyLrA_ETR-', protein:4, carbs:8, fat:3 },
+    ]);
+  }
+}
+
+// ─── ROUTER ──────────────────────────────────
+let currentPage = 'login';
+let timerInterval = null;
+
+function navigate(route) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + route);
+  if (!el) return;
+  el.classList.add('active');
+  window.scrollTo(0,0);
+  currentPage = route;
+  onPageEnter(route);
+}
+
+function onPageEnter(route) {
+  if (route === 'home')    renderHome();
+  if (route === 'menu')    renderMenu();
+  if (route === 'cart')    renderCart();
+  if (route === 'group')   renderGroup();
+  if (route === 'payment') renderPayment();
+  if (route === 'tracker') renderTracker();
+  if (route === 'profile') renderProfile();
+}
+
+// ─── TOAST ───────────────────────────────────
+function showToast(msg, dur=2200) {
+  const t = document.getElementById('bb-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), dur);
+}
+window.showToast = showToast;
+
+// ─── MENU DATA ────────────────────────────────
+const MENU_ITEMS = [
+  { id:'avocado_bowl', name:'Avocado Power Bowl', price:8.50, cal:420, protein:18, carbs:52, fat:16, tag:'HIGH PROTEIN', tagStyle:'background:#006a6a;color:#fff', note:'Smashed avocado, warm quinoa, roasted chickpeas, and a citrus-tahini drizzle.', image:'https://lh3.googleusercontent.com/aida-public/AB6AXuDn01_Ayw-F4GTQpM178gQt2PiPIe6zp5ncodJcdvLZDFtZb8liRyCVR8gia8uCcUrodk8eHF55KSfvrYDfT9P2ycX5M9_qpmDGngqHYmuMv1pieuOAHTOd4988i22GSAZAQUzJ-sA-dLsPKqNl8TJxQgtiCmRiu6mrjTjY15b-5t-SIL3Z8ICdXXTQ5rePhkspbZOozUTKD7z_sc0U0RFWT39hzI6k42zDHU_Bc2VRyJZOHiHHywe_TIv0gPeIpoFSeUIFGhiDcrI4', style:'featured', filter:['all','5to10'] },
+  { id:'honey_greek', name:'Honey Greek Curd', price:4.25, cal:210, protein:9, carbs:28, fat:5, tag:'BUDGET PICK', tagStyle:'background:#ffdeac;color:#281900', note:'Creamy Greek yogurt with local honey and house-made granola.', image:'https://lh3.googleusercontent.com/aida-public/AB6AXuCMTvm8uz_lzFWJD_Ld5W8XOKuwrotRB2c9A6UpJIlN8WpKushQCL_1DTK8fzmY3sHgBPhdp-PxBY9rB_6Wp-vwmhKLKM3VfnpwRPQgvaIqlcSGQlyPi4DFs0nGwKg2ej_Qw46NuIvGOSyBYGcwxMniMty4Q-FqoL-ydQ1GhzeiwX5W_p4uRDmZ3RYOchz_huhnlSt1Raa6hkUpftL2RDkhgeUnHsGUkeDTnF8tad3InxpruE4mNGihdWgsKVFdLgelnW3AvCP98he4', style:'compact', filter:['all','under5'] },
+  { id:'terra_latte', name:'Terra Signature Latte', price:5.50, cal:180, protein:6, carbs:22, fat:7, tag:'SIGNATURE', tagStyle:'background:#ffdbcf;color:#380d00', note:'Double shot espresso, oat milk, and a hint of lavender.', image:'https://lh3.googleusercontent.com/aida-public/AB6AXuAuyGPufb3FJOrbq1n3TItrha0oLe9iZfTNT9SR2O3NgCyGY7CqnYjG_Fr_RWCvycGE59eIRsUaPo2sw1gfKhuIFu6ZN1exy-bvYi2k3Jrj2iqSljfG_lwRslFjXdEVPVK7LDUcInZNDjo8DQbdCzpC0SaQSsvKNXeFUfnwekkFaMyIuVxQc3J1sfxzTluD_3x9gwA1YVlMn3XYVdL8mGMzsIZeaF0VXNYa1pF_uDYNKySuS4ct-hfCHsyYc8-jMZ5', style:'featured', filter:['all','5to10'] },
+  { id:'spicy_salmon', name:'Spicy Salmon Quinoa Bowl', price:14.50, cal:490, protein:38, carbs:44, fat:14, tag:'HIGH PROTEIN', tagStyle:'background:#006a6a;color:#fff', note:'Fresh salmon, quinoa, cucumber, and house gochujang sauce.', image:'https://lh3.googleusercontent.com/aida-public/AB6AXuArnuuWypGAoy5poADW_Co6wjNLGUEYzO4_lJIo-w1mX7Cqj7RIKgt_wP9EVXOHL696xqbN1wWnqcZuFAfBciRoWfxBW0YET_CNwxZcq_B7jYEiZ_Tk-Wk0346h99QTiqn9YYmppZ-ojzXKcgczQyNmGmGysXw748cnAu826zy5hvyQoLgg4Pe7zqjE8DyYi7vnT-1msHJkO-R0CHgBqttdOsk1zwnlDrGUHYY0c0JidhRv95727TAUqWyXxJMzVVRvFzikz_xJdhKO', style:'featured', filter:['all'] },
+  { id:'cold_brew', name:'Oat Milk Cold Brew', price:5.75, cal:90, protein:4, carbs:8, fat:3, tag:'BESTSELLER', tagStyle:'background:#93f2f2;color:#002020', note:'18-hour cold brew concentrate with oat milk and vanilla syrup.', image:'https://lh3.googleusercontent.com/aida-public/AB6AXuA3wVDrkEcPvQWivgbGe9MQmJBjMWY_JwDGKto6PS0ZwVGDTHo8F_bZPBrYqsrfwsVuzUPu2VAqWdZ4dYMJW-9XtsJfES5OB8iGYHslLotABjLP100pI5x13wgAPKuGCd4QZuZzM0Qm7tk3DK0B5TzS0Cr_Fk7lTb5BBW6SyaGlUh_x7T-rTeMwRjuiciNqHbaJFXrt5PSzYE6QeEI0BXBLgrEsLnAKRVAxNkBhVM6OF3bdk3wIbCb0FQv7jWxRH5FyyLrA_ETR-', style:'compact', filter:['all','5to10'] },
+];
+let menuFilter = 'all';
+
+// ─── RENDER: HOME ────────────────────────────
+function renderHome() {
+  const count = getCartCount();
+  const badge = document.getElementById('home-cart-badge');
+  if (badge) { badge.textContent = count; badge.classList.toggle('hidden', count===0); }
+
+  const harvestBtn = document.getElementById('add-harvest-btn');
+  if (harvestBtn && !harvestBtn._wired) {
+    harvestBtn._wired = true;
+    harvestBtn.addEventListener('click', function() {
+      addToCart({ id:'harvest_bowl', name:'Harvest Protein Bowl', price:8.50, note:'Extra Quinoa, Lemon Tahini Dressing', image:'https://lh3.googleusercontent.com/aida-public/AB6AXuD5eojqNOC4l7dcwsmnGbgChHTSqZhnTmngBCYn7LipnlRbjtNWgWLqYUYjkGArVyTQXnikj_mLu0qLoLuDCYkYiUzXznX9TFEscO0grfIlgp3cuUIUoGhoVIHr1P_Xxu4MxjDwAXON80gOZtvG6C0nDnF-9t0fRMXQhjPk2-gpE-ZFJtDWJ6TzREA4No1DsbymBYwmRAhe8PCMdYBL3zvUREyKc1rdFSjetV0ZbSfdh2qGKAx06PCzvKF6cdmIdFjlhWlkvBMqLZZP', protein:32, carbs:48, fat:14 });
+      renderHome();
+      showToast('Harvest Protein Bowl added! 🌾');
+      const prev = this.innerHTML;
+      this.innerHTML = '<span class="relative z-10">Added ✓</span>';
+      this.style.opacity = '0.8';
+      setTimeout(() => { this.innerHTML = prev; this.style.opacity = ''; }, 2000);
+    });
+  }
+}
+
+// ─── RENDER: MENU ────────────────────────────
+function renderMenu() {
+  const list = document.getElementById('menu-list');
+  if (!list) return;
+  list.innerHTML = '';
+  const items = MENU_ITEMS.filter(i => i.filter.includes(menuFilter));
+
+  items.forEach((item, idx) => {
+    const el = document.createElement('div');
+    el.style.animation = `fadeIn 0.3s ${idx * 0.07}s ease both`;
+    if (item.style === 'featured') {
+      el.className = 'bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_24px_rgba(26,28,28,0.06)] group';
+      el.innerHTML = `
+        <div class="relative h-56 overflow-hidden">
+          <img alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${item.image}"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+          <div class="absolute top-4 left-4"><span class="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full" style="${item.tagStyle}">${item.tag}</span></div>
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-headline text-xl font-bold">${item.name}</h3>
+            <span class="font-black text-primary text-lg">${formatPrice(item.price)}</span>
+          </div>
+          <div class="flex gap-3 mb-3">
+            <span class="text-[10px] font-bold text-stone-500 uppercase">⚡ ${item.cal} CAL</span>
+            <span class="text-[10px] font-bold text-stone-500 uppercase">🥩 ${item.protein}G PROTEIN</span>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-4 leading-relaxed">${item.note}</p>
+          <div class="flex gap-3">
+            <button class="add-btn heat-gradient text-on-primary flex-1 py-3 rounded-full font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2" data-id="${item.id}">
+              <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+              <span>Add to Order</span>
+            </button>
+            <button class="fav-btn bg-surface-container-highest w-12 h-12 rounded-full flex items-center justify-center text-on-surface-variant active:scale-90 transition-all" data-id="${item.id}">
+              <span class="material-symbols-outlined">favorite</span>
+            </button>
+          </div>
+        </div>`;
+    } else {
+      el.className = 'bg-surface-container-low rounded-lg p-5 grid grid-cols-3 gap-4 items-center';
+      el.innerHTML = `
+        <div class="col-span-2">
+          <span class="text-[10px] font-black uppercase tracking-tight px-2 py-0.5 rounded-md" style="${item.tagStyle}">${item.tag}</span>
+          <h3 class="font-headline text-lg font-bold mt-2">${item.name}</h3>
+          <p class="text-xs text-on-surface-variant mt-1">${item.note}</p>
+          <div class="flex gap-4 mt-2">
+            <span class="font-black text-primary">${formatPrice(item.price)}</span>
+            <span class="text-xs text-stone-500 self-center">${item.cal} CAL</span>
+          </div>
+        </div>
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-24 h-24 rounded-lg overflow-hidden"><img alt="${item.name}" class="w-full h-full object-cover" src="${item.image}"/></div>
+          <button class="add-btn bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-all" data-id="${item.id}">
+            <span class="material-symbols-outlined text-sm">add</span>
+          </button>
+        </div>`;
+    }
+    list.appendChild(el);
+  });
+
+  // Wire add buttons
+  list.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = MENU_ITEMS.find(i => i.id === btn.dataset.id);
+      if (!item) return;
+      addToCart({ id:item.id, name:item.name, price:item.price, note:item.note, image:item.image, protein:item.protein, carbs:item.carbs, fat:item.fat });
+      refreshMenuBadge();
+      showToast(`${item.name} added! 🛒`);
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const txt  = btn.querySelector('span:last-child');
+      if (icon) icon.textContent = 'check';
+      if (txt && txt !== icon) txt.textContent = 'Added';
+      setTimeout(() => {
+        if (icon) icon.textContent = item.style === 'featured' ? 'add_shopping_cart' : 'add';
+        if (txt && txt !== icon) txt.textContent = item.style === 'featured' ? 'Add to Order' : '';
+      }, 1500);
+    });
+  });
+
+  // Fav buttons
+  list.querySelectorAll('.fav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const active = btn.dataset.fav === '1';
+      btn.dataset.fav = active ? '' : '1';
+      icon.style.fontVariationSettings = active ? "'FILL' 0" : "'FILL' 1";
+      icon.style.color = active ? '' : '#ba1a1a';
+      showToast(active ? 'Removed from favorites' : 'Added to favorites ❤️');
+    });
+  });
+
+  // Filter chips
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.onclick = () => {
+      menuFilter = chip.dataset.filter;
+      document.querySelectorAll('.filter-chip').forEach(c => {
+        const on = c.dataset.filter === menuFilter;
+        c.className = `filter-chip ${on ? 'bg-primary text-on-primary' : 'bg-surface-container-high text-on-surface'} px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95`;
+      });
+      renderMenu();
+    };
+  });
+
+  refreshMenuBadge();
+}
+
+function refreshMenuBadge() {
+  const count = getCartCount();
+  const badge = document.getElementById('menu-cart-badge');
+  if (badge) { badge.textContent = count; badge.classList.toggle('hidden', count===0); badge.classList.add('badge-pop'); setTimeout(()=>badge.classList.remove('badge-pop'),300); }
+}
+
+// ─── RENDER: CART ────────────────────────────
+function renderCart() {
+  const cart  = getCart();
+  const total = getCartTotal();
+  const empty = cart.length === 0;
+
+  const heading = document.getElementById('cart-items-heading');
+  if (heading) heading.textContent = `Items (${cart.reduce((s,i)=>s+i.qty,0)})`;
+  ['cart-subtotal','cart-total','checkout-total'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = formatPrice(total);
+  });
+
+  const emptyMsg = document.getElementById('empty-cart-msg');
+  const nutSec   = document.getElementById('nutrition-section');
+  const checkBtn = document.getElementById('checkout-btn');
+  if (emptyMsg) emptyMsg.classList.toggle('hidden', !empty);
+  if (nutSec)   nutSec.classList.toggle('hidden', empty);
+  if (checkBtn) checkBtn.disabled = empty;
+
+  // Nutrition
+  const protein = cart.reduce((s,i) => s + (i.protein||0)*i.qty, 0);
+  const carbs   = cart.reduce((s,i) => s + (i.carbs||0)*i.qty, 0);
+  const fat     = cart.reduce((s,i) => s + (i.fat||0)*i.qty, 0);
+  ['nutrition-protein','nutrition-carbs','nutrition-fat'].forEach((id, idx) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = [protein, carbs, fat][idx];
+  });
+
+  // Items list
+  const listEl = document.getElementById('cart-items-list');
+  if (!listEl) return;
+  listEl.innerHTML = '';
+  const bgs = ['bg-surface-container-low','bg-surface-container-highest'];
+  cart.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = `${bgs[idx%2]} p-4 rounded-lg flex gap-4 items-center`;
+    div.style.animation = `fadeIn 0.3s ${idx*0.06}s ease both`;
+    div.innerHTML = `
+      <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+        <img alt="${item.name}" class="w-full h-full object-cover" src="${item.image||''}"/>
+      </div>
+      <div class="flex-grow space-y-1">
+        <div class="flex justify-between items-start">
+          <h3 class="font-bold text-lg leading-tight">${item.name}</h3>
+          <span class="font-bold text-primary">${formatPrice(item.price * item.qty)}</span>
+        </div>
+        <p class="text-xs text-stone-500">${item.note||''}</p>
+        <div class="flex items-center gap-2 pt-2">
+          <button class="qty-btn w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center active:scale-90 transition-transform" data-id="${item.id}" data-delta="-1">
+            <span class="material-symbols-outlined text-sm">remove</span>
+          </button>
+          <span class="font-bold w-4 text-center">${item.qty}</span>
+          <button class="qty-btn w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center active:scale-90 transition-transform" data-id="${item.id}" data-delta="1">
+            <span class="material-symbols-outlined text-sm">add</span>
+          </button>
+          <button class="ml-2 w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error active:scale-90 transition-transform remove-btn" data-id="${item.id}">
+            <span class="material-symbols-outlined text-sm">delete</span>
+          </button>
+        </div>
+      </div>`;
+    listEl.appendChild(div);
+  });
+
+  listEl.querySelectorAll('.qty-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      updateQty(btn.dataset.id, parseInt(btn.dataset.delta));
+      renderCart();
+    });
+  });
+  listEl.querySelectorAll('.remove-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      removeFromCart(btn.dataset.id);
+      showToast('Item removed');
+      renderCart();
+    });
+  });
+}
+
+// ─── RENDER: GROUP ───────────────────────────
+function renderGroup() {
+  const cart    = getCart();
+  const members = getGroupMembers();
+  const splits  = getSplitData();
+  const total   = getCartTotal();
+
+  // Members
+  const mList = document.getElementById('group-members-list');
+  if (!mList) return;
+  mList.innerHTML = '';
+  members.forEach(m => {
+    const chip = document.createElement('button');
+    chip.className = 'flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm text-white transition-transform active:scale-95';
+    chip.style.background = m.color;
+    chip.innerHTML = `<span class="font-black text-xs">${m.initial}</span>${m.name}`;
+    chip.addEventListener('click', () => showToast(`${m.name} is ordering!`));
+    mList.appendChild(chip);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'w-10 h-10 rounded-full border-2 border-dashed border-outline flex items-center justify-center text-outline active:scale-90 transition-transform';
+  addBtn.innerHTML = '<span class="material-symbols-outlined text-sm">person_add</span>';
+  addBtn.addEventListener('click', () => document.getElementById('add-member-row').classList.remove('hidden'));
+  mList.appendChild(addBtn);
+
+  // Basket
+  const bList = document.getElementById('group-basket-list');
+  const empty = document.getElementById('group-empty-basket');
+  if (cart.length === 0) { bList.innerHTML = ''; empty.classList.remove('hidden'); }
+  else {
+    empty.classList.add('hidden');
+    bList.innerHTML = '';
+    cart.forEach(item => {
+      const isSplit = !!splits[item.id];
+      const assigned = isSplit ? members : members.slice(0,1);
+      const card = document.createElement('div');
+      card.className = 'bg-surface-container-lowest rounded-lg p-4 shadow-sm';
+      card.innerHTML = `
+        <div class="flex items-start gap-4">
+          <div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+            <img alt="${item.name}" class="w-full h-full object-cover" src="${item.image||''}"/>
+          </div>
+          <div class="flex-grow">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-bold text-base leading-tight">${item.name}</h3>
+                <div class="flex gap-1 mt-1 flex-wrap">
+                  ${assigned.map(m=>`<span class="w-5 h-5 rounded-full text-[10px] font-black text-white flex items-center justify-center" style="background:${m.color}">${m.initial}</span>`).join('')}
+                </div>
+              </div>
+              <span class="font-black text-primary">${formatPrice(item.price * item.qty)}</span>
+            </div>
+            <div class="flex gap-2 mt-3">
+              <button class="split-btn flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-colors ${isSplit ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-container-high text-on-surface'}" data-id="${item.id}">
+                <span class="material-symbols-outlined text-xs">call_split</span>
+                ${isSplit ? 'Unsplit' : 'Split'}
+              </button>
+            </div>
+          </div>
+        </div>`;
+      bList.appendChild(card);
+    });
+    bList.querySelectorAll('.split-btn').forEach(btn => {
+      btn.addEventListener('click', () => { toggleItemSplit(btn.dataset.id); renderGroup(); showToast(btn.textContent.includes('Split') ? 'Item split!' : 'Item unsplit'); });
+    });
+  }
+
+  // Split summary
+  const splitRows = document.getElementById('group-split-rows');
+  if (!splitRows) return;
+  splitRows.innerHTML = '';
+  const memberTotals = {};
+  members.forEach(m => memberTotals[m.id] = 0);
+  cart.forEach(item => {
+    if (splits[item.id]) {
+      const share = (item.price * item.qty) / members.length;
+      members.forEach(m => { memberTotals[m.id] = (memberTotals[m.id]||0) + share; });
+    } else {
+      const owner = members[0];
+      if (owner) memberTotals[owner.id] = (memberTotals[owner.id]||0) + item.price * item.qty;
+    }
+  });
+  members.forEach(m => {
+    const amt = memberTotals[m.id] || 0;
+    const row = document.createElement('div');
+    row.className = 'flex items-center gap-4';
+    row.innerHTML = `
+      <div class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center font-black text-white text-sm" style="background:${m.color}">${m.initial}</div>
+      <div class="flex-grow"><p class="font-bold">${m.name}</p></div>
+      <span class="font-headline font-black text-lg">${formatPrice(amt)}</span>`;
+    splitRows.appendChild(row);
+  });
+  const totalEl = document.getElementById('group-split-total');
+  if (totalEl) totalEl.textContent = formatPrice(total);
+
+  // Add member wiring
+  const confirmBtn = document.getElementById('confirm-add-member');
+  const cancelBtn  = document.getElementById('cancel-add-member');
+  const input      = document.getElementById('new-member-input');
+  if (confirmBtn && !confirmBtn._wired) {
+    confirmBtn._wired = true;
+    confirmBtn.addEventListener('click', () => {
+      const name = input.value.trim();
+      if (!name) return;
+      const ms = getGroupMembers();
+      addGroupMember({ id:'member_'+Date.now(), name, initial:name[0].toUpperCase(), color:MEMBER_COLORS[ms.length % MEMBER_COLORS.length], active:true });
+      input.value = '';
+      document.getElementById('add-member-row').classList.add('hidden');
+      showToast(`${name} added to group! 👋`);
+      renderGroup();
+    });
+    input.addEventListener('keydown', e => { if (e.key==='Enter') confirmBtn.click(); });
+  }
+  if (cancelBtn && !cancelBtn._wired) {
+    cancelBtn._wired = true;
+    cancelBtn.addEventListener('click', () => {
+      input.value = '';
+      document.getElementById('add-member-row').classList.add('hidden');
+    });
+  }
+}
+
+// ─── RENDER: PAYMENT ─────────────────────────
+function renderPayment() {
+  const cart     = getCart();
+  const subtotal = getCartTotal();
+  const total    = subtotal + 0.75;
+
+  const orderList = document.getElementById('pay-order-items');
+  if (orderList) {
+    orderList.innerHTML = '';
+    cart.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'flex justify-between items-start';
+      row.innerHTML = `<div><h3 class="font-headline text-lg font-bold">${item.name}</h3><p class="text-on-surface-variant text-sm mt-0.5">${item.note||''}</p></div><span class="text-xl font-black font-headline text-primary">${formatPrice(item.price * item.qty)}</span>`;
+      orderList.appendChild(row);
+    });
+  }
+
+  const paySubtotal = document.getElementById('pay-subtotal');
+  const payTotal    = document.getElementById('pay-total');
+  const payBtnTotal = document.getElementById('pay-btn-total');
+  if (paySubtotal) paySubtotal.textContent = formatPrice(subtotal);
+  if (payTotal)    payTotal.textContent    = formatPrice(total);
+  if (payBtnTotal) payBtnTotal.textContent = formatPrice(total);
+
+  // Payment method selection
+  document.querySelectorAll('.payment-method').forEach(btn => {
+    if (!btn._payWired) {
+      btn._payWired = true;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.payment-method').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        showToast('Payment method selected');
+      });
+    }
+  });
+
+  // Pay Now
+  const payBtn = document.getElementById('pay-now-btn');
+  if (payBtn && !payBtn._wired) {
+    payBtn._wired = true;
+    payBtn.addEventListener('click', () => {
+      if (getCart().length === 0) { showToast('Cart is empty!'); return; }
+      const overlay = document.getElementById('processing-overlay');
+      overlay.classList.remove('hidden');
+
+      setTimeout(() => {
+        document.getElementById('spinner-arc').classList.add('hidden');
+        document.getElementById('spinner-circle').classList.add('border-green-600');
+        document.getElementById('spinner-circle').classList.remove('border-primary-fixed');
+        document.getElementById('lock-icon').style.opacity = '0';
+        setTimeout(() => {
+          const si = document.getElementById('success-icon');
+          si.classList.remove('hidden');
+          si.style.transform = 'scale(1)';
+          document.getElementById('processing-title').textContent = 'Order Confirmed!';
+          document.getElementById('processing-title').style.color = '#16a34a';
+          document.getElementById('processing-status').textContent = 'Redirecting to tracker...';
+          setCurrentOrder({ items: getCart(), total, code: generateCode(), placedAt: Date.now() });
+          setCart([]);
+        }, 300);
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+          // Reset overlay for next time
+          document.getElementById('spinner-arc').classList.remove('hidden');
+          document.getElementById('spinner-circle').classList.remove('border-green-600');
+          document.getElementById('spinner-circle').classList.add('border-primary-fixed');
+          document.getElementById('lock-icon').style.opacity = '';
+          document.getElementById('success-icon').classList.add('hidden');
+          document.getElementById('success-icon').style.transform = '';
+          document.getElementById('processing-title').textContent = 'Securing Your Bite';
+          document.getElementById('processing-title').style.color = '';
+          document.getElementById('processing-status').textContent = 'Processing payment...';
+          payBtn._wired = false; // Allow rewiring next visit
+          navigate('tracker');
+        }, 1800);
+      }, 2500);
+    });
+  }
+}
+
+// ─── RENDER: TRACKER ─────────────────────────
+let trackerInterval = null;
+function renderTracker() {
+  const order = getCurrentOrder();
+  const noMsg = document.getElementById('tracker-no-order');
+  const list  = document.getElementById('tracker-order-items');
+  const codeEl = document.getElementById('pickup-code');
+
+  if (!order || !order.items || order.items.length === 0) {
+    if (noMsg) noMsg.classList.remove('hidden');
+    if (list) list.innerHTML = '';
+    if (codeEl) codeEl.textContent = '– – – –';
+  } else {
+    if (noMsg) noMsg.classList.add('hidden');
+    if (codeEl) codeEl.textContent = order.code || '7721';
+    if (list) {
+      list.innerHTML = '';
+      order.items.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center gap-4';
+        row.innerHTML = `
+          <div class="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+            <img alt="${item.name}" class="w-full h-full object-cover" src="${item.image||''}"/>
+          </div>
+          <div class="flex-grow">
+            <p class="font-bold">${item.qty}x ${item.name}</p>
+            <div class="flex gap-2 mt-1">
+              <span class="bg-surface-container-high text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">${(item.protein||0)*item.qty} PROTEIN</span>
+            </div>
+          </div>
+          <span class="font-black text-primary">${formatPrice(item.price * item.qty)}</span>`;
+        list.appendChild(row);
+      });
+    }
+  }
+
+  // Timer
+  if (trackerInterval) clearInterval(trackerInterval);
+  const TOTAL = 12 * 60;
+  function tick() {
+    const placed = getOrderPlacedAt();
+    if (!placed) return;
+    const elapsed   = Math.floor((Date.now() - placed) / 1000);
+    const remaining = Math.max(0, TOTAL - elapsed);
+    const pct       = Math.min(elapsed / TOTAL, 1);
+    const timerEl   = document.getElementById('timer-display');
+    const progEl    = document.getElementById('tracker-progress');
+    if (timerEl) { const mm=String(Math.floor(remaining/60)).padStart(2,'0'); const ss=String(remaining%60).padStart(2,'0'); timerEl.textContent=`${mm}:${ss}`; }
+    if (progEl) progEl.style.width = `${Math.max(40, pct*100)}%`;
+    if (pct >= 0.4) { const l1=document.getElementById('tracker-line-1'); if (l1) l1.style.background='#006a6a'; }
+    if (pct >= 1) {
+      const stepReady = document.getElementById('step-ready');
+      const labelReady = document.getElementById('label-ready');
+      const l2 = document.getElementById('tracker-line-2');
+      if (stepReady) { stepReady.className='w-12 h-12 rounded-full bg-secondary flex items-center justify-center'; stepReady.innerHTML='<span class="material-symbols-outlined text-white" style="font-variation-settings:\'FILL\' 1;">check_circle</span>'; }
+      if (labelReady) { labelReady.className='text-[10px] font-bold uppercase tracking-widest text-secondary'; }
+      if (l2) l2.style.background='#006a6a';
+      if (timerEl) { timerEl.textContent='00:00'; timerEl.style.color='#006a6a'; }
+      clearInterval(trackerInterval);
+    }
+  }
+  tick();
+  trackerInterval = setInterval(tick, 1000);
+}
+
+// ─── RENDER: PROFILE ─────────────────────────
+function renderProfile() {
+  const user = getUser();
+  const nameEl  = document.getElementById('profile-name');
+  const emailEl = document.getElementById('profile-email');
+  if (nameEl)  nameEl.textContent  = user?.name  || 'Alex Bennett';
+  if (emailEl) emailEl.textContent = user?.email || 'alex@bennett.edu';
+
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn && !logoutBtn._wired) {
+    logoutBtn._wired = true;
+    logoutBtn.addEventListener('click', () => {
+      clearUser();
+      showToast('Logged out. See you soon! 👋');
+      setTimeout(() => navigate('login'), 800);
+    });
+  }
+}
+
+// ─── LOGIN LOGIC ─────────────────────────────
+function doLogin(isGuest) {
+  const email = document.getElementById('login-email').value.trim();
+  setUser({
+    name:  isGuest ? 'Guest User' : 'Alex Bennett',
+    email: isGuest ? 'guest@bennett.edu' : (email || 'alex@bennett.edu'),
+    id:    'user_' + Date.now(),
+    isGuest,
+  });
+  seedDemo();
+  navigate('home');
+}
+
+document.getElementById('login-btn').addEventListener('click', () => {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  if (!email || !pass) {
+    errEl.textContent = 'Please fill in both fields.';
+    errEl.classList.remove('hidden');
+    errEl.style.animation = 'fadeIn 0.3s ease';
+    return;
+  }
+  errEl.classList.add('hidden');
+  doLogin(false);
+});
+
+document.getElementById('guest-btn').addEventListener('click', () => doLogin(true));
+document.getElementById('signup-link').addEventListener('click', () => doLogin(false));
+
+// ─── BOOT ────────────────────────────────────
+(function boot() {
+  const user = getUser();
+  if (user) { seedDemo(); navigate('home'); }
+  // else stays on login (already active)
+})();
+</script>
+</body>
+</html>

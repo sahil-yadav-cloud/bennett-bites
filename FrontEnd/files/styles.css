@@ -1,0 +1,92 @@
+/* ── Bennett Bites – Shared Styles ── */
+*, *::before, *::after { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  min-height: 100dvh;
+  background: #f9f9f9;
+  overflow-x: hidden;
+  color: #1a1c1c;
+}
+h1,h2,h3,h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+  display: inline-block; line-height: 1; vertical-align: middle;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.heat-gradient { background: linear-gradient(135deg, #a43700 0%, #cd4700 100%); }
+
+/* ── Animations ── */
+@keyframes shimmer    { 0%{transform:translateX(-100%) skewX(-20deg)} 100%{transform:translateX(250%) skewX(-20deg)} }
+@keyframes spin       { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes scan       { 0%,100%{top:0} 50%{top:calc(100% - 4px)} }
+@keyframes dash       { to{stroke-dashoffset:0} }
+@keyframes pageIn     { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn     { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slideUp    { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes badgePop   { 0%{transform:scale(0)} 70%{transform:scale(1.3)} 100%{transform:scale(1)} }
+@keyframes subtleBounce{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes gentlePulse{ 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.03);opacity:0.9} }
+@keyframes rippleEffect{ to{transform:scale(4);opacity:0} }
+
+.animate-shimmer        { animation: shimmer 2.5s infinite; }
+.animate-spin-fast      { animation: spin 0.6s linear infinite; }
+.qr-scan                { animation: scan 2s ease-in-out infinite; }
+.checkmark-draw         { stroke-dasharray:100; stroke-dashoffset:100; animation:dash .5s ease-in-out forwards; }
+.animate-bounce-gentle  { animation: subtleBounce 1.8s ease-in-out infinite; }
+.animate-gentle-pulse   { animation: gentlePulse 3s infinite; }
+.badge-pop              { animation: badgePop 0.3s ease; }
+
+.fade-in-1 { animation: fadeIn 0.4s ease forwards; }
+.fade-in-2 { animation: fadeIn 0.4s 0.08s ease forwards; opacity:0; }
+.fade-in-3 { animation: fadeIn 0.4s 0.16s ease forwards; opacity:0; }
+.fade-in-4 { animation: fadeIn 0.4s 0.24s ease forwards; opacity:0; }
+
+/* ── Toast ── */
+#bb-toast {
+  position: fixed; bottom: 100px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1a1c1c; color: #fff;
+  padding: 12px 24px; border-radius: 9999px;
+  font-family: 'Be Vietnam Pro', sans-serif; font-weight: 700; font-size: 14px;
+  z-index: 9999; opacity: 0; transition: all 0.25s ease;
+  white-space: nowrap; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+#bb-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── Payment methods ── */
+.payment-method.active { background-color: #fff7ed; border-color: rgba(164,55,0,0.4); border-width: 2px; }
+.payment-method.active .radio-circle { border-width: 6px; border-color: #a43700; }
+
+/* ── Ripple ── */
+.ripple { position: relative; overflow: hidden; }
+.ripple:after {
+  content: ''; position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.3); transform: scale(0);
+  animation: rippleEffect 0.5s linear; pointer-events: none;
+}
+
+/* ── Nav press ── */
+nav a:active { transform: scale(0.92); }
+
+/* ── Page enter ── */
+.page-enter { animation: pageIn 0.28s cubic-bezier(0.4,0,0.2,1); }
+
+/* ── Admin ── */
+.admin-input {
+  width: 100%; height: 56px; padding: 0 16px;
+  background: #e8e8e8; border: none; border-radius: 12px;
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 15px;
+  font-weight: 500; color: #1a1c1c; outline: none;
+  transition: box-shadow 0.2s;
+}
+.admin-input:focus { box-shadow: 0 0 0 3px rgba(164,55,0,0.15); }
+.admin-label {
+  display: block; margin-bottom: 6px;
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; color: #5a4138;
+}

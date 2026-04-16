@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bennett Bites - User Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-container": "#006e6e",
+            "inverse-surface": "#2f3131",
+            "tertiary-container": "#9b6b00",
+            "primary": "#a43700",
+            "surface-container-low": "#f3f3f3",
+            "on-tertiary": "#ffffff",
+            "surface-container": "#eeeeee",
+            "surface-tint": "#a83900",
+            "surface-bright": "#f9f9f9",
+            "surface-container-highest": "#e2e2e2",
+            "on-tertiary-fixed": "#281900",
+            "tertiary-fixed-dim": "#ffba38",
+            "primary-fixed": "#ffdbcf",
+            "on-tertiary-fixed-variant": "#604100",
+            "on-secondary-fixed-variant": "#004f4f",
+            "primary-fixed-dim": "#ffb59a",
+            "secondary": "#006a6a",
+            "on-surface-variant": "#5a4138",
+            "on-background": "#1a1c1c",
+            "on-error-container": "#93000a",
+            "surface-container-lowest": "#ffffff",
+            "tertiary": "#7b5500",
+            "surface-container-high": "#e8e8e8",
+            "secondary-fixed-dim": "#76d6d5",
+            "tertiary-fixed": "#ffdeac",
+            "outline": "#8f7066",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#93f2f2",
+            "on-secondary": "#ffffff",
+            "primary-container": "#cd4700",
+            "on-tertiary-container": "#fffbff",
+            "on-secondary-fixed": "#002020",
+            "on-primary-container": "#fffbff",
+            "outline-variant": "#e3bfb2",
+            "inverse-on-surface": "#f1f1f1",
+            "error-container": "#ffdad6",
+            "on-surface": "#1a1c1c",
+            "surface": "#f9f9f9",
+            "on-error": "#ffffff",
+            "surface-variant": "#e2e2e2",
+            "inverse-primary": "#ffb59a",
+            "secondary-container": "#90efef",
+            "background": "#f9f9f9",
+            "on-primary-fixed-variant": "#802a00",
+            "on-primary-fixed": "#380d00",
+            "error": "#ba1a1a",
+            "surface-dim": "#dadada"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Plus Jakarta Sans"],
+            "body": ["Be Vietnam Pro"],
+            "label": ["Be Vietnam Pro"]
+          },
+          "animation": {
+            "sparkle": "sparkle 1.5s ease-in-out infinite",
+          },
+          "keyframes": {
+            "sparkle": {
+              "0%, 100%": { opacity: 0.8, transform: "scale(1)" },
+              "50%": { opacity: 1, transform: "scale(1.1)" },
+            }
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body { font-family: 'Be Vietnam Pro', sans-serif; }
+    h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .sparkle-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .sparkle-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(circle, white 1px, transparent 1px);
+      background-size: 10px 10px;
+      pointer-events: none;
+      animation: sparkle 2s infinite linear;
+      opacity: 0.5;
+    }
+    @keyframes sparkle {
+      0% { background-position: 0 0; }
+      100% { background-position: 20px 20px; }
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface mb-24 overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-950/80 backdrop-blur-md flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform duration-200 text-stone-500" onclick="history.back()">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="text-xl font-extrabold text-stone-900 dark:text-stone-50 font-['Plus_Jakarta_Sans'] tracking-tight">Profile</h1>
+</div>
+<button class="active:scale-95 transition-transform duration-200 text-stone-500">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="mt-20 px-6 max-w-2xl mx-auto space-y-12 pb-12">
+<!-- Section 1: Hero Header -->
+<section class="relative pt-8">
+<div class="flex items-center gap-6">
+<div class="relative">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl rotate-3">
+<img alt="Profile picture" class="w-full h-full object-cover" data-alt="portrait of a stylish college student with a friendly expression in a modern sunlit campus setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb2ZBP1xQQ-5GRKXaD3sp9pIFRPbv6pLIjWabYwpw-j7Dgk-o5vnS7AjHMY0C6-hhllNr49p8eDTEur3EqrRnftYpxJoRzER6Fm6bcdbL5wnSD7E3c_B6v3GJSYB18bemcvRMSq84fu3lssz26Fr5ye5ql62mkQx7BVIPBImNJ952dyT8oW05EdaLy92fQC_xrM2E6lhrD8e4D-WlO4k1FlxPpGTKFtUXGl_6eu8cSvWDLrLUiuwE5S2qoIpD74rJgfhUmw-wmp6vq"/>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary p-2 rounded-full text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</div>
+</div>
+<div class="space-y-1">
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Alex Bennett</h2>
+<div class="flex items-center gap-2 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-base" data-icon="school">school</span>
+<span class="text-sm font-['Be_Vietnam_Pro'] tracking-wide">ID: 8829-4402-UX</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Dietary Goals -->
+<section class="space-y-6">
+<div class="flex justify-between items-end">
+<h3 class="text-2xl font-bold tracking-tight">Dietary Goals</h3>
+<span class="text-xs font-bold text-primary tracking-widest uppercase">Target Daily</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Protein Card - Completed (Simulated) -->
+<div class="bg-surface-container-low p-6 rounded-lg space-y-4 hover:scale-[1.02] transition-transform duration-300 ring-2 ring-primary/20">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary" data-icon="fitness_center">fitness_center</span>
+<span class="material-symbols-outlined text-primary text-sm font-bold" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Protein</p>
+<div class="flex items-baseline gap-1">
+<p class="text-2xl font-extrabold text-on-surface">120g</p>
+<p class="text-[10px] font-bold text-primary">REACHED</p>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden sparkle-container">
+<div class="bg-primary h-full w-full rounded-full"></div>
+</div>
+</div>
+<!-- Calories Card -->
+<div class="bg-surface-container-highest p-6 rounded-lg space-y-4 hover:scale-[1.02] transition-transform duration-300">
+<span class="material-symbols-outlined text-secondary" data-icon="local_fire_department">local_fire_department</span>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Calories</p>
+<p class="text-2xl font-extrabold text-on-surface">1,625 / 2,500</p>
+</div>
+<div class="w-full bg-surface-variant h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[65%] rounded-full"></div>
+</div>
+</div>
+<!-- Carbs Card -->
+<div class="bg-surface-container-low p-6 rounded-lg space-y-4 hover:scale-[1.02] transition-transform duration-300">
+<span class="material-symbols-outlined text-tertiary" data-icon="nutrition">nutrition</span>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Carbs</p>
+<p class="text-2xl font-extrabold text-on-surface">155g / 310g</p>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[50%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg space-y-4">
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Allergies &amp; Preferences</p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 border border-outline-variant/20">
+<span class="material-symbols-outlined text-sm" data-icon="eco" style="font-variation-settings: 'FILL' 1;">eco</span> Vegan
+          </span>
+<span class="bg-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 border border-outline-variant/20">
+<span class="material-symbols-outlined text-sm" data-icon="no_food">no_food</span> Nut-free
+          </span>
+<button class="bg-surface-container-highest w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Section 3: Budget Setup -->
+<section class="space-y-6">
+<h3 class="text-2xl font-bold tracking-tight">Wallet &amp; Budget</h3>
+<div class="bg-surface-container-highest rounded-lg p-8 relative overflow-hidden group">
+<div class="relative z-10 space-y-8">
+<div class="flex justify-between items-center">
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Daily Spending Limit</p>
+<div class="flex items-center gap-2">
+<h4 class="text-4xl font-extrabold text-primary">$15.00</h4>
+<span class="text-xs font-bold text-on-surface-variant bg-surface-container-low px-2 py-0.5 rounded">Standard</span>
+</div>
+</div>
+<button class="bg-primary text-on-primary w-12 h-12 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+<span>Weekly Allowance</span>
+<span class="text-primary">$105.00</span>
+</div>
+<div class="relative h-2 w-full bg-surface-container rounded-full">
+<div class="absolute left-0 top-0 h-full bg-primary rounded-full" style="width: 35%;"></div>
+<input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" max="300" min="0" type="range" value="105"/>
+<div class="absolute top-0 w-4 h-4 bg-primary border-4 border-white rounded-full shadow-md -mt-1 ml-[35%] -translate-x-1/2"></div>
+</div>
+<div class="flex justify-between text-[10px] font-bold text-on-surface-variant/60">
+<span>$0</span>
+<span>$300</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="notifications_active">notifications_active</span>
+<p class="text-sm font-bold">Budget Alerts</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[160px]" data-icon="payments">payments</span>
+</div>
+</div>
+</section>
+<!-- Section 4: AI Personalization -->
+<section class="bg-secondary-container/30 p-8 rounded-lg border-2 border-secondary-fixed-dim/20 space-y-4">
+<div class="flex items-center gap-3">
+<div class="bg-secondary p-2 rounded-full text-on-secondary">
+<span class="material-symbols-outlined" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h3 class="text-xl font-extrabold text-on-secondary-container">Personalized for You</h3>
+</div>
+<p class="text-sm leading-relaxed text-on-secondary-container/80 font-medium">
+        Our <span class="font-bold text-secondary">Smart Picks</span> AI uses your dietary goals and budget limits to curate the best meals from campus dining halls. Your preferences help us find nutrient-dense options that keep you on track.
+      </p>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-white">
+<img alt="Meal" data-alt="vibrant healthy salad bowl with colorful vegetables and protein" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsIvt0nUix3LSMrrcm6nUhBW8f9YJHBAI_79_WbYsPeYPr6xasi78cp5dLEkR_EO3iTJ__WD7ZuWrr5oTRdzT93ohingDovNMD7s8wzIlxU5yHfpKV1sSgLDwHSuAwHo4B6L5XhE6fyl6Y-xOfoeIYgZq7YsyPDs4Giv_gUz1YDQhpabID-SEpQpUkVaShEu2v-SOGWUZG4GkvjyvcRHc4CBEPSe4PMKYSZmfL8z0TjKRmZaKcct_6S5xn3kxYMwgG_-zeMLiQLVgq"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-white">
+<img alt="Meal" data-alt="steaming bowl of vegetable soup with artisan bread on the side" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzIx9CCdCGFlMXAYxJ-MhgmZnv4RPbhC-F32uzptuuMO7lFRIpV-xb9UtChopy1K0e_v8Y6TMv_gZlDkXGvGNgnTYuG7VPFFZVwLzoalPlCkLoOSiSyMyDbHTdpz03ejAW13kXN2O4KPhIW_mDkY2DXsar2hQTBZnOkdJiOgN1kZj4t_ON05kzgTMl57qal6HZ_gh0tYYFre_6uAvtE7I4Ecr-nhCygHLef27Rfg9HRyQgbHYM3xHXKwakDdPuVF4p1EEj_8gX5xH_"/>
+</div>
+</div>
+<p class="text-[10px] font-bold text-secondary uppercase tracking-widest">+ 12 Today's Suggestions</p>
+</div>
+</section>
+<!-- Section 5: Account Settings -->
+<section class="space-y-2">
+<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-6">Preferences &amp; Account</h3>
+<div class="space-y-1">
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors group" onclick="window.location.href='{{DATA:SCREEN:SCREEN_11}}'">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="history">history</span>
+<span class="text-sm font-bold">Order History</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="credit_card">credit_card</span>
+<span class="text-sm font-bold">Payment Methods</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Visa **** 4402</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="notifications">notifications</span>
+<span class="text-sm font-bold">Notification Settings</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-surface-container-low hover:bg-error/5 hover:bg-surface-container transition-colors group mt-4" onclick="window.location.href='{{DATA:SCREEN:SCREEN_5}}'">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-error" data-icon="logout">logout</span>
+<span class="text-sm font-bold text-error">Logout</span>
+</div>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-6 bg-white/80 dark:bg-stone-950/80 backdrop-blur-md rounded-t-[2rem] z-50 shadow-[0_-12px_24px_rgba(0,0,0,0.08)]">
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-orange-500 dark:hover:text-orange-300 transition-opacity active:scale-95 duration-200" href="{{DATA:SCREEN:SCREEN_21}}">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] font-bold uppercase tracking-widest">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-orange-500 dark:hover:text-orange-300 transition-opacity active:scale-95 duration-200" href="{{DATA:SCREEN:SCREEN_11}}">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] font-bold uppercase tracking-widest">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-orange-500 dark:hover:text-orange-300 transition-opacity active:scale-95 duration-200" href="{{DATA:SCREEN:SCREEN_10}}">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] font-bold uppercase tracking-widest">Budget</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-orange-100 dark:bg-orange-950/30 text-orange-700 dark:text-orange-400 rounded-full px-5 py-2 active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] font-bold uppercase tracking-widest">Profile</span>
+</a>
+</nav>
+</body></html>

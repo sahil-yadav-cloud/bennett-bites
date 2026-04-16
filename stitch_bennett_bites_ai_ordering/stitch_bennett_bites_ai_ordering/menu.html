@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#002020",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-fixed-variant": "#604100",
+                    "on-primary-fixed-variant": "#802a00",
+                    "tertiary-container": "#9b6b00",
+                    "tertiary-fixed": "#ffdeac",
+                    "primary": "#a43700",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#cd4700",
+                    "primary-fixed": "#ffdbcf",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#380d00",
+                    "surface-bright": "#f9f9f9",
+                    "on-secondary-container": "#006e6e",
+                    "tertiary": "#7b5500",
+                    "inverse-on-surface": "#f1f1f1",
+                    "secondary-fixed-dim": "#76d6d5",
+                    "surface-variant": "#e2e2e2",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#93f2f2",
+                    "on-tertiary-fixed": "#281900",
+                    "on-primary-container": "#fffbff",
+                    "tertiary-fixed-dim": "#ffba38",
+                    "surface": "#f9f9f9",
+                    "on-surface-variant": "#5a4138",
+                    "primary-fixed-dim": "#ffb59a",
+                    "surface-dim": "#dadada",
+                    "on-surface": "#1a1c1c",
+                    "secondary": "#006a6a",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#004f4f",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f3f3f3",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e2e2e2",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#ffb59a",
+                    "surface-tint": "#a83900",
+                    "outline": "#8f7066",
+                    "outline-variant": "#e3bfb2",
+                    "background": "#f9f9f9",
+                    "on-background": "#1a1c1c",
+                    "inverse-surface": "#2f3131",
+                    "on-tertiary-container": "#fffbff",
+                    "secondary-container": "#90efef",
+                    "surface-container": "#eeeeee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Be Vietnam Pro"],
+                    "label": ["Be Vietnam Pro"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .heat-gradient {
+            background: linear-gradient(135deg, #a43700 0%, #cd4700 100%);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes added-scale {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .animate-added {
+            animation: added-scale 0.3s ease-in-out;
+        }
+
+        @keyframes rainbow-glow {
+            0% { border-color: #ff0000; box-shadow: 0 0 15px rgba(255,0,0,0.3); }
+            20% { border-color: #ff8800; box-shadow: 0 0 15px rgba(255,136,0,0.3); }
+            40% { border-color: #ffff00; box-shadow: 0 0 15px rgba(255,255,0,0.3); }
+            60% { border-color: #00ff00; box-shadow: 0 0 15px rgba(0,255,0,0.3); }
+            80% { border-color: #0000ff; box-shadow: 0 0 15px rgba(0,0,255,0.3); }
+            100% { border-color: #ff00ff; box-shadow: 0 0 15px rgba(255,0,255,0.3); }
+        }
+        .insight-card {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .insight-card:has(.try-hack-btn:hover), 
+        .insight-card:has(.try-hack-btn:active) {
+            animation: rainbow-glow 3s linear infinite;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)] flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<a class="flex items-center gap-3 group" href="javascript:history.back()">
+<div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/20 group-active:scale-95 transition-transform">
+<img alt="Student Profile Photo" class="w-full h-full object-cover" data-alt="portrait of a young college student with a friendly expression in a sunlit university courtyard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxj9-OSSMT-3k7KLFXgnkiO5y2ecdXuOqfLDhuKQa2SsOstACtDHwIRZ4XYBthbMWgKTAAoy-Hk1c5KK3r3EePwOgfsjmqlGaIlUfmNmbK5hskG-_8DkL4rxaX1qoSdSCPDJtzf2Fyj--vLkDHN2L6-Irc8VqoGwjYL0hBKk1JaFHXPd6uXmHxYJ1kXNkku7kQeE6SbFQ-eZ_7prX_jBfMSnI-zopBFPqWPtmm2AjP9jw7peXV5tZlmqUTVaFGN-lSY9etHYROASrH"/>
+</div>
+<span class="text-2xl font-black italic text-orange-700 dark:text-orange-400 font-headline tracking-tight">Bennett Bites</span>
+</a>
+</div>
+<button class="text-stone-500 dark:text-stone-400 hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined text-2xl" data-icon="search">search</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-2xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-10">
+<div class="flex justify-between items-end mb-4">
+<div>
+<span class="font-label text-[10px] uppercase tracking-widest font-bold text-secondary mb-1 block">CAMPUS PARTNER</span>
+<h1 class="font-headline text-4xl font-extrabold tracking-tight text-on-surface">Cafe Terra</h1>
+</div>
+<div class="flex items-center gap-1 bg-secondary-container px-3 py-1 rounded-full text-on-secondary-container font-bold text-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.8</span>
+</div>
+</div>
+<p class="text-on-surface-variant leading-relaxed">Sustainable bowls and artisanal coffee roasted locally on University Ave.</p>
+</section>
+<!-- Filters -->
+<section class="mb-10 -mx-6 px-6 overflow-x-auto flex gap-3 no-scrollbar">
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold text-sm whitespace-nowrap shadow-md">All Menu</button>
+<button class="bg-surface-container-high text-on-surface px-6 py-2.5 rounded-full font-bold text-sm whitespace-nowrap hover:bg-surface-variant transition-colors">Under $5</button>
+<button class="bg-surface-container-high text-on-surface px-6 py-2.5 rounded-full font-bold text-sm whitespace-nowrap hover:bg-surface-variant transition-colors">$5 - $10</button>
+<button class="bg-surface-container-high text-on-surface px-6 py-2.5 rounded-full font-bold text-sm whitespace-nowrap hover:bg-surface-variant transition-colors">Plant-Based</button>
+</section>
+<!-- Bennett's Insight Section -->
+<section class="mb-12 relative overflow-hidden bg-tertiary-fixed rounded-lg p-6 flex gap-5 items-start insight-card">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h2 class="font-headline font-bold text-on-tertiary-fixed tracking-tight">Bennett's Insight</h2>
+</div>
+<p class="text-on-tertiary-fixed-variant font-medium leading-tight">
+                    "Add dry fruits to your Greek Curd Bowl for an extra 5g of protein and sustained energy through your afternoon lab."
+                </p>
+<button class="mt-4 text-sm font-bold text-tertiary underline decoration-2 underline-offset-4 try-hack-btn">Try this hack</button>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[120px]" data-icon="neurology">neurology</span>
+</div>
+</section>
+<!-- Menu Feed -->
+<div class="space-y-10">
+<!-- Item 1: High Energy -->
+<div class="group">
+<div class="relative aspect-[16/10] rounded-lg overflow-hidden mb-4 bg-surface-container-low shadow-sm">
+<img alt="Avocado Power Bowl" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="vibrant healthy salad bowl with salmon, avocado, quinoa and fresh microgreens on a marble surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn01_Ayw-F4GTQpM178gQt2PiPIe6zp5ncodJcdvLZDFtZb8liRyCVR8gia8uCcUrodk8eHF55KSfvrYDfT9P2ycX5M9_qpmDGngqHYmuMv1pieuOAHTOd4988i22GSAZAQUzJ-sA-dLsPKqNl8TJxQgtiCmRiu6mrjTjY15b-5t-SIL3Z8ICdXXTQ5rePhkspbZOozUTKD7z_sc0U0RFWT39hzI6k42zDHU_Bc2VRyJZOHiHHywe_TIv0gPeIpoFSeUIFGhiDcrI4"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-secondary text-on-secondary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">HIGH PROTEIN</span>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-xl font-bold text-on-surface mb-1">Avocado Power Bowl</h3>
+<div class="flex gap-4 items-center">
+<span class="font-label text-[10px] uppercase font-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">bolt</span> 420 CAL
+                            </span>
+<span class="font-label text-[10px] uppercase font-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">fitness_center</span> 18G PROTEIN
+                            </span>
+</div>
+</div>
+<span class="font-headline text-xl font-extrabold text-primary">$8.50</span>
+</div>
+<p class="mt-2 text-on-surface-variant text-sm leading-relaxed">Smashed avocado, warm quinoa, roasted chickpeas, and a citrus-tahini drizzle.</p>
+<div class="mt-4 flex gap-2">
+<button class="heat-gradient text-on-primary flex-1 py-3 rounded-full font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2" onclick="handleAddToCart(this)">
+<span class="material-symbols-outlined text-sm" data-icon="add_shopping_cart">add_shopping_cart</span>
+<span class="btn-text">Add to Order</span>
+</button>
+<button class="bg-surface-container-highest w-12 h-12 rounded-full flex items-center justify-center text-on-surface-variant active:scale-90 transition-transform">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+<!-- Item 2: Budget Friendly -->
+<div class="bg-surface-container-low rounded-lg p-6 grid grid-cols-3 gap-6 items-center cursor-pointer active:scale-[0.98] transition-transform" onclick="handleAddToCart(this)">
+<div class="col-span-2">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-tight">BUDGET PICK</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-on-surface">Honey Greek Curd</h3>
+<p class="text-on-surface-variant text-xs mb-3">Creamy Greek yogurt with local honey and house-made granola.</p>
+<div class="flex items-center justify-between">
+<span class="font-headline text-lg font-black text-on-surface">$4.25</span>
+<span class="text-on-surface-variant font-bold text-[10px] tracking-widest uppercase">210 CAL</span>
+</div>
+</div>
+<div class="relative aspect-square rounded-lg overflow-hidden shadow-inner">
+<img alt="Honey Greek Curd" class="w-full h-full object-cover" data-alt="top view of a glass bowl filled with creamy yogurt topped with amber honey and golden crunchy granola" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMTvm8uz_lzFWJD_Ld5W8XOKuwrotRB2c9A6UpJIlN8WpKushQCL_1DTK8fzmY3sHgBPhdp-PxBY9rB_6Wp-vwmhKLKM3VfnpwRPQgvaIqlcSGQlyPi4DFs0nGwKg2ej_Qw46NuIvGOSyBYGcwxMniMty4Q-FqoL-ydQ1GhzeiwX5W_p4uRDmZ3RYOchz_huhnlSt1Raa6hkUpftL2RDkhgeUnHsGUkeDTnF8tad3InxpruE4mNGihdWgsKVFdLgelnW3AvCP98he4"/>
+</div>
+</div>
+<!-- Item 3: Beverage -->
+<div class="group">
+<div class="relative aspect-[16/10] rounded-lg overflow-hidden mb-4 bg-surface-container-low">
+<img alt="Terra Signature Latte" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="barista pouring steamed milk into an espresso shot to create latte art in a ceramic cup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuyGPufb3FJOrbq1n3TItrha0oLe9iZfTNT9SR2O3NgCyGY7CqnYjG_Fr_RWCvycGE59eIRsUaPo2sw1gfKhuIFu6ZN1exy-bvYi2k3Jrj2iqSljfG_lwRslFjXdEVPVK7LDUcInZNDjo8DQbdCzpC0SaQSsvKNXeFUfnwekkFaMyIuVxQc3J1sfxzTluD_3x9gwA1YVlMn3XYVdL8mGMzsIZeaF0VXNYa1pF_uZSowiTNLpc2ob3MfqiDaWGWG3GRF6MOH-JdYxKL"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-xl font-bold text-on-surface mb-1">Terra Signature Latte</h3>
+<p class="text-on-surface-variant text-sm">Double shot espresso, oat milk, and a hint of lavender.</p>
+</div>
+<span class="font-headline text-xl font-extrabold text-primary">$5.50</span>
+</div>
+<div class="mt-4 flex gap-2">
+<button class="bg-secondary text-on-secondary flex-1 py-3 rounded-full font-bold text-sm active:scale-95 transition-transform">Customize Milk</button>
+<button class="bg-primary text-on-primary w-12 h-12 rounded-full flex items-center justify-center active:scale-90 transition-all" onclick="handleAddToCart(this)">
+<span class="material-symbols-outlined btn-icon" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Cart Button -->
+<a class="fixed bottom-24 right-6 z-40 bg-primary text-on-primary w-16 h-16 rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-transform" href="javascript:void(0)" onclick="location.href='{{DATA:SCREEN:SCREEN_18}}'">
+<span class="material-symbols-outlined text-3xl">shopping_cart</span>
+</a>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full bg-white/90 dark:bg-stone-950/90 backdrop-blur-lg rounded-t-[2rem] z-50 flex justify-around items-center px-4 pb-6 pt-2 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-orange-600 transition-colors active:scale-[0.98]" href="javascript:void(0)" onclick="location.href='{{DATA:SCREEN:SCREEN_10}}'">
+<span class="material-symbols-outlined" data-icon="local_fire_department">local_fire_department</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-orange-100 dark:bg-orange-950/50 text-orange-700 dark:text-orange-300 rounded-full py-2 px-4 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-orange-600 transition-colors active:scale-[0.98]" href="javascript:void(0)" onclick="location.href='{{DATA:SCREEN:SCREEN_18}}'">
+<span class="material-symbols-outlined" data-icon="group_add">group_add</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Group</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-orange-600 transition-colors active:scale-[0.98]" href="javascript:void(0)" onclick="location.href='{{DATA:SCREEN:SCREEN_11}}'">
+<span class="material-symbols-outlined" data-icon="potted_plant">potted_plant</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Track</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-orange-600 transition-colors active:scale-[0.98]" href="javascript:void(0)" onclick="location.href='{{DATA:SCREEN:SCREEN_4}}'">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Goals</span>
+</a>
+</nav>
+<script>
+        function handleAddToCart(btn) {
+            btn.classList.add('animate-added');
+            
+            const textSpan = btn.querySelector('.btn-text');
+            const iconSpan = btn.querySelector('.btn-icon') || btn.querySelector('.material-symbols-outlined');
+            
+            const originalText = textSpan ? textSpan.innerText : null;
+            const originalIcon = iconSpan ? iconSpan.innerText : null;
+
+            if (textSpan) textSpan.innerText = 'Added!';
+            if (iconSpan) iconSpan.innerText = 'check';
+
+            setTimeout(() => {
+                btn.classList.remove('animate-added');
+                if (textSpan) textSpan.innerText = originalText;
+                if (iconSpan) iconSpan.innerText = originalIcon;
+                // Redirect to cart after a brief success animation
+                location.href = '{{DATA:SCREEN:SCREEN_18}}';
+            }, 800);
+        }
+    </script>
+</body></html>

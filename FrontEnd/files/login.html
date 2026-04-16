@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – Bennett Bites</title>
+  <script>
+    tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#002020","surface-container-high":"#e8e8e8","tertiary-container":"#9b6b00","tertiary-fixed":"#ffdeac","primary":"#a43700","on-primary":"#ffffff","primary-container":"#cd4700","primary-fixed":"#ffdbcf","error-container":"#ffdad6","on-primary-fixed":"#380d00","on-secondary-container":"#006e6e","secondary":"#006a6a","surface-variant":"#e2e2e2","surface-container-lowest":"#ffffff","secondary-fixed":"#93f2f2","on-tertiary-fixed":"#281900","on-primary-container":"#fffbff","surface":"#f9f9f9","on-surface-variant":"#5a4138","surface-dim":"#dadada","on-surface":"#1a1c1c","surface-container-low":"#f3f3f3","on-secondary":"#ffffff","surface-container-highest":"#e2e2e2","error":"#ba1a1a","inverse-primary":"#ffb59a","outline":"#8f7066","outline-variant":"#e3bfb2","background":"#f9f9f9","on-background":"#1a1c1c","secondary-container":"#90efef","surface-container":"#eeeeee"},borderRadius:{DEFAULT:"1rem",lg:"2rem",xl:"3rem",full:"9999px"},fontFamily:{headline:["Plus Jakarta Sans"],body:["Be Vietnam Pro"]}}}}
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../src/styles.css"/>
+</head>
+<body class="text-on-surface">
+
+<div id="bb-toast"></div>
+
+<div class="bg-background min-h-dvh flex flex-col items-center justify-center p-6 page-enter">
+  <main class="w-full max-w-md flex flex-col gap-8">
+
+    <!-- Brand -->
+    <div class="flex flex-col items-center text-center gap-4 fade-in-1">
+      <div class="relative group">
+        <div class="absolute -inset-4 bg-primary-fixed/20 rounded-full blur-2xl"></div>
+        <h1 class="font-headline font-black italic text-5xl tracking-tighter text-primary relative">Bennett Bites</h1>
+      </div>
+      <p class="font-body text-on-surface-variant max-w-[260px] leading-relaxed text-sm">
+        Fueling the academic pulse with campus-favorite flavors.
+      </p>
+    </div>
+
+    <!-- Login Card -->
+    <section class="bg-surface-container-lowest rounded-lg p-8 shadow-[0_12px_24px_rgba(26,28,28,0.06)] relative overflow-hidden fade-in-2">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+
+      <div class="flex flex-col gap-6 relative z-10">
+        <!-- Email -->
+        <div class="flex flex-col gap-1.5">
+          <label class="font-body text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1">
+            Campus Email
+          </label>
+          <div class="relative group">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px] group-focus-within:text-primary transition-colors">mail</span>
+            <input id="login-email"
+              class="w-full h-14 pl-12 pr-4 bg-surface-container-high rounded-md border-none ring-0 focus:ring-2 focus:ring-primary/20 transition-all text-on-surface font-medium placeholder:text-stone-400 outline-none"
+              placeholder="you@bennett.edu.in" type="email" autocomplete="email"/>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="flex flex-col gap-1.5">
+          <div class="flex justify-between items-center px-1">
+            <label class="font-body text-xs font-bold uppercase tracking-widest text-on-surface-variant">Password</label>
+            <button id="forgot-btn" type="button" class="text-[10px] font-bold text-secondary uppercase tracking-wider">Forgot?</button>
+          </div>
+          <div class="relative group">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px] group-focus-within:text-primary transition-colors">lock</span>
+            <input id="login-password"
+              class="w-full h-14 pl-12 pr-4 bg-surface-container-high rounded-md border-none ring-0 focus:ring-2 focus:ring-primary/20 transition-all text-on-surface font-medium placeholder:text-stone-400 outline-none"
+              placeholder="••••••••" type="password" autocomplete="current-password"/>
+          </div>
+        </div>
+
+        <p id="login-error" class="text-error text-sm font-medium hidden px-1"></p>
+
+        <!-- Submit -->
+        <button id="login-btn" type="button"
+          class="mt-2 w-full h-14 rounded-full bg-gradient-to-r from-primary to-primary-container text-white font-headline font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-[0.97] transition-all duration-200 relative overflow-hidden">
+          <div class="absolute inset-0 w-1/2 h-full bg-white/20 -skew-x-[20deg] -translate-x-full animate-shimmer pointer-events-none"></div>
+          <span class="relative z-10">Login</span>
+          <span class="material-symbols-outlined text-[20px] relative z-10">arrow_forward</span>
+        </button>
+      </div>
+
+      <div class="relative flex items-center justify-center py-8">
+        <div class="w-full border-t border-outline-variant/30"></div>
+        <span class="absolute bg-surface-container-lowest px-4 text-[10px] font-bold uppercase tracking-widest text-outline">or</span>
+      </div>
+
+      <button id="guest-btn" type="button"
+        class="w-full h-14 rounded-full bg-secondary-container text-on-secondary-container font-headline font-bold text-base flex items-center justify-center gap-2 active:scale-[0.97] transition-all duration-200">
+        Continue as Guest
+      </button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="flex flex-col items-center gap-6 fade-in-3">
+      <p class="text-xs text-on-surface-variant font-medium">
+        New to the campus?
+        <button id="signup-link" type="button" class="text-primary font-bold hover:underline">Create an account</button>
+      </p>
+      <p class="text-[10px] text-on-surface-variant/60 text-center">
+        Only <span class="font-bold text-primary">@bennett.edu.in</span> email addresses are permitted.
+      </p>
+    </footer>
+  </main>
+</div>
+
+<script type="module">
+import { setUser, seedDemo, getUser }   from '../src/state.js';
+import { showToast }                    from '../src/utils.js';
+import { guardGuest, navigate }         from '../src/router.js';
+
+// Redirect if already logged in.
+guardGuest(getUser);
+
+const emailEl  = document.getElementById('login-email');
+const passEl   = document.getElementById('login-password');
+const errEl    = document.getElementById('login-error');
+
+/** Show inline validation error. */
+function showError(msg) {
+  errEl.textContent = msg;
+  errEl.classList.remove('hidden');
+  errEl.style.animation = 'none';
+  requestAnimationFrame(() => { errEl.style.animation = 'fadeIn 0.3s ease'; });
+}
+
+function hideError() { errEl.classList.add('hidden'); }
+
+/** Core login routine. */
+function doLogin(isGuest) {
+  const email = emailEl.value.trim();
+  setUser({
+    name:    isGuest ? 'Guest User' : (email.split('@')[0] || 'Student'),
+    email:   isGuest ? 'guest@bennett.edu.in' : email,
+    id:      'user_' + Date.now(),
+    isGuest,
+  });
+  seedDemo();
+  navigate('home');
+}
+
+// ── Login button ──────────────────────────────────────────────────────────
+document.getElementById('login-btn').addEventListener('click', () => {
+  const email = emailEl.value.trim();
+  const pass  = passEl.value;
+
+  hideError();
+
+  if (!email || !pass) {
+    showError('Please fill in both fields.');
+    return;
+  }
+
+  // Institutional gate — strict domain check.
+  if (!email.endsWith('@bennett.edu.in')) {
+    showError('Only @bennett.edu.in email addresses are allowed.');
+    emailEl.focus();
+    return;
+  }
+
+  if (pass.length < 6) {
+    showError('Password must be at least 6 characters.');
+    return;
+  }
+
+  doLogin(false);
+});
+
+// ── Guest button ──────────────────────────────────────────────────────────
+document.getElementById('guest-btn').addEventListener('click', () => {
+  doLogin(true);
+});
+
+// ── Sign-up link (demo – auto-login) ─────────────────────────────────────
+document.getElementById('signup-link').addEventListener('click', () => {
+  showToast('Sign-up coming soon! Logging you in as demo user.');
+  emailEl.value = 'alex@bennett.edu.in';
+  passEl.value  = 'demo123';
+  doLogin(false);
+});
+
+// ── Forgot password ───────────────────────────────────────────────────────
+document.getElementById('forgot-btn').addEventListener('click', () => {
+  showToast('Password reset email sent!');
+});
+
+// Enter key support.
+[emailEl, passEl].forEach(el => {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('login-btn').click();
+  });
+});
+</script>
+</body>
+</html>

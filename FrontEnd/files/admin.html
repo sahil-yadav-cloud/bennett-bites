@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin – Bennett Bites</title>
+  <script>
+    tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container-high":"#e8e8e8","primary":"#a43700","on-primary":"#ffffff","primary-container":"#cd4700","primary-fixed":"#ffdbcf","on-primary-fixed":"#380d00","on-secondary-container":"#006e6e","secondary":"#006a6a","surface-variant":"#e2e2e2","surface-container-lowest":"#ffffff","secondary-fixed":"#93f2f2","on-secondary-fixed":"#002020","on-primary-container":"#fffbff","tertiary-fixed":"#ffdeac","tertiary-container":"#9b6b00","surface":"#f9f9f9","on-surface-variant":"#5a4138","on-surface":"#1a1c1c","secondary-container":"#90efef","on-secondary":"#ffffff","surface-container-low":"#f3f3f3","surface-container-highest":"#e2e2e2","error":"#ba1a1a","outline":"#8f7066","outline-variant":"#e3bfb2","background":"#f9f9f9","surface-container":"#eeeeee"},borderRadius:{DEFAULT:"1rem",lg:"2rem",xl:"3rem",full:"9999px"},fontFamily:{headline:["Plus Jakarta Sans"],body:["Be Vietnam Pro"]}}}}
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../src/styles.css"/>
+</head>
+<body class="text-on-surface bg-background">
+
+<div id="bb-toast"></div>
+
+<!-- Header -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)]">
+  <div class="flex items-center justify-between px-6 py-4">
+    <div class="flex items-center gap-3">
+      <button id="back-btn" class="text-stone-500 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <div>
+        <h1 class="text-xl font-black font-headline text-orange-700 leading-none">Admin Panel</h1>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mt-0.5">Bennett Bites</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 bg-secondary-container px-3 py-1.5 rounded-full">
+      <span class="material-symbols-outlined text-secondary text-sm">admin_panel_settings</span>
+      <span class="text-xs font-bold text-on-secondary-container">STAFF ONLY</span>
+    </div>
+  </div>
+</header>
+
+<main class="pt-24 pb-12 px-6 max-w-2xl mx-auto space-y-8 page-enter">
+
+  <!-- Section title -->
+  <section class="fade-in-1">
+    <span class="text-[10px] uppercase tracking-widest font-bold text-secondary mb-2 block">FOOD MANAGEMENT</span>
+    <h2 class="font-headline text-4xl font-extrabold tracking-tight leading-none">Add New <span class="text-primary">Item</span></h2>
+    <p class="text-on-surface-variant text-sm mt-2">Fill in the details and upload a photo. The item will appear on the menu immediately.</p>
+  </section>
+
+  <!-- Image upload zone -->
+  <section class="fade-in-2">
+    <label class="admin-label">Food Image</label>
+    <div id="drop-zone"
+      class="relative border-2 border-dashed border-outline-variant rounded-lg h-52 flex flex-col items-center justify-center gap-3 cursor-pointer overflow-hidden transition-all hover:border-primary/50 hover:bg-primary-fixed/5 active:scale-[0.99]"
+      role="button" tabindex="0" aria-label="Upload food image">
+      <!-- Preview -->
+      <img id="img-preview" src="" alt="Preview" class="hidden absolute inset-0 w-full h-full object-cover rounded-lg"/>
+      <div id="drop-placeholder" class="flex flex-col items-center gap-2 text-center">
+        <div class="w-14 h-14 rounded-full bg-primary-fixed/30 flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary text-3xl">add_photo_alternate</span>
+        </div>
+        <p class="font-bold text-on-surface">Tap to upload</p>
+        <p class="text-xs text-on-surface-variant">JPEG, PNG or WEBP · Max 5 MB</p>
+      </div>
+      <input id="food-image" type="file" accept="image/jpeg,image/png,image/webp" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
+    </div>
+  </section>
+
+  <!-- Form fields -->
+  <section class="space-y-5 fade-in-3">
+
+    <!-- Name -->
+    <div>
+      <label class="admin-label" for="food-name">Item Name</label>
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px]">restaurant</span>
+        <input id="food-name" type="text" placeholder="e.g. Avocado Power Bowl"
+          class="admin-input pl-12" maxlength="80" required/>
+      </div>
+    </div>
+
+    <!-- Price + Calories (2-col) -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="admin-label" for="food-price">Price (USD)</label>
+        <div class="relative">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-outline font-bold text-sm">$</span>
+          <input id="food-price" type="number" placeholder="0.00" min="0" step="0.01"
+            class="admin-input pl-8" required/>
+        </div>
+      </div>
+      <div>
+        <label class="admin-label" for="food-calories">Calories</label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px]">local_fire_department</span>
+          <input id="food-calories" type="number" placeholder="420" min="0"
+            class="admin-input pl-12" required/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category -->
+    <div>
+      <label class="admin-label" for="food-category">Category</label>
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">label</span>
+        <select id="food-category"
+          class="admin-input pl-12 appearance-none cursor-pointer pr-10"
+          required>
+          <option value="" disabled selected>Select a category…</option>
+          <option value="bowls">Bowls</option>
+          <option value="drinks">Drinks</option>
+          <option value="snacks">Snacks</option>
+          <option value="mains">Mains</option>
+          <option value="desserts">Desserts</option>
+          <option value="breakfast">Breakfast</option>
+        </select>
+        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">expand_more</span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label class="admin-label" for="food-desc">Short Description</label>
+      <textarea id="food-desc" rows="3" placeholder="Describe the item briefly…"
+        class="w-full p-4 bg-surface-container-high rounded-xl border-none outline-none focus:shadow-[0_0_0_3px_rgba(164,55,0,0.15)] resize-none font-body text-sm text-on-surface placeholder:text-stone-400 transition-shadow"
+        maxlength="200"></textarea>
+    </div>
+  </section>
+
+  <!-- Status / error -->
+  <div id="form-status" class="hidden rounded-lg px-5 py-4 text-sm font-medium"></div>
+
+  <!-- Submit -->
+  <div class="space-y-3 fade-in-4">
+    <button id="submit-btn" type="button"
+      class="w-full h-14 rounded-full bg-gradient-to-r from-primary to-primary-container text-white font-headline font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-[0.97] transition-all relative overflow-hidden">
+      <div class="absolute inset-0 w-1/2 h-full bg-white/20 -skew-x-[20deg] -translate-x-full animate-shimmer pointer-events-none"></div>
+      <span class="material-symbols-outlined relative z-10 text-[20px]" id="submit-icon">upload</span>
+      <span class="relative z-10" id="submit-label">Upload Food Item</span>
+    </button>
+    <button id="reset-btn" type="button"
+      class="w-full h-11 rounded-full bg-surface-container-high text-on-surface-variant font-bold text-sm active:scale-[0.97] transition-all">
+      Clear Form
+    </button>
+  </div>
+
+</main>
+
+<script type="module">
+import { navigate, guardAuth }  from '../src/router.js';
+import { getUser }              from '../src/state.js';
+import { showToast }            from '../src/utils.js';
+import { BennettAPI }           from '../src/api.js';
+
+if (!guardAuth(getUser)) { throw new Error('redirect'); }
+
+const api = new BennettAPI();
+
+// ── Image preview ─────────────────────────────────────────────────────────
+const fileInput   = document.getElementById('food-image');
+const preview     = document.getElementById('img-preview');
+const placeholder = document.getElementById('drop-placeholder');
+
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files?.[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    showStatus('Image must be under 5 MB.', 'error');
+    fileInput.value = '';
+    return;
+  }
+  const url = URL.createObjectURL(file);
+  preview.src = url;
+  preview.classList.remove('hidden');
+  placeholder.classList.add('hidden');
+});
+
+// ── Status helper ─────────────────────────────────────────────────────────
+function showStatus(msg, type = 'info') {
+  const el = document.getElementById('form-status');
+  el.textContent = msg;
+  el.className = `rounded-lg px-5 py-4 text-sm font-medium ${
+    type === 'error'   ? 'bg-error-container text-on-error-container' :
+    type === 'success' ? 'bg-secondary-container text-on-secondary-container' :
+                         'bg-surface-container-high text-on-surface'
+  }`;
+  el.classList.remove('hidden');
+}
+
+function hideStatus() { document.getElementById('form-status').classList.add('hidden'); }
+
+// ── Submit ────────────────────────────────────────────────────────────────
+document.getElementById('submit-btn').addEventListener('click', async () => {
+  hideStatus();
+
+  const name     = document.getElementById('food-name').value.trim();
+  const price    = parseFloat(document.getElementById('food-price').value);
+  const calories = parseInt(document.getElementById('food-calories').value, 10);
+  const category = document.getElementById('food-category').value;
+  const desc     = document.getElementById('food-desc').value.trim();
+  const file     = fileInput.files?.[0];
+
+  // Validation
+  if (!name)              { showStatus('Item name is required.', 'error');       return; }
+  if (isNaN(price) || price < 0) { showStatus('Enter a valid price.', 'error'); return; }
+  if (isNaN(calories))   { showStatus('Enter valid calories.', 'error');         return; }
+  if (!category)         { showStatus('Select a category.', 'error');            return; }
+  if (!file)             { showStatus('Please upload a food image.', 'error');   return; }
+
+  // Build FormData (multipart/form-data — BennettAPI.uploadFood omits Content-Type header)
+  const formData = new FormData();
+  formData.append('name',        name);
+  formData.append('price',       price.toString());
+  formData.append('calories',    calories.toString());
+  formData.append('category',    category);
+  formData.append('description', desc);
+  formData.append('image',       file, file.name);
+
+  // UI: loading state
+  const icon  = document.getElementById('submit-icon');
+  const label = document.getElementById('submit-label');
+  icon.textContent  = 'hourglass_empty';
+  label.textContent = 'Uploading…';
+  document.getElementById('submit-btn').disabled = true;
+
+  try {
+    await api.uploadFood(formData);
+    showStatus(`"${name}" added to menu successfully! 🎉`, 'success');
+    showToast('Food item uploaded!');
+    resetForm();
+  } catch (err) {
+    // If backend unavailable, show a clear message (not a crash).
+    showStatus(`Upload failed: ${err.message}. Is the backend running at localhost:8000?`, 'error');
+    console.error('[BennettAPI.uploadFood]', err);
+  } finally {
+    icon.textContent  = 'upload';
+    label.textContent = 'Upload Food Item';
+    document.getElementById('submit-btn').disabled = false;
+  }
+});
+
+// ── Reset ────────────────────────────────────────────────────────────────
+function resetForm() {
+  ['food-name','food-price','food-calories','food-desc'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('food-category').selectedIndex = 0;
+  fileInput.value = '';
+  preview.src = '';
+  preview.classList.add('hidden');
+  placeholder.classList.remove('hidden');
+}
+
+document.getElementById('reset-btn').addEventListener('click', () => {
+  resetForm();
+  hideStatus();
+  showToast('Form cleared.');
+});
+
+document.getElementById('back-btn').addEventListener('click', () => navigate('home'));
+</script>
+</body>
+</html>

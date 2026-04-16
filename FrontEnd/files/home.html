@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home – Bennett Bites</title>
+  <script>
+    tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container-high":"#e8e8e8","tertiary-container":"#9b6b00","tertiary-fixed":"#ffdeac","primary":"#a43700","on-primary":"#ffffff","primary-container":"#cd4700","primary-fixed":"#ffdbcf","on-primary-fixed":"#380d00","on-secondary-container":"#006e6e","secondary":"#006a6a","surface-variant":"#e2e2e2","surface-container-lowest":"#ffffff","secondary-fixed":"#93f2f2","on-tertiary-fixed":"#281900","on-primary-container":"#fffbff","surface":"#f9f9f9","on-surface-variant":"#5a4138","on-surface":"#1a1c1c","secondary-container":"#90efef","on-secondary":"#ffffff","surface-container-lowest":"#ffffff","surface-container-low":"#f3f3f3","surface-container-highest":"#e2e2e2","error":"#ba1a1a","outline":"#8f7066","outline-variant":"#e3bfb2","background":"#f9f9f9","surface-container":"#eeeeee","on-secondary-fixed":"#002020"},borderRadius:{DEFAULT:"1rem",lg:"2rem",xl:"3rem",full:"9999px"},fontFamily:{headline:["Plus Jakarta Sans"],body:["Be Vietnam Pro"]}}}}
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../src/styles.css"/>
+</head>
+<body class="text-on-surface">
+
+<div id="bb-toast"></div>
+
+<!-- Header -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)] flex justify-between items-center px-6 py-4">
+  <div class="flex items-center gap-3">
+    <button id="profile-avatar" class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant active:scale-90 transition-transform">
+      <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd-o8EpAIYEalOZbN4HNU9TMwTtVFuWRmwvh2TPBeFGJLU0uAnjIf5cacZ_Jw7iQFlvrp9J7zU2uatimpyg2xpKCG-F5k18_RTfXj-U8CGn6lpBdmA0vYYKm7bvznTPqpJs3Iv4uQQMOamfKmO_HIiDtw2U6BJPYji2HkAoCisO5qgSIkKXDh-UR0wiWI50JAXPFmYTqT2WMrIJKL954X1OG2K4M-1-GEXkLByllAksuxDxTAJTrW-SvyU-ja_U3bxClIJNNT27WBt" alt="Avatar"/>
+    </button>
+    <h1 class="text-2xl font-black italic text-orange-700 font-headline tracking-tight">Bennett Bites</h1>
+  </div>
+  <div class="flex items-center gap-4">
+    <button id="search-btn" class="text-stone-500 hover:text-primary transition-colors active:scale-95">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+    <button id="cart-btn" class="relative cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined text-stone-500 hover:text-primary transition-colors">shopping_cart</span>
+      <span id="home-cart-badge" class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-black rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+    </button>
+  </div>
+</header>
+
+<main class="pt-24 pb-32 px-6 max-w-2xl mx-auto space-y-8 page-enter">
+
+  <!-- Active Order Banner -->
+  <button id="active-order-btn" class="w-full text-left relative overflow-hidden bg-secondary-container rounded-lg p-6 flex items-center justify-between shadow-sm active:scale-[0.98] transition-all duration-200 fade-in-1">
+    <div class="space-y-1">
+      <span class="text-[10px] font-bold uppercase tracking-widest text-on-secondary-container">Active Order</span>
+      <p class="font-headline font-bold text-lg text-on-secondary-container leading-tight">Fresh Bowl is being prepped</p>
+      <div class="flex items-center gap-2 text-sm text-on-secondary-container/80">
+        <span class="material-symbols-outlined text-sm">timer</span>
+        <span>Ready in 8 mins • Cafe Terra</span>
+      </div>
+    </div>
+    <div class="relative w-16 h-16 flex items-center justify-center">
+      <div class="absolute inset-0 border-4 border-white/20 rounded-full"></div>
+      <div class="absolute inset-0 border-4 border-white rounded-full animate-pulse" style="clip-path:polygon(0 0,70% 0,70% 100%,0 100%)"></div>
+      <span class="material-symbols-outlined text-white text-3xl">restaurant</span>
+    </div>
+  </button>
+
+  <!-- On Campus Now -->
+  <section class="fade-in-2">
+    <h2 class="font-headline font-extrabold text-xl mb-4 tracking-tight">On Campus Now</h2>
+    <div class="flex gap-4 overflow-x-auto no-scrollbar -mx-6 px-6">
+      <button class="outlet-btn flex-none w-40 space-y-3 active:scale-95 transition-transform text-left">
+        <div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+          <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA0q15xp7iHNRqJhv3bmfBj6U8mIKUefdiM6OjOEHrIYB5-NuExC0sVoguGz1OmlfMoE2BbS3j9DHDvhNMfc1jPvq--RY5lyT6gBs0xEmn9kw9cWg_HosXkSSGrEtBrE8-LK-4eoQKkgHjKcglOYyXfPeRsihRXCa89sflex5U1DVlQBuKjDRa8oj6olDcqIDn1L2IuN68VK_egb1p0TiANvsXA3dcHGKOXqce80-8AtsRBBBuLslmPAgBlG0iaaaRb5eL1u7VRW5" alt="Cafe Terra"/>
+          <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-secondary">OPEN</div>
+        </div>
+        <p class="font-bold text-sm">Cafe Terra</p>
+      </button>
+      <button class="outlet-btn flex-none w-40 space-y-3 active:scale-95 transition-transform text-left">
+        <div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+          <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3LdpnK5zIpTAn9d1CuRdmaO43IpNrntrJ9vQXGRpUceewIpmm8stzZP4ACDu6pUyN62y6rDAPVwln7ZBFG18-QhKimOv4j9ARvbvtZmx7SwSEXt026X1LMVB7k5pacYPyilsuUb7vqcl9NPZTkJC898ByBT1jYyQMGcgdYMOq0uCUykx4AB9tw5Y1QZ-9toNWjF2Z9E_5eP5VOaZLiILb8VJp4A68m-rUy2x2QbrjTkwTg2MDjNQIktzpbj-1yWpGOuASg14y7jLD" alt="Student Hub"/>
+          <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-secondary">OPEN</div>
+        </div>
+        <p class="font-bold text-sm">Student Hub</p>
+      </button>
+      <button class="outlet-btn flex-none w-40 space-y-3 active:scale-95 transition-transform text-left">
+        <div class="aspect-square rounded-lg overflow-hidden bg-surface-container-high relative">
+          <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOl8v768kYJ9GsZDyRiNM-OXlOwcIrJUsJ-07C4p1KHwk9yP9HMG2qT5ejiJiMGPdxhoicmSvyh3Amd-MasMtlC2JXtQyHyyOL7E43fNpqPTUQ4ddlbClbluX0PbsOEVx6tqTnM9r9bxE20GaC-6sdef3KULwwEHAcHBPjqiyE43PRBYQvSh-6qH6vhJgPcmpvMXF6-As6indcG0xg4kEf4TDKC3j8V-sc8AiiBB1cVailaXvwpKYUNKySuS4ct-hfCHsyYc8-jMZ5" alt="The Salad Bar"/>
+          <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-error">BUSY</div>
+        </div>
+        <p class="font-bold text-sm">The Salad Bar</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- For You -->
+  <section class="space-y-6 fade-in-3">
+    <div class="flex items-end justify-between">
+      <div class="space-y-1">
+        <h2 class="font-headline font-extrabold text-3xl tracking-tight">For You</h2>
+        <p id="for-you-sub" class="text-on-surface-variant text-sm">High protein • Under $10 budget</p>
+      </div>
+      <button id="ai-pick-btn" class="bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full flex items-center gap-2 shadow-sm active:scale-95 transition-transform animate-gentle-pulse">
+        <span class="material-symbols-outlined text-lg">auto_awesome</span>
+        <span class="text-xs font-bold">AI SMART PICK</span>
+      </button>
+    </div>
+
+    <!-- Featured Card -->
+    <div class="rounded-lg bg-surface-container-low p-1 overflow-hidden group">
+      <div class="relative h-64 rounded-xl overflow-hidden mb-4">
+        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5eojqNOC4l7dcwsmnGbgChHTSqZhnTmngBCYn7LipnlRbjtNWgWLqYUYjkGArVyTQXnikj_mLu0qLoLuDCYkYiUzXznX9TFEscO0grfIlgp3cuUIUoGhoVIHr1P_Xxu4MxjDwAXON80gOZtvG6C0nDnF-9t0fRMXQhjPk2-gpE-ZFJtDWJ6TzREA4No1DsbymBYwmRAhe8PCMdYBL3zvUREyKc1rdFSjetV0ZbSfdh2qGKAx06PCzvKF6cdmIdFjlhWlkvBMqLZZP"
+          alt="Harvest Protein Bowl"/>
+        <div class="absolute bottom-4 left-4 flex gap-2">
+          <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary shadow-sm">$8.50</span>
+          <span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-xs font-bold shadow-sm">32g PROTEIN</span>
+        </div>
+      </div>
+      <div class="px-4 pb-4">
+        <div class="flex justify-between items-start mb-2">
+          <div>
+            <h3 class="font-headline font-extrabold text-2xl">Harvest Protein Bowl</h3>
+            <p class="text-on-surface-variant text-sm mt-1">Extra Quinoa, Lemon Tahini Dressing</p>
+          </div>
+        </div>
+        <button id="add-harvest-btn"
+          class="mt-4 w-full py-4 rounded-full bg-gradient-to-r from-primary to-primary-container text-white font-headline font-bold text-base flex items-center justify-center gap-2 shadow-lg active:scale-[0.97] transition-all relative overflow-hidden">
+          <div class="absolute inset-0 w-1/2 h-full bg-white/20 -skew-x-[20deg] -translate-x-full animate-shimmer pointer-events-none"></div>
+          <span class="material-symbols-outlined relative z-10 text-[20px]">add_shopping_cart</span>
+          <span class="relative z-10">Add to Order</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg rounded-t-[2rem] shadow-[0_-8px_20px_rgba(0,0,0,0.05)] flex justify-around items-center px-4 pb-6 pt-2 z-50">
+  <a class="flex flex-col items-center justify-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 active:scale-90 cursor-pointer transition-transform" id="nav-home">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">local_fire_department</span>
+    <span class="text-[10px] uppercase tracking-widest font-bold">Feed</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform" id="nav-menu">
+    <span class="material-symbols-outlined">restaurant_menu</span>
+    <span class="text-[10px] uppercase tracking-widest font-bold">Menu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform" id="nav-cart">
+    <span class="material-symbols-outlined">shopping_cart</span>
+    <span class="text-[10px] uppercase tracking-widest font-bold">Cart</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform" id="nav-tracker">
+    <span class="material-symbols-outlined">potted_plant</span>
+    <span class="text-[10px] uppercase tracking-widest font-bold">Track</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform" id="nav-profile">
+    <span class="material-symbols-outlined">account_circle</span>
+    <span class="text-[10px] uppercase tracking-widest font-bold">Profile</span>
+  </a>
+</nav>
+
+<script type="module">
+import { navigate, guardAuth, syncCartBadge } from '../src/router.js';
+import { getUser, addToCart, getCartCount }   from '../src/state.js';
+import { showToast }                           from '../src/utils.js';
+
+if (!guardAuth(getUser)) { throw new Error('redirect'); }
+
+const user = getUser();
+document.querySelector('#for-you-sub').textContent =
+  `Hello ${user?.name?.split(' ')[0] || 'Student'} • High protein picks`;
+
+function refreshBadge() { syncCartBadge('home-cart-badge', getCartCount); }
+refreshBadge();
+
+// Sync badge when cart changes in another tab.
+window.addEventListener('storage', refreshBadge);
+window.addEventListener('bb:cart-changed', refreshBadge);
+
+// Nav
+document.getElementById('nav-menu').addEventListener('click', () => navigate('menu'));
+document.getElementById('nav-cart').addEventListener('click', () => navigate('cart'));
+document.getElementById('nav-tracker').addEventListener('click', () => navigate('tracker'));
+document.getElementById('nav-profile').addEventListener('click', () => navigate('profile'));
+document.getElementById('cart-btn').addEventListener('click', () => navigate('cart'));
+document.getElementById('search-btn').addEventListener('click', () => showToast('Search coming soon!'));
+document.getElementById('active-order-btn').addEventListener('click', () => navigate('tracker'));
+document.querySelectorAll('.outlet-btn').forEach(b => b.addEventListener('click', () => navigate('menu')));
+document.getElementById('ai-pick-btn').addEventListener('click', () => showToast('AI Smart Picks refreshed!'));
+document.getElementById('profile-avatar').addEventListener('click', () => navigate('profile'));
+
+// Add Harvest Bowl
+const harvestBtn = document.getElementById('add-harvest-btn');
+harvestBtn.addEventListener('click', function () {
+  addToCart({
+    id: 'harvest_bowl', name: 'Harvest Protein Bowl', price: 8.50,
+    note: 'Extra Quinoa, Lemon Tahini Dressing',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD5eojqNOC4l7dcwsmnGbgChHTSqZhnTmngBCYn7LipnlRbjtNWgWLqYUYjkGArVyTQXnikj_mLu0qLoLuDCYkYiUzXznX9TFEscO0grfIlgp3cuUIUoGhoVIHr1P_Xxu4MxjDwAXON80gOZtvG6C0nDnF-9t0fRMXQhjPk2-gpE-ZFJtDWJ6TzREA4No1DsbymBYwmRAhe8PCMdYBL3zvUREyKc1rdFSjetV0ZbSfdh2qGKAx06PCzvKF6cdmIdFjlhWlkvBMqLZZP',
+    protein: 32, carbs: 48, fat: 14,
+  });
+  refreshBadge();
+  showToast('Harvest Protein Bowl added! 🌾');
+  const orig = this.innerHTML;
+  this.innerHTML = '<span class="relative z-10 font-bold">Added ✓</span>';
+  this.style.opacity = '0.8';
+  setTimeout(() => { this.innerHTML = orig; this.style.opacity = ''; }, 2000);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<html class="light" lang="en"><head></head><body class="bg-surface text-on-surface min-h-screen pb-32">```html
+
+
+
+    <meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bennett Bites - Cart &amp; Group Order</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-secondary-fixed": "#002020",
+                "surface-container-high": "#e8e8e8",
+                "on-tertiary-fixed-variant": "#604100",
+                "on-primary-fixed-variant": "#802a00",
+                "tertiary-container": "#9b6b00",
+                "tertiary-fixed": "#ffdeac",
+                "primary": "#a43700",
+                "on-primary": "#ffffff",
+                "primary-container": "#cd4700",
+                "primary-fixed": "#ffdbcf",
+                "on-error": "#ffffff",
+                "error-container": "#ffdad6",
+                "on-primary-fixed": "#380d00",
+                "surface-bright": "#f9f9f9",
+                "on-secondary-container": "#006e6e",
+                "tertiary": "#7b5500",
+                "inverse-on-surface": "#f1f1f1",
+                "secondary-fixed-dim": "#76d6d5",
+                "surface-variant": "#e2e2e2",
+                "surface-container-lowest": "#ffffff",
+                "secondary-fixed": "#93f2f2",
+                "on-tertiary-fixed": "#281900",
+                "on-primary-container": "#fffbff",
+                "tertiary-fixed-dim": "#ffba38",
+                "surface": "#f9f9f9",
+                "on-surface-variant": "#5a4138",
+                "primary-fixed-dim": "#ffb59a",
+                "surface-dim": "#dadada",
+                "on-surface": "#1a1c1c",
+                "secondary": "#006a6a",
+                "on-error-container": "#93000a",
+                "on-secondary-fixed-variant": "#004f4f",
+                "on-tertiary": "#ffffff",
+                "surface-container-low": "#f3f3f3",
+                "on-secondary": "#ffffff",
+                "surface-container-highest": "#e2e2e2",
+                "error": "#ba1a1a",
+                "inverse-primary": "#ffb59a",
+                "surface-tint": "#a83900",
+                "outline": "#8f7066",
+                "outline-variant": "#e3bfb2",
+                "background": "#f9f9f9",
+                "on-background": "#1a1c1c",
+                "inverse-surface": "#2f3131",
+                "on-tertiary-container": "#fffbff",
+                "secondary-container": "#90efef",
+                "surface-container": "#eeeeee"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Plus Jakarta Sans"],
+                "body": ["Be Vietnam Pro"],
+                "label": ["Be Vietnam Pro"]
+            },
+            "keyframes": {
+                "subtle-bounce": {
+                    "0%, 100%": { transform: "translateY(0)" },
+                    "50%": { transform: "translateY(-8px)" }
+                }
+            },
+            "animation": {
+                "subtle-bounce": "subtle-bounce 1s ease-in-out"
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        h1, h2, h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .editorial-gradient {
+            background: linear-gradient(135deg, #a43700 0%, #cd4700 100%);
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .nutrition-card {
+            animation: subtle-bounce 1s ease-in-out;
+            animation-fill-mode: both;
+        }
+        .nutrition-card:nth-child(2) { animation-delay: 0.1s; }
+        .nutrition-card:nth-child(3) { animation-delay: 0.2s; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)] flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<button class="hover:opacity-80 transition-opacity active:scale-95 duration-200 text-stone-500 mr-1" onclick="window.history.back()">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-orange-100">
+<img alt="Student Profile Photo" class="w-full h-full object-cover" data-alt="close-up portrait of a cheerful college student with messy hair wearing a collegiate sweater in soft indoor lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbtEpkH_dj2iX9-MQVIEMSGH5B7zK2Xlv88pFeECWWHEGh8mGd9oeO4tGpy-L87n-vE4YXkw89a0oeZ2njr7y_c6J2e-K8YXySvpRiF4lPauTNIy9Q7ogjk0-p1LKdu8s9jsKQ5EfVwez2hrqtjx5VvAS4lSgPbg1HKx4Yy_58hO456HVEdOhgkqiI1glO_RA2jcFCVJtuIl8lWkVxR89kP6BPVVRyFZmySaknahg708UZO4HXqpaYBaU89qEUmmGK5se7TaksVlgt"/>
+</div>
+<span class="text-2xl font-black italic text-orange-700 dark:text-orange-400 font-['Plus_Jakarta_Sans'] tracking-tight">Bennett Bites</span>
+</div>
+<button class="text-stone-500 dark:text-stone-400 hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<main class="pt-24 px-6 max-w-2xl mx-auto space-y-8">
+<!-- Header Section -->
+<section class="space-y-2">
+<h1 class="text-4xl font-extrabold tracking-tighter text-on-surface">Your Cart</h1>
+<p class="text-stone-500 font-medium">Review your selection or start a group session.</p>
+</section>
+<!-- Group Order Entry -->
+<section class="bg-secondary-container p-6 rounded-lg flex items-center justify-between gap-4 shadow-sm">
+<div class="space-y-1">
+<h3 class="font-bold text-on-secondary-container text-lg">Group Order</h3>
+<p class="text-sm text-on-secondary-container/80">Order with friends and track together.</p>
+</div>
+<button class="bg-on-secondary-container text-white px-6 py-3 rounded-full font-bold text-sm transition-transform active:scale-95 shadow-lg" onclick="window.location.href='{{DATA:SCREEN:SCREEN_21}}'">
+                Start Group Order
+            </button>
+</section>
+<!-- Cart Items List -->
+<section class="space-y-6">
+<div class="flex justify-between items-end">
+<h2 class="text-xl font-bold tracking-tight">Items (2)</h2>
+<button class="text-primary font-bold text-sm">Add More</button>
+</div>
+<!-- Item 1 -->
+<div class="bg-surface-container-low p-4 rounded-lg flex gap-4 items-center">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Healthy Bowl" class="w-full h-full object-cover" data-alt="vibrant healthy grain bowl with salmon, avocado, and fresh greens on a clean white background, high contrast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArnuuWypGAoy5poADW_Co6wjNLGUEYzO4_lJIo-w1mX7Cqj7RIKgt_wP9EVXOHL696xqbN1wWnqcZuFAfBciRoWfxBW0YET_CNwxZcq_B7jYEiZ_Tk-Wk0346h99QTiqn9YYmppZ-ojzXKcgczQyNmGmGysXw748cnAu826zy5hvyQoLgg4Pe7zqjE8DyYi7vnT-1msHJkO-R0CHgBqttdOsk1zwnlDrGUHYY0c0JidhRv95727TAUqWyXxJMzVVRvFzikz_xJdhKO"/>
+</div>
+<div class="flex-grow space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-lg leading-tight">Spicy Salmon Quinoa Bowl</h3>
+<span class="font-bold text-primary">$14.50</span>
+</div>
+<p class="text-xs text-stone-500">No onions, extra dressing on side</p>
+<div class="flex items-center gap-2 pt-2">
+<button class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="font-bold w-4 text-center">1</span>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-highest p-4 rounded-lg flex gap-4 items-center">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Iced Coffee" class="w-full h-full object-cover" data-alt="cold brew iced coffee in a tall glass with swirling cream and ice cubes on a stone surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3wVDrkEcPvQWivgbGe9MQmJBjMWY_JwDGKto6PS0ZwVGDTHo8F_bZPBrYqsrfwsVuzUPu2VAqWdZ4dYMJW-9XtsJfES5OB8iGYHslLotABjLP100pI5x13wgAPKuGCd4QZuZzM0Qm7tk3DK0B5TzS0Cr_Fk7lTb5BBW6SyaGlUh_x7T-rTeMwRjuiciNqHbaJFXrt5PSzYE6QeYCqEI0BXBLgrEsLnAKRVAxNkBhVM6OF3bdk3wIbCb0FQv7jWxRH5FyyLrA_ETR-"/>
+</div>
+<div class="flex-grow space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-lg leading-tight">Oat Milk Cold Brew</h3>
+<span class="font-bold text-primary">$5.75</span>
+</div>
+<p class="text-xs text-stone-500">Regular ice, 2 pumps vanilla</p>
+<div class="flex items-center gap-2 pt-2">
+<button class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="font-bold w-4 text-center">1</span>
+<button class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Nutritional Summary Bento -->
+<section class="space-y-4">
+<h2 class="text-xl font-bold tracking-tight">Order Nutrition</h2>
+<div class="grid grid-cols-3 gap-3">
+<div class="nutrition-card bg-secondary-fixed p-4 rounded-lg flex flex-col justify-between aspect-square">
+<span class="text-[10px] font-bold tracking-widest uppercase text-on-secondary-fixed/60">Protein</span>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-black text-on-secondary-fixed">32</span>
+<span class="text-xs font-bold mb-1">g</span>
+</div>
+</div>
+<div class="nutrition-card bg-tertiary-fixed p-4 rounded-lg flex flex-col justify-between aspect-square">
+<span class="text-[10px] font-bold tracking-widest uppercase text-on-tertiary-fixed/60">Carbs</span>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-black text-on-tertiary-fixed">48</span>
+<span class="text-xs font-bold mb-1">g</span>
+</div>
+</div>
+<div class="nutrition-card bg-primary-fixed p-4 rounded-lg flex flex-col justify-between aspect-square">
+<span class="text-[10px] font-bold tracking-widest uppercase text-on-primary-fixed/60">Fats</span>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-black text-on-primary-fixed">14</span>
+<span class="text-xs font-bold mb-1">g</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Split Bill Toggle -->
+<section class="bg-surface-container p-5 rounded-lg flex items-center justify-between border-l-4 border-secondary shadow-sm">
+<div class="flex items-center gap-3">
+<div class="bg-secondary/10 w-10 h-10 rounded-full flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<h3 class="font-bold text-sm">Split Bill Evenly</h3>
+<p class="text-xs text-stone-500">Perfect for group study sessions</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</section>
+<!-- Total Details -->
+<section class="space-y-3 pt-4">
+<div class="flex justify-between text-sm">
+<span class="text-stone-500">Subtotal</span>
+<span class="font-bold">$20.25</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-stone-500">Service Fee</span>
+<span class="font-bold text-secondary">FREE (Student Plan)</span>
+</div>
+<div class="flex justify-between text-xl font-extrabold pt-2 border-t border-outline-variant/20">
+<span>Total</span>
+<span class="text-primary">$20.25</span>
+</div>
+</section>
+</main>
+<!-- Fixed Bottom Checkout & Navigation -->
+<div class="fixed bottom-0 left-0 w-full z-50">
+<!-- Floating Checkout Button -->
+<div class="px-6 pb-4">
+<button class="editorial-gradient w-full py-5 rounded-full flex items-center justify-between px-8 shadow-xl active:scale-[0.98] transition-transform duration-200" onclick="window.location.href='{{DATA:SCREEN:SCREEN_19}}'">
+<div class="flex flex-col items-start">
+<span class="text-white/80 text-[10px] uppercase font-bold tracking-widest">Ready in 12 mins</span>
+<span class="text-white font-bold text-lg">Checkout Order</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-white font-bold text-xl">$20.25</span>
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+</div>
+</button>
+</div>
+<!-- BottomNavBar -->
+<nav class="bg-white/90 dark:bg-stone-950/90 backdrop-blur-lg rounded-t-[2rem] shadow-[0_-8px_20px_rgba(0,0,0,0.05)] flex justify-around items-center px-4 pb-6 pt-2 w-full">
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="local_fire_department">local_fire_department</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group_add">group_add</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Group</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="potted_plant">potted_plant</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Track</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-orange-100 dark:bg-orange-950/50 text-orange-700 dark:text-orange-300 rounded-full py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Goals</span>
+</a>
+</nav>
+</div>
+```</body></html>

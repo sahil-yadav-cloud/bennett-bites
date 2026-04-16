@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile – Bennett Bites</title>
+  <script>
+    tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container-high":"#e8e8e8","primary":"#a43700","on-primary":"#ffffff","primary-container":"#cd4700","primary-fixed":"#ffdbcf","on-primary-fixed":"#380d00","on-secondary-container":"#006e6e","secondary":"#006a6a","surface-variant":"#e2e2e2","surface-container-lowest":"#ffffff","secondary-fixed":"#93f2f2","on-secondary-fixed":"#002020","on-primary-container":"#fffbff","tertiary-fixed":"#ffdeac","tertiary-container":"#9b6b00","surface":"#f9f9f9","on-surface-variant":"#5a4138","on-surface":"#1a1c1c","secondary-container":"#90efef","on-secondary":"#ffffff","surface-container-low":"#f3f3f3","surface-container-highest":"#e2e2e2","error":"#ba1a1a","outline":"#8f7066","outline-variant":"#e3bfb2","background":"#f9f9f9","surface-container":"#eeeeee"},borderRadius:{DEFAULT:"1rem",lg:"2rem",xl:"3rem",full:"9999px"},fontFamily:{headline:["Plus Jakarta Sans"],body:["Be Vietnam Pro"]}}}}
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../src/styles.css"/>
+</head>
+<body class="text-on-surface">
+
+<div id="bb-toast"></div>
+
+<header class="flex items-center justify-between px-6 pt-12 pb-4">
+  <h1 class="font-headline font-black text-2xl text-primary">My Profile</h1>
+  <button id="back-btn" class="text-stone-500 active:scale-90 transition-transform">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </button>
+</header>
+
+<main class="px-6 max-w-2xl mx-auto pb-32 space-y-6 page-enter">
+
+  <!-- Avatar + name -->
+  <section class="flex flex-col items-center text-center gap-4 py-4">
+    <div class="relative">
+      <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-primary-fixed shadow-lg">
+        <img class="w-full h-full object-cover"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbtEpkH_dj2iX9-MQVIEMSGH5B7zK2Xlv88pFeECWWHEGh8mGd9oeO4tGpy-L87n-vE4YXkw89a0oeZ2njr7y_c6J2e-K8YXySvpRiF4lPauTNIy9Q7ogjk0-p1LKdu8s9jsKQ5EfVwez2hrqtjx5VvAS4lSgPbg1HKx4Yy_58hO456HVEdOhgkqiI1glO_RA2jcFCVJtuIl8lWkVxR89kP6BPVVRyFZmySaknahg708UZO4HXqpaYBaU89qEUmmGK5se7TaksVlgt"
+          alt="Avatar"/>
+      </div>
+    </div>
+    <div>
+      <h2 class="font-headline font-black text-2xl" id="profile-name">—</h2>
+      <p class="text-on-surface-variant text-sm mt-0.5" id="profile-email">—</p>
+    </div>
+    <div class="flex gap-3">
+      <div class="bg-primary-fixed px-4 py-2 rounded-full text-center">
+        <p class="font-black text-primary text-xl">12</p>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Orders</p>
+      </div>
+      <div class="bg-secondary-container px-4 py-2 rounded-full text-center">
+        <p class="font-black text-secondary text-xl">2.4k</p>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Calories</p>
+      </div>
+      <div class="bg-tertiary-fixed px-4 py-2 rounded-full text-center">
+        <p class="font-black text-on-surface text-xl">$42</p>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Spent</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Budget -->
+  <section class="bg-surface-container-lowest rounded-lg p-6 shadow-sm space-y-4">
+    <div class="flex items-center justify-between">
+      <h3 class="font-headline font-black text-lg">Campus Wallet</h3>
+      <button id="edit-limit-btn" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary active:scale-90 transition-transform">
+        <span class="material-symbols-outlined text-sm">edit</span>
+      </button>
+    </div>
+    <div class="flex items-baseline gap-1">
+      <span class="font-headline font-black text-4xl text-primary">$58</span>
+      <span class="text-on-surface-variant text-sm font-medium">remaining</span>
+    </div>
+    <div>
+      <div class="flex justify-between text-sm mb-2">
+        <span class="font-bold text-on-surface-variant uppercase text-[10px] tracking-widest">Weekly Allowance</span>
+        <span class="font-bold">$105.00</span>
+      </div>
+      <div class="relative h-2 bg-surface-variant rounded-full overflow-hidden">
+        <div class="h-full bg-primary rounded-full transition-all" style="width:35%"></div>
+      </div>
+      <div class="flex justify-between mt-1 text-[10px] text-on-surface-variant font-bold">
+        <span>$0</span><span>$300</span>
+      </div>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-sm">notifications</span>
+        <span class="font-bold text-sm">Budget Alerts</span>
+      </div>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input id="budget-alert-toggle" type="checkbox" class="sr-only peer" checked/>
+        <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+      </label>
+    </div>
+  </section>
+
+  <!-- Smart Picks promo -->
+  <section class="bg-secondary-container rounded-lg p-6 space-y-3">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+        <span class="material-symbols-outlined text-white text-lg">auto_awesome</span>
+      </div>
+      <h3 class="font-headline font-bold text-on-secondary-container">Personalized for You</h3>
+    </div>
+    <p class="text-sm text-on-secondary-container/80 leading-relaxed">Our Smart Picks AI curates meals based on your dietary goals and budget.</p>
+    <button id="smart-picks-btn" class="text-xs font-bold text-secondary active:opacity-70 transition-opacity">🍔🥗 View today's suggestions →</button>
+  </section>
+
+  <!-- Settings list -->
+  <section class="space-y-2">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-1">Preferences &amp; Account</p>
+    <div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm">
+      <button id="history-btn" class="w-full flex items-center justify-between p-5 border-b border-outline-variant/10 active:bg-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-on-surface-variant">history</span>
+          <span class="font-bold">Order History</span>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+      </button>
+      <button id="payment-btn" class="w-full flex items-center justify-between p-5 border-b border-outline-variant/10 active:bg-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+          <span class="font-bold">Payment Methods</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-on-surface-variant font-medium">Visa **** 4402</span>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+        </div>
+      </button>
+      <button id="admin-btn" class="w-full flex items-center justify-between p-5 border-b border-outline-variant/10 active:bg-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-secondary">admin_panel_settings</span>
+          <span class="font-bold text-secondary">Admin Panel</span>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+      </button>
+      <button id="notif-btn" class="w-full flex items-center justify-between p-5 active:bg-surface-container transition-colors">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+          <span class="font-bold">Notification Settings</span>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+      </button>
+    </div>
+    <button id="logout-btn" class="w-full flex items-center gap-3 p-4 text-error font-bold active:opacity-70 transition-opacity">
+      <span class="material-symbols-outlined">logout</span>
+      Logout
+    </button>
+  </section>
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg rounded-t-[2rem] shadow-[0_-8px_20px_rgba(0,0,0,0.05)] flex justify-around items-center px-4 pb-6 pt-2 z-50">
+  <a id="nav-home"    class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">local_fire_department</span><span class="text-[10px] uppercase tracking-widest font-bold">Feed</span></a>
+  <a id="nav-menu"    class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">restaurant_menu</span><span class="text-[10px] uppercase tracking-widest font-bold">Menu</span></a>
+  <a id="nav-cart"    class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">shopping_cart</span><span class="text-[10px] uppercase tracking-widest font-bold">Cart</span></a>
+  <a id="nav-tracker" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">potted_plant</span><span class="text-[10px] uppercase tracking-widest font-bold">Track</span></a>
+  <a id="nav-profile" class="flex flex-col items-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">account_circle</span><span class="text-[10px] uppercase tracking-widest font-bold">Profile</span></a>
+</nav>
+
+<script type="module">
+import { navigate, guardAuth }   from '../src/router.js';
+import { getUser, clearUser }    from '../src/state.js';
+import { showToast }             from '../src/utils.js';
+
+if (!guardAuth(getUser)) { throw new Error('redirect'); }
+
+const user = getUser();
+document.getElementById('profile-name').textContent  = user?.name  || 'Student';
+document.getElementById('profile-email').textContent = user?.email || '—';
+
+// Nav
+document.getElementById('back-btn').addEventListener('click',      () => navigate('home'));
+document.getElementById('nav-home').addEventListener('click',      () => navigate('home'));
+document.getElementById('nav-menu').addEventListener('click',      () => navigate('menu'));
+document.getElementById('nav-cart').addEventListener('click',      () => navigate('cart'));
+document.getElementById('nav-tracker').addEventListener('click',   () => navigate('tracker'));
+document.getElementById('history-btn').addEventListener('click',   () => navigate('tracker'));
+document.getElementById('smart-picks-btn').addEventListener('click', () => navigate('menu'));
+document.getElementById('admin-btn').addEventListener('click',     () => navigate('admin'));
+document.getElementById('payment-btn').addEventListener('click',   () => showToast('Payment methods coming soon!'));
+document.getElementById('notif-btn').addEventListener('click',     () => showToast('Notification settings coming soon!'));
+document.getElementById('edit-limit-btn').addEventListener('click',() => showToast('Budget limit updated!'));
+
+document.getElementById('budget-alert-toggle').addEventListener('change', function () {
+  showToast(this.checked ? 'Budget alerts ON' : 'Budget alerts OFF');
+});
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  clearUser();
+  showToast('Logged out. See you soon! 👋');
+  setTimeout(() => navigate('login'), 800);
+});
+</script>
+</body>
+</html>

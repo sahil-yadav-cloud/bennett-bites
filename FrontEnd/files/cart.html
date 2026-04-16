@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart – Bennett Bites</title>
+  <script>
+    tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container-high":"#e8e8e8","primary":"#a43700","on-primary":"#ffffff","primary-container":"#cd4700","primary-fixed":"#ffdbcf","on-primary-fixed":"#380d00","on-secondary-container":"#006e6e","secondary":"#006a6a","surface-variant":"#e2e2e2","surface-container-lowest":"#ffffff","secondary-fixed":"#93f2f2","on-secondary-fixed":"#002020","on-primary-container":"#fffbff","tertiary-fixed":"#ffdeac","surface":"#f9f9f9","on-surface-variant":"#5a4138","on-surface":"#1a1c1c","secondary-container":"#90efef","on-secondary":"#ffffff","surface-container-low":"#f3f3f3","surface-container-highest":"#e2e2e2","error":"#ba1a1a","outline":"#8f7066","outline-variant":"#e3bfb2","background":"#f9f9f9","surface-container":"#eeeeee"},borderRadius:{DEFAULT:"1rem",lg:"2rem",xl:"3rem",full:"9999px"},fontFamily:{headline:["Plus Jakarta Sans"],body:["Be Vietnam Pro"]}}}}
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../src/styles.css"/>
+</head>
+<body class="text-on-surface">
+
+<div id="bb-toast"></div>
+
+<!-- Header -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)]">
+  <div class="flex items-center justify-between px-6 py-4">
+    <div class="flex items-center gap-3">
+      <button id="back-btn" class="text-stone-500 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="text-2xl font-black italic text-orange-700 font-headline tracking-tight">Your Cart</h1>
+    </div>
+    <span id="cart-items-heading" class="text-sm font-bold text-on-surface-variant">Items (0)</span>
+  </div>
+</header>
+
+<main class="pt-24 pb-52 px-6 max-w-2xl mx-auto space-y-6 page-enter">
+
+  <!-- Empty state -->
+  <div id="empty-cart-msg" class="hidden flex flex-col items-center justify-center py-20 text-center gap-4">
+    <span class="material-symbols-outlined text-5xl text-stone-300">shopping_cart</span>
+    <p class="font-headline font-bold text-xl text-on-surface-variant">Your cart is empty</p>
+    <button id="browse-btn" class="text-primary font-bold active:opacity-70 transition-opacity">Browse the Menu →</button>
+  </div>
+
+  <!-- Items list -->
+  <div id="cart-items-list" class="space-y-3"></div>
+
+  <!-- Nutrition section -->
+  <section id="nutrition-section" class="bg-surface-container-low rounded-lg p-5 space-y-4">
+    <h3 class="font-headline font-bold text-base">Nutrition Summary</h3>
+    <div class="grid grid-cols-3 gap-3 text-center">
+      <div class="bg-surface-container-lowest rounded-lg p-3 space-y-1">
+        <p class="font-black text-2xl text-primary" id="nutrition-protein">0</p>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-stone-400">Protein (g)</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-lg p-3 space-y-1">
+        <p class="font-black text-2xl text-secondary" id="nutrition-carbs">0</p>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-stone-400">Carbs (g)</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-lg p-3 space-y-1">
+        <p class="font-black text-2xl" id="nutrition-fat">0</p>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-stone-400">Fat (g)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Totals -->
+  <section class="space-y-3 pt-4">
+    <div class="flex justify-between text-sm">
+      <span class="text-stone-500">Subtotal</span>
+      <span class="font-bold" id="cart-subtotal">$0.00</span>
+    </div>
+    <div class="flex justify-between text-sm">
+      <span class="text-stone-500">Service Fee</span>
+      <span class="font-bold text-secondary">FREE (Student Plan)</span>
+    </div>
+    <div class="flex justify-between text-xl font-extrabold pt-2 border-t border-outline-variant/20">
+      <span>Total</span>
+      <span class="text-primary" id="cart-total">$0.00</span>
+    </div>
+  </section>
+</main>
+
+<!-- Fixed Bottom: Checkout + Nav -->
+<div class="fixed bottom-0 left-0 w-full z-50">
+  <div class="px-6 pb-3 bg-white/90 backdrop-blur-lg pt-4">
+    <button id="checkout-btn" disabled
+      class="heat-gradient w-full py-5 rounded-full flex items-center justify-between px-8 shadow-xl active:scale-[0.98] transition-transform duration-200 disabled:opacity-40 disabled:cursor-not-allowed">
+      <div class="flex flex-col items-start">
+        <span class="text-white/80 text-[10px] uppercase font-bold tracking-widest">Ready in 12 mins</span>
+        <span class="text-white font-bold text-lg">Checkout Order</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-white font-bold text-xl" id="checkout-total">$0.00</span>
+        <span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1;">arrow_forward</span>
+      </div>
+    </button>
+  </div>
+  <nav class="bg-white/90 backdrop-blur-lg rounded-t-none flex justify-around items-center px-4 pb-6 pt-2 w-full">
+    <a id="nav-home"    class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">local_fire_department</span><span class="text-[10px] uppercase tracking-widest font-bold">Feed</span></a>
+    <a id="nav-menu"    class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">restaurant_menu</span><span class="text-[10px] uppercase tracking-widest font-bold">Menu</span></a>
+    <a id="nav-cart"    class="flex flex-col items-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">shopping_cart</span><span class="text-[10px] uppercase tracking-widest font-bold">Cart</span></a>
+    <a id="nav-tracker" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">potted_plant</span><span class="text-[10px] uppercase tracking-widest font-bold">Track</span></a>
+    <a id="nav-profile" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">account_circle</span><span class="text-[10px] uppercase tracking-widest font-bold">Profile</span></a>
+  </nav>
+</div>
+
+<script type="module">
+import { navigate, guardAuth }                              from '../src/router.js';
+import { getUser, getCart, getCartTotal, getCartCount,
+         updateQty, removeFromCart, setCurrentOrder }      from '../src/state.js';
+import { showToast, formatPrice, generateCode }            from '../src/utils.js';
+
+if (!guardAuth(getUser)) { throw new Error('redirect'); }
+
+function render() {
+  const cart  = getCart();
+  const total = getCartTotal();
+  const empty = cart.length === 0;
+
+  // Header count
+  const hdr = document.getElementById('cart-items-heading');
+  if (hdr) hdr.textContent = `Items (${cart.reduce((s,i)=>s+i.qty,0)})`;
+
+  // Totals
+  ['cart-subtotal','cart-total','checkout-total'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = formatPrice(total);
+  });
+
+  // Empty / filled toggle
+  document.getElementById('empty-cart-msg').classList.toggle('hidden', !empty);
+  document.getElementById('nutrition-section').classList.toggle('hidden', empty);
+  document.getElementById('checkout-btn').disabled = empty;
+
+  // Nutrition
+  const protein = cart.reduce((s,i) => s+(i.protein||0)*i.qty,0);
+  const carbs   = cart.reduce((s,i) => s+(i.carbs||0)*i.qty,0);
+  const fat     = cart.reduce((s,i) => s+(i.fat||0)*i.qty,0);
+  document.getElementById('nutrition-protein').textContent = protein;
+  document.getElementById('nutrition-carbs').textContent   = carbs;
+  document.getElementById('nutrition-fat').textContent     = fat;
+
+  // Items
+  const listEl = document.getElementById('cart-items-list');
+  listEl.innerHTML = '';
+  const bgs = ['bg-surface-container-low','bg-surface-container-highest'];
+  cart.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = `${bgs[idx%2]} p-4 rounded-lg flex gap-4 items-center`;
+    div.style.animation = `fadeIn 0.3s ${idx*0.06}s ease both`;
+    div.innerHTML = `
+      <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+        <img alt="${item.name}" class="w-full h-full object-cover" src="${item.image||''}"/>
+      </div>
+      <div class="flex-grow space-y-1 min-w-0">
+        <div class="flex justify-between items-start">
+          <h3 class="font-bold text-base leading-tight">${item.name}</h3>
+          <span class="font-bold text-primary ml-2 flex-shrink-0">${formatPrice(item.price * item.qty)}</span>
+        </div>
+        <p class="text-xs text-stone-500 truncate">${item.note||''}</p>
+        <div class="flex items-center gap-2 pt-2">
+          <button class="qty-btn w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center active:scale-90 transition-transform" data-id="${item.id}" data-delta="-1">
+            <span class="material-symbols-outlined text-sm">remove</span>
+          </button>
+          <span class="font-bold w-5 text-center">${item.qty}</span>
+          <button class="qty-btn w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center active:scale-90 transition-transform" data-id="${item.id}" data-delta="1">
+            <span class="material-symbols-outlined text-sm">add</span>
+          </button>
+          <button class="remove-btn ml-2 w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error active:scale-90 transition-transform" data-id="${item.id}">
+            <span class="material-symbols-outlined text-sm">delete</span>
+          </button>
+        </div>
+      </div>`;
+    listEl.appendChild(div);
+  });
+
+  // Wire qty/remove buttons
+  listEl.querySelectorAll('.qty-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      updateQty(btn.dataset.id, parseInt(btn.dataset.delta));
+      render();
+    });
+  });
+  listEl.querySelectorAll('.remove-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      removeFromCart(btn.dataset.id);
+      showToast('Item removed');
+      render();
+    });
+  });
+}
+
+// Checkout
+document.getElementById('checkout-btn').addEventListener('click', () => {
+  const cart = getCart();
+  if (!cart.length) return;
+  setCurrentOrder({
+    items: cart,
+    total: getCartTotal(),
+    code:  generateCode(),
+  });
+  showToast('Order placed! 🎉');
+  setTimeout(() => navigate('tracker'), 600);
+});
+
+// Nav
+document.getElementById('back-btn').addEventListener('click',    () => navigate('menu'));
+document.getElementById('browse-btn')?.addEventListener('click', () => navigate('menu'));
+document.getElementById('nav-home').addEventListener('click',    () => navigate('home'));
+document.getElementById('nav-menu').addEventListener('click',    () => navigate('menu'));
+document.getElementById('nav-tracker').addEventListener('click', () => navigate('tracker'));
+document.getElementById('nav-profile').addEventListener('click', () => navigate('profile'));
+
+// Cross-tab sync
+window.addEventListener('storage', render);
+window.addEventListener('bb:cart-changed', render);
+
+render();
+</script>
+</body>
+</html>

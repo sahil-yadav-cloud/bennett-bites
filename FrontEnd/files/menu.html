@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu – Bennett Bites</title>
+  <script>
+    tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container-high":"#e8e8e8","primary":"#a43700","on-primary":"#ffffff","primary-container":"#cd4700","primary-fixed":"#ffdbcf","on-primary-fixed":"#380d00","on-secondary-container":"#006e6e","secondary":"#006a6a","surface-variant":"#e2e2e2","surface-container-lowest":"#ffffff","secondary-fixed":"#93f2f2","on-secondary-fixed":"#002020","on-tertiary-fixed":"#281900","on-primary-container":"#fffbff","tertiary-fixed":"#ffdeac","surface":"#f9f9f9","on-surface-variant":"#5a4138","on-surface":"#1a1c1c","secondary-container":"#90efef","on-secondary":"#ffffff","surface-container-low":"#f3f3f3","surface-container-highest":"#e2e2e2","error":"#ba1a1a","outline":"#8f7066","outline-variant":"#e3bfb2","background":"#f9f9f9","surface-container":"#eeeeee"},borderRadius:{DEFAULT:"1rem",lg:"2rem",xl:"3rem",full:"9999px"},fontFamily:{headline:["Plus Jakarta Sans"],body:["Be Vietnam Pro"]}}}}
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../src/styles.css"/>
+</head>
+<body class="text-on-surface">
+
+<div id="bb-toast"></div>
+
+<!-- Header -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)]">
+  <div class="flex items-center justify-between px-6 py-4">
+    <div class="flex items-center gap-3">
+      <h1 class="text-2xl font-black italic text-orange-700 font-headline tracking-tight">Menu</h1>
+    </div>
+    <button id="cart-btn" class="relative cursor-pointer active:scale-90 transition-transform">
+      <span class="material-symbols-outlined text-stone-500">shopping_cart</span>
+      <span id="menu-cart-badge" class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-black rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+    </button>
+  </div>
+  <!-- Filter Chips -->
+  <div class="flex gap-2 overflow-x-auto no-scrollbar px-6 pb-3">
+    <button class="filter-chip bg-primary text-on-primary px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95" data-filter="all">All</button>
+    <button class="filter-chip bg-surface-container-high text-on-surface px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95" data-filter="under5">Under $5</button>
+    <button class="filter-chip bg-surface-container-high text-on-surface px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95" data-filter="5to10">$5–$10</button>
+  </div>
+</header>
+
+<main class="pt-36 pb-32 px-6 max-w-2xl mx-auto page-enter">
+  <div id="menu-list" class="space-y-5"></div>
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg rounded-t-[2rem] shadow-[0_-8px_20px_rgba(0,0,0,0.05)] flex justify-around items-center px-4 pb-6 pt-2 z-50">
+  <a id="nav-home"    class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">local_fire_department</span><span class="text-[10px] uppercase tracking-widest font-bold">Feed</span></a>
+  <a id="nav-menu"    class="flex flex-col items-center bg-orange-100 text-orange-700 rounded-full py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">restaurant_menu</span><span class="text-[10px] uppercase tracking-widest font-bold">Menu</span></a>
+  <a id="nav-cart"    class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">shopping_cart</span><span class="text-[10px] uppercase tracking-widest font-bold">Cart</span></a>
+  <a id="nav-tracker" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">potted_plant</span><span class="text-[10px] uppercase tracking-widest font-bold">Track</span></a>
+  <a id="nav-profile" class="flex flex-col items-center text-stone-400 py-2 px-4 active:scale-90 cursor-pointer transition-transform"><span class="material-symbols-outlined">account_circle</span><span class="text-[10px] uppercase tracking-widest font-bold">Profile</span></a>
+</nav>
+
+<script type="module">
+import { navigate, guardAuth, syncCartBadge } from '../src/router.js';
+import { getUser, addToCart, getCartCount }   from '../src/state.js';
+import { showToast, formatPrice, MENU_ITEMS } from '../src/utils.js';
+
+if (!guardAuth(getUser)) { throw new Error('redirect'); }
+
+let activeFilter = 'all';
+
+function refreshBadge() {
+  syncCartBadge('menu-cart-badge', getCartCount);
+  const badge = document.getElementById('menu-cart-badge');
+  if (badge) { badge.classList.add('badge-pop'); setTimeout(() => badge.classList.remove('badge-pop'), 300); }
+}
+
+function renderMenu() {
+  const list  = document.getElementById('menu-list');
+  const items = MENU_ITEMS.filter(i => i.filter.includes(activeFilter));
+  list.innerHTML = '';
+
+  items.forEach((item, idx) => {
+    const el = document.createElement('div');
+    el.style.animation = `fadeIn 0.3s ${idx * 0.07}s ease both`;
+
+    if (item.style === 'featured') {
+      el.className = 'bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_24px_rgba(26,28,28,0.06)] group';
+      el.innerHTML = `
+        <div class="relative h-56 overflow-hidden">
+          <img alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${item.image}"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+          <div class="absolute top-4 left-4"><span class="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full" style="${item.tagStyle}">${item.tag}</span></div>
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-headline text-xl font-bold">${item.name}</h3>
+            <span class="font-black text-primary text-lg">${formatPrice(item.price)}</span>
+          </div>
+          <div class="flex gap-3 mb-3">
+            <span class="text-[10px] font-bold text-stone-500 uppercase">⚡ ${item.cal} CAL</span>
+            <span class="text-[10px] font-bold text-stone-500 uppercase">🥩 ${item.protein}G PROTEIN</span>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-4 leading-relaxed">${item.note}</p>
+          <div class="flex gap-3">
+            <button class="fav-btn w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center active:scale-90 transition-transform" data-id="${item.id}" data-fav="">
+              <span class="material-symbols-outlined text-stone-400">favorite</span>
+            </button>
+            <button class="add-btn flex-1 h-12 rounded-full bg-gradient-to-r from-primary to-primary-container text-white font-bold flex items-center justify-center gap-2 shadow-md active:scale-[0.97] transition-all" data-id="${item.id}">
+              <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+              <span>Add to Order</span>
+            </button>
+          </div>
+        </div>`;
+    } else {
+      el.className = 'flex gap-4 bg-surface-container-lowest rounded-lg p-4 shadow-sm items-center group';
+      el.innerHTML = `
+        <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+          <img alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${item.image}"/>
+        </div>
+        <div class="flex-1 min-w-0">
+          <span class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full inline-block mb-1" style="${item.tagStyle}">${item.tag}</span>
+          <h3 class="font-headline font-bold text-base leading-tight">${item.name}</h3>
+          <p class="text-[11px] text-stone-400 mt-0.5">${item.cal} cal · ${item.protein}g protein</p>
+          <div class="flex items-center justify-between mt-2">
+            <span class="font-black text-primary">${formatPrice(item.price)}</span>
+            <button class="add-btn w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center shadow-sm active:scale-90 transition-transform" data-id="${item.id}">
+              <span class="material-symbols-outlined text-sm">add</span>
+            </button>
+          </div>
+        </div>`;
+    }
+    list.appendChild(el);
+  });
+
+  // Wire add buttons
+  list.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = MENU_ITEMS.find(i => i.id === btn.dataset.id);
+      if (!item) return;
+      addToCart({ id:item.id, name:item.name, price:item.price, note:item.note, image:item.image, protein:item.protein, carbs:item.carbs, fat:item.fat });
+      refreshBadge();
+      showToast(`${item.name} added! 🛒`);
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const txt  = btn.querySelector('span:not(.material-symbols-outlined)');
+      if (icon) icon.textContent = 'check';
+      if (txt)  txt.textContent  = 'Added';
+      setTimeout(() => {
+        if (icon) icon.textContent = item.style === 'featured' ? 'add_shopping_cart' : 'add';
+        if (txt)  txt.textContent  = item.style === 'featured' ? 'Add to Order' : '';
+      }, 1500);
+    });
+  });
+
+  // Wire fav buttons
+  list.querySelectorAll('.fav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const active = btn.dataset.fav === '1';
+      btn.dataset.fav = active ? '' : '1';
+      icon.style.fontVariationSettings = active ? "'FILL' 0" : "'FILL' 1";
+      icon.style.color = active ? '' : '#ba1a1a';
+      showToast(active ? 'Removed from favorites' : 'Added to favorites ❤️');
+    });
+  });
+}
+
+// Filter chips
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    activeFilter = chip.dataset.filter;
+    document.querySelectorAll('.filter-chip').forEach(c => {
+      const on = c.dataset.filter === activeFilter;
+      c.className = `filter-chip ${on ? 'bg-primary text-on-primary' : 'bg-surface-container-high text-on-surface'} px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all active:scale-95`;
+    });
+    renderMenu();
+  });
+});
+
+// Nav
+document.getElementById('nav-home').addEventListener('click',    () => navigate('home'));
+document.getElementById('nav-cart').addEventListener('click',    () => navigate('cart'));
+document.getElementById('nav-tracker').addEventListener('click', () => navigate('tracker'));
+document.getElementById('nav-profile').addEventListener('click', () => navigate('profile'));
+document.getElementById('cart-btn').addEventListener('click',    () => navigate('cart'));
+
+// Cross-tab cart sync
+window.addEventListener('storage', refreshBadge);
+window.addEventListener('bb:cart-changed', refreshBadge);
+
+refreshBadge();
+renderMenu();
+</script>
+</body>
+</html>

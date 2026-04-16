@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#002020",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed-variant": "#604100",
+                        "on-primary-fixed-variant": "#802a00",
+                        "tertiary-container": "#9b6b00",
+                        "tertiary-fixed": "#ffdeac",
+                        "primary": "#a43700",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#cd4700",
+                        "primary-fixed": "#ffdbcf",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#380d00",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-container": "#006e6e",
+                        "tertiary": "#7b5500",
+                        "inverse-on-surface": "#f1f1f1",
+                        "secondary-fixed-dim": "#76d6d5",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#93f2f2",
+                        "on-tertiary-fixed": "#281900",
+                        "on-primary-container": "#fffbff",
+                        "tertiary-fixed-dim": "#ffba38",
+                        "surface": "#f9f9f9",
+                        "on-surface-variant": "#5a4138",
+                        "primary-fixed-dim": "#ffb59a",
+                        "surface-dim": "#dadada",
+                        "on-surface": "#1a1c1c",
+                        "secondary": "#006a6a",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f3f3f3",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#ffb59a",
+                        "surface-tint": "#a83900",
+                        "outline": "#8f7066",
+                        "outline-variant": "#e3bfb2",
+                        "background": "#f9f9f9",
+                        "on-background": "#1a1c1c",
+                        "inverse-surface": "#2f3131",
+                        "on-tertiary-container": "#fffbff",
+                        "secondary-container": "#90efef",
+                        "surface-container": "#eeeeee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    },
+                    "animation": {
+                        "steam": "steam 2s ease-in-out infinite",
+                        "scan": "scan 3s linear infinite"
+                    },
+                    "keyframes": {
+                        "steam": {
+                            "0%": { transform: "translateY(0) scale(1)", opacity: "0" },
+                            "50%": { transform: "translateY(-4px) scale(1.2)", opacity: "0.5" },
+                            "100%": { transform: "translateY(-8px) scale(1)", opacity: "0" }
+                        },
+                        "scan": {
+                            "0%": { top: "0%" },
+                            "100%": { top: "100%" }
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0 12px 24px rgba(26, 28, 28, 0.08);
+        }
+        .steam-particle {
+            position: absolute;
+            background: currentColor;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-[0_12px_24px_rgba(26,28,28,0.08)]">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<a class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-variant transition-colors active:scale-90" href="{{DATA:SCREEN:SCREEN_21}}">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</a>
+<span class="text-2xl font-black italic text-orange-700 dark:text-orange-400 font-headline tracking-tight">Bennett Bites</span>
+</div>
+<button class="text-stone-500 dark:text-stone-400 hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="history" onclick="window.location.href='{{DATA:SCREEN:SCREEN_33}}'">history</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-2xl mx-auto space-y-8">
+<!-- Live Status Card -->
+<section class="relative overflow-hidden rounded-lg bg-surface-container-low p-8 text-center space-y-6">
+<div class="absolute top-0 left-0 w-full h-2 bg-surface-variant">
+<div class="h-full w-2/3 bg-gradient-to-r from-primary to-primary-container transition-all duration-1000"></div>
+</div>
+<div class="space-y-1">
+<span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-secondary font-bold">Estimated Arrival</span>
+<h1 class="font-headline text-7xl font-extrabold tracking-tighter text-on-surface">08:42</h1>
+<p class="text-on-surface-variant font-medium">Minutes until your bite is ready</p>
+</div>
+<!-- Interactive Progress Bar -->
+<div class="relative flex justify-between items-center px-4 pt-4">
+<button class="flex flex-col items-center gap-2 z-10 transition-transform active:scale-95 group">
+<div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-on-secondary shadow-lg group-hover:shadow-secondary/20">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="font-label text-[10px] font-bold text-secondary tracking-wider uppercase">Placed</span>
+</button>
+<div class="absolute top-10 left-1/2 -translate-x-1/2 w-4/5 h-[2px] bg-outline-variant/30"></div>
+<button class="flex flex-col items-center gap-2 z-10 transition-transform active:scale-95 group relative">
+<!-- Easter Egg: Steam Animation -->
+<div class="absolute -top-4 flex gap-1">
+<div class="steam-particle animate-steam text-primary/40" style="animation-delay: 0s"></div>
+<div class="steam-particle animate-steam text-primary/40" style="animation-delay: 0.5s"></div>
+<div class="steam-particle animate-steam text-primary/40" style="animation-delay: 1s"></div>
+</div>
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-xl ring-4 ring-primary-fixed group-hover:ring-8 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<span class="font-label text-[10px] font-bold text-primary tracking-wider uppercase">Preparing</span>
+</button>
+<button class="flex flex-col items-center gap-2 z-10 opacity-40 grayscale hover:opacity-60 transition-all active:scale-95 group">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+<span class="font-label text-[10px] font-bold text-on-surface-variant tracking-wider uppercase">Ready</span>
+</button>
+</div>
+</section>
+<!-- Order Content Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Pickup Info Card -->
+<div class="bg-surface-container-lowest p-6 rounded-lg editorial-shadow flex flex-col justify-between space-y-4">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider">Pickup Point</span>
+</div>
+<h3 class="font-headline text-xl font-bold leading-tight">Student Center West Wing, Level 2</h3>
+</div>
+<button class="w-full bg-secondary-container text-on-secondary-container py-4 rounded-full font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">directions</span>
+                    Get Directions
+                </button>
+</div>
+<!-- QR Verification Card -->
+<div class="bg-surface-container-highest p-6 rounded-lg flex flex-col items-center justify-center space-y-4">
+<div class="bg-white p-4 rounded-xl shadow-inner relative overflow-hidden group">
+<!-- Easter Egg: Scan Line Animation -->
+<div class="absolute left-0 right-0 h-0.5 bg-primary/40 shadow-[0_0_8px_rgba(164,55,0,0.5)] z-10 animate-scan pointer-events-none"></div>
+<img alt="Pickup QR Code" class="w-32 h-32 opacity-90 group-hover:opacity-100 transition-opacity" data-alt="a clean black and white digital qr code used for pickup verification in a restaurant mobile app" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2ZGpfdHPBOykAKouAmN7ie0nSA6exuTVZtcET-q8i_WFB-P1WSwqen4McBy0INpr9gqcCS1y-QvoNhh-wVOzxQBWmpYTN7bo5FF3FVOMu9agj_TYCGl2ED_CbU-le-M2mLMoPshYz_6XLGxRhZNs5jRnN69ksoSIm0NNY5TUZ-MuzS4Rg9Az4U6v40OmL4L1xqOtilNhcRTMcWrpsr9AWkqOcCztexyOoZ1zAVHaZ_jI3IEwh0RwH7MsW72_F7eNm2zLmwWKh-U2m"/>
+</div>
+<div class="text-center">
+<span class="font-label text-[10px] font-bold text-on-surface-variant uppercase tracking-widest block">Verification Code</span>
+<span class="font-headline font-black text-2xl tracking-[0.2em]">7721</span>
+</div>
+</div>
+</div>
+<!-- Order Details List -->
+<section class="bg-surface-container-low rounded-lg p-6 space-y-6">
+<div class="flex items-center justify-between">
+<h4 class="font-headline text-lg font-bold">Your Order</h4>
+<button class="text-primary font-bold text-sm hover:underline" onclick="window.location.href='{{DATA:SCREEN:SCREEN_33}}'">Order History</button>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container-highest ring-primary/0 group-hover:ring-2 transition-all">
+<img alt="The Bennett Burger" class="w-full h-full object-cover" data-alt="close-up of a juicy double cheeseburger with melting cheddar and fresh lettuce on a toasted brioche bun" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZSjzNnT9wFDyz7gr31scUqIt0Td0SWNZTrhOmEkW27WPCyJYKVuCw12Lzs0AkbPRD4qZlqa57htJyNPVGfV04ylXNYvtJNrrQI0f1BtqI9LXB5sD3WKPDc6ojXRh7gQH62tB_sQXnvtLbItxwR3jIqIXYden8SNhyc4-Zb-mK-vJ-TwctLmOKdgWgGPE-rmQDIU6WKcsCYf3FIKBQG9-shu9dBnt2R2kWI7qQVvWKDirvNsfQPLMp3hGDVQxvSPoicIKMzbjtEot0"/>
+</div>
+<div>
+<p class="font-bold">1x The Bennett Burger</p>
+<div class="flex gap-2">
+<span class="bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">720 CAL</span>
+<span class="bg-tertiary-container text-on-tertiary-container text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Budget-Friendly</span>
+</div>
+</div>
+</div>
+<span class="font-bold text-primary group-hover:scale-110 transition-transform">$12.50</span>
+</div>
+<div class="flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container-highest ring-primary/0 group-hover:ring-2 transition-all">
+<img alt="Berry Blitz Shake" class="w-full h-full object-cover" data-alt="a refreshing tall strawberry milkshake topped with whipped cream and a single red berry in a clear glass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXCjRac70TmUQxeMtc3yOZCn_3SEjhliXnc_NhmHCporFNtO6ZafW8y2bE_TE5ZfJL70WPugJoe_30Z-9FEhhe1j6PpES8pg2la9eFengflRDA500VgUEspC1fPTMoLRZwWDSYVrwJ-Nbl0qsJBOaryJ7w5bsDCI74Tm7SjikOZ2D2zYesLE7XfD6K_TolaMqzLtA9Dc0po0gvwVlv373tMUP7MT_Aq8_SsfDEfgl5ZDqtDBwEKEMiGNkBjhEJ1mcEj8jPo4BL_Gk0"/>
+</div>
+<div>
+<p class="font-bold">1x Berry Blitz Shake</p>
+<span class="bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">240 CAL</span>
+</div>
+</div>
+<span class="font-bold text-primary group-hover:scale-110 transition-transform">$5.50</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/90 dark:bg-stone-950/90 backdrop-blur-lg rounded-t-[2rem] z-50 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="{{DATA:SCREEN:SCREEN_21}}">
+<span class="material-symbols-outlined" data-icon="local_fire_department">local_fire_department</span>
+<span class="font-body text-[10px] uppercase tracking-widest font-bold">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="{{DATA:SCREEN:SCREEN_9}}">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-body text-[10px] uppercase tracking-widest font-bold">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group_add">group_add</span>
+<span class="font-body text-[10px] uppercase tracking-widest font-bold">Group</span>
+</a>
+<div class="flex flex-col items-center justify-center bg-orange-100 dark:bg-orange-950/50 text-orange-700 dark:text-orange-300 rounded-full py-2 px-4 active:scale-[0.98] transition-transform duration-200 cursor-default">
+<span class="material-symbols-outlined" data-icon="potted_plant" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+<span class="font-body text-[10px] uppercase tracking-widest font-bold">Track</span>
+</div>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 py-2 px-4 hover:text-teal-600 dark:hover:text-teal-400 active:scale-[0.98] transition-transform duration-200" href="{{DATA:SCREEN:SCREEN_33}}">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-body text-[10px] uppercase tracking-widest font-bold">Goals</span>
+</a>
+</nav>
+</body></html>

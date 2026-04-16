@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bennett Bites | Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Be+Vietnam+Pro:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#ffdbcf",
+                        "outline": "#8f7066",
+                        "on-tertiary-fixed": "#281900",
+                        "on-secondary-fixed": "#002020",
+                        "tertiary": "#7b5500",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-tint": "#a83900",
+                        "surface-container-low": "#f3f3f3",
+                        "on-primary-fixed-variant": "#802a00",
+                        "background": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#006e6e",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary": "#a43700",
+                        "tertiary-fixed-dim": "#ffba38",
+                        "surface": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#006a6a",
+                        "on-background": "#1a1c1c",
+                        "on-tertiary-container": "#fffbff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "primary-fixed-dim": "#ffb59a",
+                        "surface-container": "#eeeeee",
+                        "secondary-container": "#90efef",
+                        "on-primary-fixed": "#380d00",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#604100",
+                        "tertiary-fixed": "#ffdeac",
+                        "outline-variant": "#e3bfb2",
+                        "surface-bright": "#f9f9f9",
+                        "secondary-fixed-dim": "#76d6d5",
+                        "on-primary-container": "#fffbff",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#ffb59a",
+                        "surface-container-high": "#e8e8e8",
+                        "on-surface-variant": "#5a4138",
+                        "tertiary-container": "#9b6b00",
+                        "surface-dim": "#dadada",
+                        "primary-container": "#cd4700",
+                        "secondary-fixed": "#93f2f2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    },
+                    "animation": {
+                        "shimmer": "shimmer 2.5s infinite"
+                    },
+                    "keyframes": {
+                        "shimmer": {
+                            "0%": { "transform": "translateX(-100%) skewX(-20deg)" },
+                            "100%": { "transform": "translateX(250%) skewX(-20deg)" }
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .editorial-shadow {
+            box-shadow: 0 12px 24px rgba(26, 28, 28, 0.06);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col items-center justify-center p-6 selection:bg-primary-fixed selection:text-on-primary-fixed">
+<main class="w-full max-w-md flex flex-col gap-8">
+<div class="flex flex-col items-center text-center gap-4">
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary-fixed/20 rounded-full blur-2xl group-hover:bg-primary-fixed/30 transition-all duration-500"></div>
+<h1 class="font-headline font-black italic text-5xl tracking-tighter text-primary relative">
+                    Bennett Bites
+                </h1>
+</div>
+<p class="font-body text-on-surface-variant max-w-[260px] leading-relaxed text-sm">
+                Fueling the academic pulse with campus-favorite flavors.
+            </p>
+</div>
+<section class="bg-surface-container-lowest rounded-lg p-8 editorial-shadow relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+<form action="#" class="flex flex-col gap-6 relative z-10" onsubmit="event.preventDefault(); window.location.href='{{DATA:SCREEN:SCREEN_8}}';">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1" for="email">
+                        Campus Email
+                    </label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px] group-focus-within:text-primary transition-colors">mail</span>
+<input class="w-full h-14 pl-12 pr-4 bg-surface-container rounded-md border-none ring-0 focus:ring-2 focus:ring-primary/20 bg-surface-container-high transition-all text-on-surface font-medium placeholder:text-stone-400" id="email" placeholder="student@university.edu" required="" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center px-1">
+<label class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant" for="password">
+                            Password
+                        </label>
+<a class="text-[10px] font-bold text-secondary uppercase tracking-wider hover:opacity-70 transition-opacity" href="#">Forgot?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px] group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full h-14 pl-12 pr-4 bg-surface-container rounded-md border-none ring-0 focus:ring-2 focus:ring-primary/20 bg-surface-container-high transition-all text-on-surface font-medium placeholder:text-stone-400" id="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<button class="mt-2 w-full h-14 rounded-full bg-gradient-to-r from-primary to-primary-container text-white font-headline font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-[0.97] transition-all duration-200 relative overflow-hidden group" type="submit">
+<!-- Shimmer Easter Egg -->
+<div class="absolute inset-0 w-1/2 h-full bg-white/20 -skew-x-[20deg] translate-x-[-100%] animate-shimmer pointer-events-none group-hover:bg-white/30"></div>
+<span class="relative z-10">Login</span>
+<span class="material-symbols-outlined text-[20px] relative z-10">arrow_forward</span>
+</button>
+</form>
+<div class="relative flex items-center justify-center py-8">
+<div class="w-full border-t border-outline-variant/30"></div>
+<span class="absolute bg-surface-container-lowest px-4 text-[10px] font-bold uppercase tracking-widest text-outline">or</span>
+</div>
+<button class="w-full h-14 rounded-full bg-secondary-container text-on-secondary-container font-headline font-bold text-base flex items-center justify-center gap-2 active:scale-[0.97] transition-all duration-200" onclick="window.location.href='{{DATA:SCREEN:SCREEN_8}}'">
+                Continue as Guest
+            </button>
+</section>
+<footer class="flex flex-col items-center gap-6">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant/10">
+<img alt="Signature Bowl" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx8Q8GLxDRLbc13-L2y4oKWy6Gky2LUYU0KelHSyMJsxruj_klD-7fi_rISzMryNsuCrcrpL1szvH8dyneT98rNBoH8t8DrPazlNkBFM8SfqP0r3UvhiH-U9rkMSiaLzdk_ol9d6cFKBuboVul_6rlRmHyWUkr_DdXuY73hDNTie0vzABEeVWuZfXTnHp5521DoeQUuhq3GegTz-pSyw7191Yc9QSrvWjOxvvux73zW8kTux3EIwae9XxVNd-yMP2HYb8CjJ98e7tG"/>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant/10">
+<img alt="Artisanal Pizza" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqSCNDmsvn27NTLkkRWZXquSk23mwdDFTJQ-rjz4O5pJHTxk6xjLTDoVTGr-JH-aFC_7e-9HdsNG8FnB0eSBFWM15G2n0YwzaKoqOdB-dkSXya83E_FPvw4NLZN74-jg4nYVKFI3bfN1M-fJGKldGnxYL8utbJOKcQhd_ZwaMZTr9Z0AWA8OfNJxYsiciaAJQuUJqLShdNltOI-wZ0MjafpMxcXofmODVb7I9Ow-x_26yvvfI8WyiTDrgqwIu1YgR7HCClTvDIBOku"/>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant/10">
+<img alt="Fresh Donuts" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD13N3M82ZVx9UhXeVaU8aIqgcz3W041X64efbWe7T9Wb4hb7kAQp-w09au5bbLgSar_BEXXUz33HsNEFk_CmIZgeJ2ybGcAm8JpZRbUKLH1tJpptjvgZMEipmEQ_0waxJYd9iCIQbshWS12_Ff-XdiaqWCpgOh_CSIsFXhPW6C7pcvVwrxQHPkvEgkwElLOb7QjwHAf5bymPFjBYNveLV0FNZjbNt1wFQKTjqXrUGrfq1KqtxQ6aNwIfr7eThjrsc_q2ycXhIpMFoj"/>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant font-medium">
+                New to the campus? <a class="text-primary font-bold hover:underline" href="{{DATA:SCREEN:SCREEN_8}}">Create an account</a>
+</p>
+</footer>
+</main>
+<div class="fixed top-8 left-8 hidden lg:block">
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-black uppercase tracking-widest text-outline-variant">System Status</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-xs font-bold text-on-surface-variant">Kitchen Active</span>
+</div>
+</div>
+</div>
+</body></html>

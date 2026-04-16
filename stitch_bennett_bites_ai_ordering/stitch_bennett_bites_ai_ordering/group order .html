@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campus Bites | Group Order</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#ffdeac",
+                      "surface-container-highest": "#e2e2e2",
+                      "inverse-primary": "#ffb59a",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#5a4138",
+                      "inverse-on-surface": "#f1f1f1",
+                      "error-container": "#ffdad6",
+                      "on-background": "#1a1c1c",
+                      "on-secondary": "#ffffff",
+                      "background": "#f9f9f9",
+                      "surface": "#f9f9f9",
+                      "secondary-fixed-dim": "#76d6d5",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#f9f9f9",
+                      "secondary-fixed": "#93f2f2",
+                      "surface-container": "#eeeeee",
+                      "on-primary-fixed-variant": "#802a00",
+                      "surface-tint": "#a83900",
+                      "on-secondary-container": "#006e6e",
+                      "on-secondary-fixed": "#002020",
+                      "primary-fixed": "#ffdbcf",
+                      "on-tertiary-fixed-variant": "#604100",
+                      "on-primary-container": "#fffbff",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed-dim": "#ffba38",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#004f4f",
+                      "tertiary": "#7b5500",
+                      "primary-fixed-dim": "#ffb59a",
+                      "outline-variant": "#e3bfb2",
+                      "secondary-container": "#90efef",
+                      "secondary": "#006a6a",
+                      "primary-container": "#cd4700",
+                      "inverse-surface": "#2f3131",
+                      "surface-container-low": "#f3f3f3",
+                      "on-surface": "#1a1c1c",
+                      "tertiary-container": "#9b6b00",
+                      "on-tertiary-fixed": "#281900",
+                      "surface-dim": "#dadada",
+                      "primary": "#a43700",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-container": "#fffbff",
+                      "surface-variant": "#e2e2e2",
+                      "outline": "#8f7066",
+                      "surface-container-high": "#e8e8e8",
+                      "on-primary-fixed": "#380d00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Be Vietnam Pro"],
+                      "label": ["Be Vietnam Pro"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        @keyframes rocket-blast {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+        }
+        .rocket-animation {
+            animation: rocket-blast 0.8s ease-out forwards;
+        }
+    </style>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface pb-32">
+<!-- Rocket Easter Egg Container -->
+<div class="fixed inset-0 pointer-events-none z-[100] flex items-center justify-center" id="rocket-container"></div>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md flex items-center justify-between px-6 h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-stone-100 transition-transform active:scale-95 duration-200" onclick="window.location.href='{{DATA:SCREEN:SCREEN_18}}'">
+<span class="material-symbols-outlined text-orange-700" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="Plus Jakarta Sans headline-lg font-bold tracking-tight text-orange-700">Group Order</h1>
+</div>
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full border-2 border-orange-500 overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a young college student smiling outdoors with warm afternoon sunlight on their face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUiDkJVwckHInRPL-J3pWGOptkK5XabH-LhKP9IZYDluJmjY9BjV4Mvp6zBvMLtpfcZOOW3C35FVhz_tAhIYGk8a7RZOJak6nxoiFLZ4YB2NkySCNV1oArnvsnP1s-WFr_VUhDgw5A9hx7BPV5Q-aaUqaZrKlOQL4kJqCQ86cJERtZEerxLjAu43qTlU25UShlO7wqNnbYBp9CIRDOdDvBVcuAaaPHgqmZEjZvkqzZ8zl2GidSJto3is4bNliNkwLoVIps5bAgqHdD"/>
+</div>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-2xl mx-auto">
+<!-- User Selection Area -->
+<section class="mb-8">
+<h2 class="text-xs font-bold uppercase tracking-[0.15em] text-stone-500 mb-4 font-label">Active Members</h2>
+<div class="flex gap-3">
+<!-- User Chip Active -->
+<div class="flex items-center gap-2 bg-primary-container text-on-primary-container py-2 pl-2 pr-5 rounded-full ring-2 ring-primary/20 transition-all">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm">A</div>
+<span class="font-semibold text-sm">You (Alex)</span>
+</div>
+<!-- User Chip Inactive/Selectable -->
+<div class="flex items-center gap-2 bg-surface-container-low text-on-surface py-2 pl-2 pr-5 rounded-full hover:bg-surface-container transition-all cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white font-bold text-sm">S</div>
+<span class="font-semibold text-sm">Sam</span>
+</div>
+<!-- Add Button -->
+<button class="w-12 h-12 rounded-full border-2 border-dashed border-outline-variant flex items-center justify-center text-outline hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+</button>
+</div>
+</section>
+<!-- Cart Items Section -->
+<section class="space-y-6">
+<h2 class="text-xs font-bold uppercase tracking-[0.15em] text-stone-500 mb-4 font-label">Shared Basket</h2>
+<!-- Item Card 1 -->
+<div class="bg-surface-container-lowest rounded-lg p-5 flex gap-4 relative overflow-hidden shadow-sm group">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Salmon Bowl" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A vibrant spicy salmon quinoa bowl with avocado, edamame, and pickled ginger in a ceramic bowl on a light surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjdWlu0VNAMmKS27A83U066UUJw_4H8XuXg3secnIA83QFBPUNmZ6Bdvtwurn7oDqda1ea81IAOZHI2FtlRnR4Kuum9tnCMlMasS4K-L8siFJTs1P9jzdb0KWugGj3DN5ICQnY_wVbdO6cjqaNz1joAz2h5O9Zx1HmBFWkiXtmmSaWGZ6Bo_UG9fZHis1KknWA_IuKXzI-211D10wYTzOxeYklSGxgbD7f-UqOD54WtETyGFucV93LsdqmGuVET7wz4vuiZ1Rcb2P6"/>
+</div>
+<div class="flex-grow flex flex-col justify-between py-1">
+<div>
+<h3 class="font-bold text-lg leading-tight">Spicy Salmon Quinoa Bowl</h3>
+<div class="flex gap-2 mt-1">
+<span class="text-[10px] bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full font-bold">PROTEIN+</span>
+<span class="text-[10px] bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full font-bold">FAVORITE</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-3">
+<span class="text-primary font-extrabold text-xl tracking-tight">$14.50</span>
+<div class="flex gap-2">
+<button class="flex items-center gap-1.5 px-4 py-1.5 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold hover:bg-secondary hover:text-white transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="share">share</span> Split
+                        </button>
+<button class="w-9 h-9 flex items-center justify-center text-error bg-error-container/30 rounded-full hover:bg-error-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Splitting Indicator -->
+<div class="absolute top-0 right-0 p-3">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-primary border-2 border-white text-[8px] flex items-center justify-center text-white font-bold">A</div>
+<div class="w-6 h-6 rounded-full bg-secondary border-2 border-white text-[8px] flex items-center justify-center text-white font-bold">S</div>
+</div>
+</div>
+</div>
+<!-- Item Card 2 -->
+<div class="bg-surface-container-low rounded-lg p-5 flex gap-4 relative overflow-hidden group">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Cold Brew" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Chilled oat milk cold brew coffee with ice cubes in a tall glass, aesthetic coffee photography with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9pB-U0adDGNQvfXf8WxRCAGuv-bDZqY7aCgF-dh4YbYS3FCB4zfy4EaxUBQ8iKlRALCbEmglCMAge-f0qj9MlJhEnb6ECMtuh6CaUUoM2cMs8uxvVQyOMhbprf-lp6Kcvsy_tx2FwTjAOfUxoy-vEYgNxG9e96ssD2F8OnD82JZugLLcitGQt0W_5ViUH422cLj4M_inJ7XA-a-SttfvBxqwcshGK9QOPLRQhWswNvOxWrSKgZA5zTDjB0dWNjbbLxdgFWtccBs0_"/>
+</div>
+<div class="flex-grow flex flex-col justify-between py-1">
+<div>
+<h3 class="font-bold text-lg leading-tight">Oat Milk Cold Brew</h3>
+<p class="text-stone-500 text-xs mt-1">Extra shot, vanilla syrup</p>
+</div>
+<div class="flex items-center justify-between mt-3">
+<span class="text-primary font-extrabold text-xl tracking-tight">$5.75</span>
+<div class="flex gap-2">
+<button class="flex items-center gap-1.5 px-4 py-1.5 bg-surface-container-highest text-on-surface rounded-full text-xs font-bold hover:bg-stone-300 transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="share">share</span> Split
+                        </button>
+<button class="w-9 h-9 flex items-center justify-center text-error bg-error-container/30 rounded-full hover:bg-error-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Single User Indicator -->
+<div class="absolute top-0 right-0 p-3">
+<div class="w-6 h-6 rounded-full bg-primary border-2 border-white text-[8px] flex items-center justify-center text-white font-bold">A</div>
+</div>
+</div>
+</section>
+<!-- Bill Breakdown Section -->
+<section class="mt-12 bg-surface-container-highest/30 rounded-[2rem] p-8 border border-white/50 backdrop-blur-sm">
+<h2 class="text-xl font-extrabold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+            The Split
+        </h2>
+<div class="space-y-4">
+<div class="flex justify-between items-center pb-4 border-b border-stone-200">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">A</div>
+<div>
+<p class="font-bold text-sm">You (Alex)</p>
+<p class="text-[10px] text-stone-500 uppercase tracking-wider">Salmon (1/2) + Cold Brew</p>
+</div>
+</div>
+<span class="font-extrabold text-lg">$13.00</span>
+</div>
+<div class="flex justify-between items-center pb-4 border-b border-stone-200">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-white font-bold">S</div>
+<div>
+<p class="font-bold text-sm">Sam</p>
+<p class="text-[10px] text-stone-500 uppercase tracking-wider">Salmon (1/2)</p>
+</div>
+</div>
+<span class="font-extrabold text-lg">$7.25</span>
+</div>
+<div class="flex justify-between items-center pt-2">
+<p class="text-stone-500 font-bold uppercase text-xs tracking-widest">Total Bill</p>
+<span class="text-2xl font-black text-primary">$20.25</span>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<div class="mt-12 flex flex-col gap-4">
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-white py-4 rounded-full font-bold text-lg shadow-xl shadow-primary/20 active:scale-95 transition-transform flex items-center justify-center gap-3" id="finalize-order-btn">
+            Finalize Group Order
+            <span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+</button>
+<button class="w-full bg-white text-stone-600 py-3 rounded-full font-semibold text-sm hover:bg-stone-50 active:scale-98 transition-all border border-stone-100" onclick="window.location.href='{{DATA:SCREEN:SCREEN_18}}'">
+            Back to Cart
+        </button>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 bg-white/90 dark:bg-stone-950/90 backdrop-blur-xl rounded-t-[2rem] shadow-[0_-12px_24px_rgba(0,0,0,0.05)] border-t border-stone-200/20">
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 py-2 px-6 hover:text-orange-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+<span class="Plus Jakarta Sans label-sm uppercase tracking-wider text-[10px] mt-1">Feed</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 py-2 px-6 hover:text-orange-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="Plus Jakarta Sans label-sm uppercase tracking-wider text-[10px] mt-1">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-orange-100 dark:bg-orange-950/30 text-orange-700 dark:text-orange-400 rounded-full py-2 px-6">
+<span class="material-symbols-outlined" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="Plus Jakarta Sans label-sm uppercase tracking-wider text-[10px] mt-1">Group</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 py-2 px-6 hover:text-orange-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="Plus Jakarta Sans label-sm uppercase tracking-wider text-[10px] mt-1">Profile</span>
+</div>
+</nav>
+<script>
+    document.getElementById('finalize-order-btn').addEventListener('click', function() {
+        const container = document.getElementById('rocket-container');
+        
+        // Clear previous rockets if any
+        container.innerHTML = '';
+        
+        // Create blast effect
+        for(let i = 0; i < 5; i++) {
+            const rocket = document.createElement('div');
+            rocket.className = 'absolute rocket-animation text-4xl';
+            rocket.innerHTML = '🚀';
+            rocket.style.left = `${45 + (Math.random() * 10)}%`;
+            rocket.style.top = `${45 + (Math.random() * 10)}%`;
+            rocket.style.animationDelay = `${i * 0.1}s`;
+            container.appendChild(rocket);
+        }
+
+        // Navigate after animation
+        setTimeout(() => {
+            window.location.href = '{{DATA:SCREEN:SCREEN_19}}';
+        }, 900);
+    });
+</script>
+</body></html>
